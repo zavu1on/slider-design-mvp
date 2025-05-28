@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
+import { ToastProvider } from '@/shared/providers';
 import './globals.css';
 
 const montserratFont = Montserrat({ subsets: ['latin', 'cyrillic'] });
@@ -16,7 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <body className={montserratFont.className}>{children}</body>
+      <body className={montserratFont.className}>
+        <ToastProvider>{children}</ToastProvider>
+      </body>
     </html>
   );
 }

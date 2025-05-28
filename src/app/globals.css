@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import "tw-animate-css";
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -114,7 +114,19 @@
   * {
     @apply border-border outline-ring/50;
   }
+
+  html {
+    width: 100dvw;
+    height: 100dvh;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground size-full;
+  }
+}
+
+@layer components {
+  form .text-destructive.text-sm {
+    @apply mb-2;
   }
 }
