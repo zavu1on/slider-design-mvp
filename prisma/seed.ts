@@ -1,3 +1,4 @@
+import { hashPassword } from '@/entities/auth/lib/password';
 import { PrismaClient } from '../src/generated/prisma';
 
 const prisma = new PrismaClient();
@@ -6,7 +7,7 @@ async function main() {
   const user = await prisma.user.create({
     data: {
       login: 'admin',
-      password: 'hashed-password', // todo change to bcrypt
+      password: await hashPassword('admin'),
     },
   });
 
@@ -29,7 +30,7 @@ async function main() {
 }
 
 main()
-  .catch(e => {
+  .catch((e) => {
     console.error('Seed generating failed:', e);
   })
   .finally(async () => {

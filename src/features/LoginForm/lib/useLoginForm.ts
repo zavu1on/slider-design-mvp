@@ -1,19 +1,10 @@
 import { useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
-// import { signIn } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 import { useParams, useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { type LoginFormSchema, loginFormSchema } from '@/entities/auth';
-
-// todo delete this mock
-const signIn = async (...args: unknown[]) => {
-  console.log('args', args);
-
-  return {
-    error: undefined,
-  };
-};
 
 interface UseLoginForm {
   loginForm: ReturnType<typeof useForm<LoginFormSchema>>;
@@ -41,11 +32,11 @@ export const useLoginForm = (): UseLoginForm => {
     });
 
     if (resp?.error) {
-      toast(resp.error);
+      toast('Неправильный логин или пароль');
     } else {
       toast('Вы успешно вошли в систему');
 
-      // router.push(params?.callbackUrl ?? '/users');
+      router.push(params?.callbackUrl ?? '/users');
     }
 
     setLoading(false);
