@@ -12,7 +12,7 @@ export const LoginForm: FC = () => {
   return (
     <>
       <Card
-        title="Интеграция"
+        title="Авторизация"
         description="Введите логин и пароль"
         className="w-96"
       >

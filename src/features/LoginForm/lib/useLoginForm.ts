@@ -36,7 +36,7 @@ export const useLoginForm = (): UseLoginForm => {
     } else {
       toast('Вы успешно вошли в систему');
 
-      router.push(params?.callbackUrl ?? '/users');
+      router.push(params?.callbackUrl ?? '/slides');
     }
 
     setLoading(false);

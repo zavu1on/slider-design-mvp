@@ -1,7 +1,5 @@
-import { hashPassword } from '@/entities/auth/lib/password';
+import { SlideList } from '@/pages/SlideList';
 
 export default function SlidesPage() {
-  hashPassword('admin').then((v) => console.log(v));
-
-  return <div>Slides</div>;
+  return <SlideList />;
 }

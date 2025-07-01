@@ -24,6 +24,8 @@ const eslintConfig = [
           endOfLine: 'auto',
         },
       ],
+      '@typescript-eslint/no-import-type-side-effects': 'error',
+      'import/named': 'error',
     },
   },
 ];

@@ -1,5 +1,5 @@
-import { type InputHTMLAttributes, type ReactNode } from 'react';
-import { type FieldValues } from 'react-hook-form';
+import type { InputHTMLAttributes, ReactNode } from 'react';
+import type { FieldValues } from 'react-hook-form';
 import { Input as UIInput } from '@/generated/shadcn/input';
 import { type FormChildrenProps, FormField } from '../Form';
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { type ReactElement, type ReactNode, cloneElement } from 'react';
-import { type Control, type FieldValues, type Path } from 'react-hook-form';
+import type { Control, FieldValues, Path } from 'react-hook-form';
 import {
   FormControl,
   FormDescription,

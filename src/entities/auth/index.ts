@@ -4,4 +4,14 @@ export {
   isRequestWithAuth,
   type NextRequestWithAuth,
 } from './schema';
-export { handlers, signIn, signOut, auth } from './lib';
+export {
+  handlers,
+  signIn,
+  signOut,
+  auth,
+  getSessionOrLogin,
+  getSessionOrThrowError,
+  hashPassword,
+  verifyPassword,
+} from './lib';
+export { LogoutButton } from './ui';

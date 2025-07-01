@@ -1,17 +1,15 @@
-import { type AdapterUser } from '@auth/core/adapters';
-import { type JWT } from '@auth/core/jwt';
+import type { AdapterUser } from '@auth/core/adapters';
+import type { JWT } from '@auth/core/jwt';
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import { prisma } from '@/shared/lib';
 import { loginFormSchema } from '../schema';
-import { generateTokens, verifyAccessToken, verifyRefreshToken } from './jwt';
 import { verifyPassword } from './password';
 
 declare module '@auth/core/jwt' {
   interface JWT {
     body: {
-      accessToken: string;
-      refreshToken: string;
+      id: string;
       expiresAt: number;
     };
   }
@@ -19,8 +17,7 @@ declare module '@auth/core/jwt' {
 
 declare module 'next-auth' {
   interface User {
-    accessToken: string;
-    refreshToken: string;
+    id: string;
     expiresAt: number;
   }
 
@@ -48,14 +45,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               login: cleanData.email,
             },
           });
-          if (!verifyPassword(cleanData.password, user.password)) return null;
-
-          const tokens = generateTokens({ id: user.id });
+          if (!(await verifyPassword(cleanData.password, user.password)))
+            return null;
 
           return {
-            ...tokens,
+            id: user.id,
             expiresAt: Math.floor(
-              new Date(Date.now() + 1000 * 60 * 30).getTime() / 1000 // 30m
+              new Date(Date.now() + 1000 * 60 * 60 * 8).getTime() / 1000 // 8h
             ),
           };
         } catch (error) {
@@ -70,40 +66,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async jwt({ token, user }) {
       if (user) {
         token.body = {
-          accessToken: user.accessToken,
-          refreshToken: user.refreshToken,
+          id: user.id,
           expiresAt: user.expiresAt,
         };
-      } else if (Date.now() < token.body.expiresAt * 1000) {
-        return token;
       }
-
-      try {
-        const accessTokenData = verifyAccessToken(token.body.accessToken);
-        const refreshTokenData = verifyRefreshToken(token.body.refreshToken);
-
-        if (accessTokenData?.id !== refreshTokenData?.id || !refreshTokenData) {
-          return null;
-        }
-
-        await prisma.user.findFirstOrThrow({
-          where: { id: refreshTokenData.id },
-        });
-        const tokenPair = generateTokens({ id: refreshTokenData.id });
-
-        return {
-          ...token,
-          body: {
-            ...tokenPair,
-            expiresAt: Math.floor(
-              new Date(Date.now() + 1000 * 60 * 30).getTime() / 1000
-            ),
-          },
-        };
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      } catch (error) {
+      if (Date.now() > token.body.expiresAt * 1000) {
         return null;
       }
+
+      return token;
     },
     async session({ session, token }) {
       session.user = token as AdapterUser & JWT;
