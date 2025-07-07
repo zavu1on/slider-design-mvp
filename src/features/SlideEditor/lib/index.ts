@@ -1,0 +1,1 @@
+export { useInitCanvas } from './useInitCanvas';

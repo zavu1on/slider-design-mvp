@@ -1,0 +1,1 @@
+export { useCanvasBackgroundStore } from './useCanvasBackgroundStore';

@@ -1,4 +1,4 @@
-import { type ComponentProps, type FC } from 'react';
+import type { ComponentProps, FC } from 'react';
 import * as UI from '@/generated/shadcn/button';
 import { cn } from '@/shared/lib';
 

@@ -9,7 +9,9 @@ type ProfileHeaderProps = {
 export const ProfileHeader: FC<ProfileHeaderProps> = ({ userName }) => {
   return (
     <header className="bg-gray-800 text-white p-4 flex justify-between items-center">
-      <h1 className="text-xl font-bold">Slider Designer</h1>
+      <h1 className="text-xl font-bold">
+        <Link href="/slides">Slider Designer</Link>
+      </h1>
       <div className="flex items-center gap-4">
         <span>
           Hello,{' '}
