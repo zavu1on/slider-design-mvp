@@ -42,4 +42,11 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# prisma
 /src/generated/prisma
+
+# todo
+todo.md
+
+# media files
+public/upload

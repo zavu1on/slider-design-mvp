@@ -1,11 +1,11 @@
 'use client';
 
-import { FC, useState } from 'react';
+import { type FC, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import {
-  ChangeLoginFormSchema,
+  type ChangeLoginFormSchema,
   changeLoginAction,
   changeLoginFormSchema,
 } from '@/entities/profile';
@@ -31,11 +31,11 @@ export const ChangeLoginForm: FC<ChangeLoginFormProps> = ({ currentLogin }) => {
     const resp = await changeLoginAction(data);
 
     if (resp.success) {
-      toast('Логин успешно изменен!');
+      toast.success('Логин успешно изменен!');
       changeLoginForm.setValue('currentLogin', data.newLogin);
       changeLoginForm.setValue('newLogin', '');
     } else if (resp.error) {
-      toast(resp.error);
+      toast.error(resp.error);
     }
     setLoading(false);
   };
@@ -60,10 +60,7 @@ export const ChangeLoginForm: FC<ChangeLoginFormProps> = ({ currentLogin }) => {
         label="Новый логин"
         className="rounded px-3 py-5"
       />
-      <LoadingButton
-        loading={loading}
-        className="mt-auto bg-blue-600 text-white rounded px-4 py-2 hover:bg-blue-700 transition"
-      >
+      <LoadingButton loading={loading} className="mt-auto">
         Сменить логин
       </LoadingButton>
     </Form>

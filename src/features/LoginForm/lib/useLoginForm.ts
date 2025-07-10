@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { signIn } from 'next-auth/react';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { type LoginFormSchema, loginFormSchema } from '@/entities/auth';
@@ -14,7 +14,7 @@ interface UseLoginForm {
 
 export const useLoginForm = (): UseLoginForm => {
   const router = useRouter();
-  const params = useParams<{ callbackUrl: string }>();
+  const params = useSearchParams();
   const [loading, setLoading] = useState(false);
 
   const loginForm = useForm<LoginFormSchema>({
@@ -32,11 +32,11 @@ export const useLoginForm = (): UseLoginForm => {
     });
 
     if (resp?.error) {
-      toast('Неправильный логин или пароль');
+      toast.error('Неправильный логин или пароль');
     } else {
-      toast('Вы успешно вошли в систему');
+      toast.success('Вы успешно вошли в систему');
 
-      router.push(params?.callbackUrl ?? '/slides');
+      router.push(params?.get('callbackUrl') ?? '/slides');
     }
 
     setLoading(false);

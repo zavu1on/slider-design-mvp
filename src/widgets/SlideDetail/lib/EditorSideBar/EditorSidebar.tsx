@@ -1,6 +1,10 @@
-import { FC } from 'react';
+'use client';
+
+import { type FC, useEffect } from 'react';
 import { Grid2X2Plus, Image, Settings, Sparkles, Type } from 'lucide-react';
 import Link from 'next/link';
+import { useUserMaterialsStore } from '@/entities/slides';
+import type { Material } from '@/generated/prisma';
 import {
   Accordion,
   AccordionContent,
@@ -20,13 +24,14 @@ import {
   SidebarTrigger,
 } from '@/generated/shadcn/sidebar';
 import { Button } from '@/shared/ui';
-import { SettingsContent } from './SettingsContent';
+import { ImageLoader } from './ImageLoader';
+import { ProjectSettings } from './ProjectSettings';
 
 const SIDEBAR_ITEMS = [
   {
     title: 'Настройки',
     icon: Settings,
-    body: <SettingsContent />,
+    body: <ProjectSettings />,
   },
   {
     title: 'Элементы',
@@ -36,7 +41,7 @@ const SIDEBAR_ITEMS = [
   {
     title: 'Изображения',
     icon: Image,
-    body: <p>Заглушка</p>,
+    body: <ImageLoader />,
   },
   {
     title: 'Текст',
@@ -52,9 +57,16 @@ const SIDEBAR_ITEMS = [
 
 type EditorSidebarProps = {
   name: string;
+  materials: Material[];
 };
 
-export const EditorSidebar: FC<EditorSidebarProps> = ({ name }) => {
+export const EditorSidebar: FC<EditorSidebarProps> = ({ name, materials }) => {
+  const setMaterials = useUserMaterialsStore((store) => store.setMaterials);
+
+  useEffect(() => {
+    setMaterials(materials);
+  }, []);
+
   return (
     <div className="flex flex-row bg-slate-200">
       <Sidebar className="editor-sidebar">

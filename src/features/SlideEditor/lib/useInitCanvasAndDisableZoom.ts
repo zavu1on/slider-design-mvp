@@ -1,9 +1,14 @@
 'use client';
 
-import { Dispatch, RefObject, SetStateAction, useEffect } from 'react';
+import {
+  type Dispatch,
+  type RefObject,
+  type SetStateAction,
+  useEffect,
+} from 'react';
 import { Canvas } from 'fabric';
 
-export const useInitCanvas = (
+export const useInitCanvasAndDisableZoom = (
   canvasRef: RefObject<HTMLCanvasElement | null>,
   setCanvas: Dispatch<SetStateAction<Canvas | null>>
 ) => {
@@ -15,8 +20,6 @@ export const useInitCanvas = (
         height: 720 / 2,
       });
       const scaleFactor = window.devicePixelRatio || 1;
-
-      console.log(scaleFactor);
 
       initCanvas.setDimensions({
         width: (1280 * scaleFactor) / 1.5,
@@ -32,4 +35,23 @@ export const useInitCanvas = (
       };
     }
   }, [canvasRef, setCanvas]);
+
+  useEffect(() => {
+    const handleWheel = (event: WheelEvent) => {
+      if (event.ctrlKey) event.preventDefault();
+    };
+    document.addEventListener('wheel', handleWheel);
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.ctrlKey && (event.key === '+' || event.key === '-')) {
+        event.preventDefault();
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('wheel', handleWheel);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
 };

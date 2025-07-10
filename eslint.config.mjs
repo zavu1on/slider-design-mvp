@@ -24,8 +24,14 @@ const eslintConfig = [
           endOfLine: 'auto',
         },
       ],
-      '@typescript-eslint/no-import-type-side-effects': 'error',
       'import/named': 'error',
+      '@typescript-eslint/no-import-type-side-effects': 'error',
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        {
+          fixStyle: 'inline-type-imports',
+        },
+      ],
     },
   },
 ];

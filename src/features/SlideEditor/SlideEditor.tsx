@@ -1,11 +1,11 @@
 'use client';
 
-import { FC, use, useEffect, useRef, useState } from 'react';
-import { Canvas } from 'fabric';
-import { useCanvasBackgroundStore } from '@/entities/slides';
-import { Slide } from '@/generated/prisma';
+import { type FC, use, useEffect, useRef, useState } from 'react';
+import { type Canvas, FabricImage } from 'fabric';
+import { useAddImageStore, useCanvasBackgroundStore } from '@/entities/slides';
+import type { Slide } from '@/generated/prisma';
 import { cn } from '@/shared/lib';
-import { useInitCanvas } from './lib';
+import { useInitCanvasAndDisableZoom } from './lib';
 
 type SlideEditorProps = {
   slide: Promise<Slide | null>;
@@ -17,8 +17,9 @@ export const SlideEditor: FC<SlideEditorProps> = ({ slide }) => {
   const [canvas, setCanvas] = useState<Canvas | null>(null);
 
   const color = useCanvasBackgroundStore((state) => state.color);
+  const { image, clear } = useAddImageStore();
 
-  useInitCanvas(canvasRef, setCanvas);
+  useInitCanvasAndDisableZoom(canvasRef, setCanvas);
 
   useEffect(() => {
     if (canvas) {
@@ -28,6 +29,20 @@ export const SlideEditor: FC<SlideEditorProps> = ({ slide }) => {
       canvas.renderAll();
     }
   }, [canvas, color]);
+
+  useEffect(() => {
+    const addImage = async () => {
+      if (canvas && image) {
+        const canvasImage = await FabricImage.fromURL(image.filePath);
+        canvas.add(canvasImage);
+        canvas.renderAll();
+
+        clear();
+      }
+    };
+
+    addImage();
+  }, [canvas, image]);
 
   return (
     <div>

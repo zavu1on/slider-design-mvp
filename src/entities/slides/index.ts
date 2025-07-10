@@ -1,2 +1,12 @@
-export { getUserSlides, getSlideById, getSlideNameById } from './api';
-export { useCanvasBackgroundStore } from './store';
+export {
+  getUserSlides,
+  getSlideById,
+  getSlideNameById,
+  uploadImageAction,
+  getUserMaterials,
+} from './api';
+export {
+  useCanvasBackgroundStore,
+  useAddImageStore,
+  useUserMaterialsStore,
+} from './store';

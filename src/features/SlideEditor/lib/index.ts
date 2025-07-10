@@ -1,1 +1,1 @@
-export { useInitCanvas } from './useInitCanvas';
+export { useInitCanvasAndDisableZoom } from './useInitCanvasAndDisableZoom';

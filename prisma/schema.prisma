@@ -20,7 +20,7 @@ model User {
   password  String
   createdAt DateTime   @default(now())
   slides    Slide[]
-  Material  Material[]
+  materials Material[]
 }
 
 model Slide {
@@ -35,14 +35,13 @@ model Slide {
 enum MaterialType {
   UNKNOWN
   IMAGE
-  AUDIO
-  VIDEO
-  FONT
 }
 
 model Material {
   id       Int          @id @default(autoincrement())
   filePath String       @unique
+  width    Int?
+  height   Int?
   type     MaterialType @default(UNKNOWN)
   owner    User         @relation(fields: [ownerId], references: [id])
   ownerId  String
