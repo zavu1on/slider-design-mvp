@@ -3,7 +3,7 @@
 import { type FC, useEffect } from 'react';
 import { Grid2X2Plus, Image, Settings, Sparkles, Type } from 'lucide-react';
 import Link from 'next/link';
-import { useUserMaterialsStore } from '@/entities/slides';
+import { useUserMaterialsStore } from '@/entities/canvas';
 import type { Material } from '@/generated/prisma';
 import {
   Accordion,

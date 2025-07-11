@@ -26,7 +26,7 @@ export const ChangeLoginForm: FC<ChangeLoginFormProps> = ({ currentLogin }) => {
     },
   });
 
-  const onSubmit = async (data: ChangeLoginFormSchema) => {
+  const onChangeLoginSubmit = async (data: ChangeLoginFormSchema) => {
     setLoading(true);
     const resp = await changeLoginAction(data);
 
@@ -44,7 +44,7 @@ export const ChangeLoginForm: FC<ChangeLoginFormProps> = ({ currentLogin }) => {
     <Form
       className="h-full bg-gray-50 p-4 rounded shadow flex flex-col gap-4"
       form={changeLoginForm}
-      onSubmit={changeLoginForm.handleSubmit(onSubmit)}
+      onSubmit={changeLoginForm.handleSubmit(onChangeLoginSubmit)}
     >
       <h3 className="text-md font-semibold mb-2">Сменить логин</h3>
       <Input

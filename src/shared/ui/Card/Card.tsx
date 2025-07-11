@@ -1,4 +1,4 @@
-import { type FC, type ReactNode } from 'react';
+import type { FC, ReactNode } from 'react';
 import {
   CardContent,
   CardDescription,
@@ -14,6 +14,7 @@ type CardProps = {
   description?: string;
   footer?: ReactNode;
   className?: string;
+  onClick?: () => void;
 
   style?: Partial<{
     header: string;
@@ -30,10 +31,11 @@ export const Card: FC<CardProps> = ({
   description,
   footer,
   className,
+  onClick,
   style,
 }) => {
   return (
-    <CardSkeleton className={className}>
+    <CardSkeleton className={className} onClick={onClick}>
       <CardHeader className={style?.header}>
         <CardTitle className={style?.title}>{title}</CardTitle>
         <CardDescription className={style?.description}>

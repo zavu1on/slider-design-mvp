@@ -1,14 +1,18 @@
 'use server';
 
+import { AuthError } from 'next-auth';
 import { ValidationError } from 'yup';
 import {
   getSessionOrLogin,
   hashPassword,
   verifyPassword,
 } from '@/entities/auth';
-import { ActionBasicResponse } from '@/shared';
+import type { ActionBasicResponse } from '@/shared';
 import { prisma } from '@/shared/lib';
-import { ChangePasswordFormSchema, changePasswordFormSchema } from '../schema';
+import {
+  type ChangePasswordFormSchema,
+  changePasswordFormSchema,
+} from '../schema';
 
 export const changePasswordAction = async (
   data: ChangePasswordFormSchema
@@ -45,6 +49,9 @@ export const changePasswordAction = async (
         success: false,
         error: error.message,
       };
+    }
+    if (error instanceof AuthError) {
+      return { success: false, error: 'Необходима повторная авторизация' };
     }
 
     return {

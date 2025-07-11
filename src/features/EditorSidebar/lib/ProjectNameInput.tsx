@@ -34,7 +34,7 @@ export const ProjectNameInput: FC<ProjectNameInputProps> = ({
   if (mode === 'view')
     return (
       <span
-        className="cursor-pointer overflow-hidden text-ellipsis whitespace-nowrap"
+        className="cursor-pointer truncate"
         onDoubleClick={() => setMode('edit')}
       >
         {name}

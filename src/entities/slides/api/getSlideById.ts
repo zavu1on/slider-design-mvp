@@ -1,5 +1,5 @@
 import type { Session } from 'next-auth';
-import { Slide } from '@/generated/prisma';
+import type { Slide } from '@/generated/prisma';
 import { prisma } from '@/shared/lib';
 
 export const getSlideById = async (

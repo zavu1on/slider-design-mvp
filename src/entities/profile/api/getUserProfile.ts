@@ -1,7 +1,7 @@
 import type { Session } from 'next-auth';
 import { signOut } from '@/entities/auth';
 import { prisma } from '@/shared/lib';
-import { PublicUser } from '../schema';
+import type { PublicUser } from '../schema';
 
 export const getUserProfile = async (
   session: Session

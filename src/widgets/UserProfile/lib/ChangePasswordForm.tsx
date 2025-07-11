@@ -46,7 +46,7 @@ export const ChangePasswordForm: FC = () => {
     },
   ];
 
-  const onSubmit = async (data: ChangePasswordFormSchema) => {
+  const onChangePassword = async (data: ChangePasswordFormSchema) => {
     setLoading(true);
     const resp = await changePasswordAction(data);
 
@@ -62,7 +62,7 @@ export const ChangePasswordForm: FC = () => {
   return (
     <Form
       form={changePasswordForm}
-      onSubmit={changePasswordForm.handleSubmit(onSubmit)}
+      onSubmit={changePasswordForm.handleSubmit(onChangePassword)}
       className="bg-gray-50 p-4 rounded shadow flex flex-col gap-4"
     >
       <h3 className="text-md font-semibold mb-2">Сменить пароль</h3>

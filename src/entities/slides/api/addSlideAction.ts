@@ -2,27 +2,37 @@
 
 import { AuthError } from 'next-auth';
 import { revalidatePath } from 'next/cache';
+import { v4 as uuidv4 } from 'uuid';
 import { ValidationError } from 'yup';
 import { getSessionOrThrowError } from '@/entities/auth';
+import type { SlideData } from '@/entities/canvas';
 import type { ActionBasicResponse } from '@/shared';
 import { prisma } from '@/shared/lib';
-import { type ChangeLoginFormSchema, changeLoginFormSchema } from '../schema';
+import { type AddSlideFormSchema, addSlideFormSchema } from '../schema';
 
-export const changeLoginAction = async (
-  data: ChangeLoginFormSchema
+const createInitialSlideData = (): SlideData => [
+  {
+    id: uuidv4(),
+    previewUrl: '',
+    elements: [],
+  },
+];
+
+export const addSlideAction = async (
+  data: AddSlideFormSchema
 ): Promise<ActionBasicResponse> => {
   try {
-    const changeLoginForm = await changeLoginFormSchema.validate(data);
+    const addSlideForm = await addSlideFormSchema.validate(data);
     const session = await getSessionOrThrowError();
 
-    await prisma.user.update({
-      where: { id: session.user.body.id },
+    await prisma.slide.create({
       data: {
-        login: changeLoginForm.newLogin.trim(),
+        name: addSlideForm.name,
+        authorId: session.user.body.id,
+        data: JSON.stringify(createInitialSlideData()),
       },
     });
-
-    revalidatePath('/profile');
+    revalidatePath('/slides');
 
     return {
       success: true,

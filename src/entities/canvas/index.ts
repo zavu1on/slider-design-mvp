@@ -1,4 +1,4 @@
-export { useCanvasStore } from './store';
+export { useCanvasStore, useUserMaterialsStore } from './store';
 export {
   CanvasElementType,
   type CanvasElement,

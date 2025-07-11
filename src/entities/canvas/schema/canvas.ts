@@ -18,6 +18,7 @@ export type CanvasElement = {
 
 export type PresentationSlide = {
   id: string;
+  previewUrl: string;
   elements: CanvasElement[];
 };
 

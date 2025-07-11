@@ -1,4 +1,4 @@
-import type { FC, Ref } from 'react';
+import { type FC, type Ref, useMemo } from 'react';
 import { cn } from '@/shared/lib';
 import { useCanvasStore } from '../store';
 
@@ -8,13 +8,19 @@ export type CanvasProps = {
 };
 
 export const Canvas: FC<CanvasProps> = ({ ref, className }) => {
-  const color = useCanvasStore((state) => state.color);
+  const { color, slideData, currentSlideId } = useCanvasStore();
+  const currentPresentationSlide = useMemo(
+    () => slideData.find((slide) => slide.id === currentSlideId),
+    [slideData, currentSlideId]
+  );
 
   return (
     <div
       className={cn('relative', className)}
       style={{ backgroundColor: color }}
       ref={ref}
-    ></div>
+    >
+      <pre>{JSON.stringify(currentPresentationSlide, null, 2)}</pre>
+    </div>
   );
 };

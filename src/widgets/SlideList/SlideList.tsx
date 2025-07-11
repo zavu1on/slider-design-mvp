@@ -1,6 +1,7 @@
-import { FC } from 'react';
-import { ProfileHeader, PublicUser } from '@/entities/profile';
+import type { FC } from 'react';
+import { ProfileHeader, type PublicUser } from '@/entities/profile';
 import type { Slide } from '@/generated/prisma';
+import { AddSlideForm } from './lib';
 import { SliderCard } from './ui';
 
 type SlideListProps = {
@@ -17,6 +18,7 @@ export const SlideList: FC<SlideListProps> = ({ user, slides }) => {
           {slides.map((slide) => (
             <SliderCard key={slide.id} slide={slide} />
           ))}
+          <AddSlideForm />
         </div>
       </div>
     </main>

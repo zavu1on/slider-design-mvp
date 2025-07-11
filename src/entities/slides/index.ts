@@ -5,5 +5,7 @@ export {
   uploadImageAction,
   getUserMaterials,
   updateSlideName,
+  deleteSlideAction,
+  addSlideAction,
 } from './api';
-export { useUserMaterialsStore } from './store';
+export { addSlideFormSchema, type AddSlideFormSchema } from './schema';
