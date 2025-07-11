@@ -15,5 +15,5 @@ export default auth((request: NextRequest) => {
 });
 
 export const config = {
-  matcher: ['/', '/login', '/slides', '/slides/:path*'],
+  matcher: ['/', '/login', '/profile', '/slides', '/slides/:path*'],
 };

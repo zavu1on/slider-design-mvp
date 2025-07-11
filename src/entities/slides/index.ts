@@ -4,9 +4,6 @@ export {
   getSlideNameById,
   uploadImageAction,
   getUserMaterials,
+  updateSlideName,
 } from './api';
-export {
-  useCanvasBackgroundStore,
-  useAddImageStore,
-  useUserMaterialsStore,
-} from './store';
+export { useUserMaterialsStore } from './store';

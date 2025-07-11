@@ -1,11 +1,11 @@
 'use client';
 
 import type { FC } from 'react';
-import { useCanvasBackgroundStore } from '@/entities/slides';
+import { useCanvasStore } from '@/entities/canvas';
 import { ColorPicker } from '@/shared/ui';
 
 export const ProjectSettings: FC = () => {
-  const { color, setColor } = useCanvasBackgroundStore();
+  const { color, setColor } = useCanvasStore();
 
   return (
     <div className="text-gray-400">

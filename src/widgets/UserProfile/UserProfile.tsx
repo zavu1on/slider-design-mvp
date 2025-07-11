@@ -1,5 +1,5 @@
-import { FC } from 'react';
-import { PublicUser } from '@/entities/profile';
+import type { FC } from 'react';
+import type { PublicUser } from '@/entities/profile';
 import { ProfileHeader } from '@/entities/profile/ui/ProfileHeader';
 import { ChangeLoginForm, ChangePasswordForm } from './lib';
 import { UserInfo } from './ui';

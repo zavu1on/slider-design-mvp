@@ -2,9 +2,9 @@ import { type FC, Suspense } from 'react';
 import { Loader2 } from 'lucide-react';
 import { getSessionOrLogin } from '@/entities/auth';
 import { getSlideById } from '@/entities/slides';
+import { EditorSidebar } from '@/features/EditorSidebar';
 import { SlideEditor } from '@/features/SlideEditor';
 import type { Material } from '@/generated/prisma';
-import { EditorSidebar } from './lib';
 
 type SlideDetailProps = {
   id: string;
@@ -22,7 +22,7 @@ export const SlideDetail: FC<SlideDetailProps> = async ({
 
   return (
     <>
-      <EditorSidebar name={name} materials={materials} />
+      <EditorSidebar id={id} name={name} materials={materials} />
       <main className="w-screen h-screen bg-slate-200 p-8">
         <div className="size-full flex justify-center items-center">
           <Suspense

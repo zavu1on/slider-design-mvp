@@ -1,1 +1,0 @@
-export { useInitCanvasAndDisableZoom } from './useInitCanvasAndDisableZoom';

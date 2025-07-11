@@ -35,6 +35,7 @@ model Slide {
 enum MaterialType {
   UNKNOWN
   IMAGE
+  // VIDEO
 }
 
 model Material {

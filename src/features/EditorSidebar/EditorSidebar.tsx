@@ -24,8 +24,7 @@ import {
   SidebarTrigger,
 } from '@/generated/shadcn/sidebar';
 import { Button } from '@/shared/ui';
-import { ImageLoader } from './ImageLoader';
-import { ProjectSettings } from './ProjectSettings';
+import { ImageLoader, ProjectNameInput, ProjectSettings } from './lib';
 
 const SIDEBAR_ITEMS = [
   {
@@ -56,11 +55,16 @@ const SIDEBAR_ITEMS = [
 ];
 
 type EditorSidebarProps = {
+  id: string;
   name: string;
   materials: Material[];
 };
 
-export const EditorSidebar: FC<EditorSidebarProps> = ({ name, materials }) => {
+export const EditorSidebar: FC<EditorSidebarProps> = ({
+  id,
+  name,
+  materials,
+}) => {
   const setMaterials = useUserMaterialsStore((store) => store.setMaterials);
 
   useEffect(() => {
@@ -72,8 +76,8 @@ export const EditorSidebar: FC<EditorSidebarProps> = ({ name, materials }) => {
       <Sidebar className="editor-sidebar">
         <SidebarContent className="bg-gray-800 text-slate-300">
           <SidebarGroup>
-            <SidebarGroupLabel className="text-white font-bold">
-              {name}
+            <SidebarGroupLabel className="text-white font-bold w-full">
+              <ProjectNameInput id={id} initialName={name} />
             </SidebarGroupLabel>
             <SidebarGroupContent className="mt-2">
               <SidebarMenu>
