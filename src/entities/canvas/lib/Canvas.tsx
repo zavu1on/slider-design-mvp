@@ -1,6 +1,10 @@
-import { type FC, type Ref, useMemo } from 'react';
-import { cn } from '@/shared/lib';
+'use client';
+
+import { type FC, type Ref, useMemo, useRef } from 'react';
+import React from 'react';
 import { useCanvasStore } from '../store';
+import { RenderElement } from '../ui';
+import { MoveableAndSelectable } from './MoveableAndSelectable';
 
 export type CanvasProps = {
   ref: Ref<HTMLDivElement>;
@@ -14,13 +18,30 @@ export const Canvas: FC<CanvasProps> = ({ ref, className }) => {
     [slideData, currentSlideId]
   );
 
+  const canvasRef = useRef<HTMLDivElement>(null);
+
   return (
-    <div
-      className={cn('relative', className)}
-      style={{ backgroundColor: color }}
-      ref={ref}
-    >
-      <pre>{JSON.stringify(currentPresentationSlide, null, 2)}</pre>
-    </div>
+    <>
+      <div
+        className={className}
+        style={{ backgroundColor: color }}
+        ref={(node) => {
+          canvasRef.current = node;
+          if (typeof ref === 'function') {
+            ref(node);
+          } else if (ref) {
+            ref.current = node;
+          }
+        }}
+      >
+        {currentPresentationSlide?.elements.map((el) => (
+          <RenderElement key={el.id} el={el} />
+        ))}
+      </div>
+      <MoveableAndSelectable
+        canvasRef={canvasRef}
+        currentPresentationSlide={currentPresentationSlide}
+      />
+    </>
   );
 };

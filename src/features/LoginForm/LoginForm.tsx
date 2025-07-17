@@ -36,7 +36,7 @@ export const LoginForm: FC = () => {
             />
           </div>
           <LoadingButton loading={loading} className="mt-4">
-            Submit
+            Войти
           </LoadingButton>
         </Form>
       </Card>

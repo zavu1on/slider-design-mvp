@@ -1,4 +1,4 @@
-import { type FC } from 'react';
+import type { FC } from 'react';
 import { preload } from 'react-dom';
 import { LoginForm } from '@/features/LoginForm';
 

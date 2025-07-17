@@ -8,7 +8,11 @@ export const useInitCanvas = (
   containerRef: RefObject<HTMLDivElement | null>,
   canvasRef: RefObject<HTMLDivElement | null>
 ) => {
-  const setColor = useCanvasStore((state) => state.setColor);
+  const { setSizes, setColor } = useCanvasStore((state) => state);
+
+  useEffect(() => {
+    setSizes(width, height);
+  }, [width, height]);
 
   useEffect(() => {
     setColor(color);

@@ -44,7 +44,7 @@ export const useCanvas: UseCanvas = ({
     return (
       <div
         ref={containerRef}
-        className="w-[60vw] h-[calc(60vw*0.5625)] relative overflow-hidden shadow"
+        className="w-[60vw] h-[calc(60vw*0.5625)] overflow-hidden shadow"
       >
         <Canvas ref={canvasRef} className={className} />
       </div>

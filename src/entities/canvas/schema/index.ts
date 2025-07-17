@@ -4,3 +4,4 @@ export {
   type PresentationSlide,
   type SlideData,
 } from './canvas';
+export { type TargetElement } from './selected-targets';

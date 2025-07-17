@@ -3,9 +3,13 @@ import type { CanvasElement, SlideData } from '../schema';
 
 type CanvasBackgroundStore = {
   color: string;
+  width: number;
+  height: number;
   slideData: SlideData;
   currentSlideId: string | null;
+  selectedSlidesId: string[];
 
+  setSizes: (width: number, height: number) => void;
   setColor: (color: string) => void;
   setSlideData: (slideData: SlideData) => void;
 
@@ -17,20 +21,26 @@ type CanvasBackgroundStore = {
   updateCanvasElement: (slideId: string, element: CanvasElement) => void;
 
   setCurrentSlideId: (id: string) => void;
+
+  setSelectedSlidesId: (idList: string[]) => void;
 };
 
 export const useCanvasStore = create<CanvasBackgroundStore>()((set) => ({
+  width: 0,
+  height: 0,
   color: '#ffffff',
   slideData: [],
   currentSlideId: null,
+  selectedSlidesId: [],
 
+  setSizes: (width, height) => set((state) => ({ ...state, width, height })),
   setColor: (color) => set((state) => ({ ...state, color })),
   setSlideData: (slideData) => set((state) => ({ ...state, slideData })),
 
   addPresentationSlide: (id) =>
     set((state) => ({
       ...state,
-      slideData: [...state.slideData, { id, elements: [] }],
+      slideData: [...state.slideData, { id, previewUrl: '', elements: [] }],
     })),
   removePresentationSlide: (id) =>
     set((state) => ({
@@ -85,6 +95,11 @@ export const useCanvasStore = create<CanvasBackgroundStore>()((set) => ({
       }),
     })),
 
-  setCurrentSlideId: (id: string) =>
-    set((state) => ({ ...state, currentSlideId: id })),
+  setCurrentSlideId: (id) => set((state) => ({ ...state, currentSlideId: id })),
+
+  setSelectedSlidesId: (idList) =>
+    set((state) => ({
+      ...state,
+      selectedSlidesId: idList,
+    })),
 }));
