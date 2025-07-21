@@ -5,10 +5,12 @@ import Image from 'next/image';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import { toast } from 'sonner';
 import {
-  uploadImageAction,
-  useAddImageStore,
+  CanvasElementType,
+  useCanvasStore,
   useUserMaterialsStore,
-} from '@/entities/slides';
+} from '@/entities/canvas';
+import { uploadImageAction } from '@/entities/slides';
+import type { Material } from '@/generated/prisma';
 import { LoadingButton } from '@/shared/ui';
 import { useInitDragAndDropInput } from './useInitDragAndDropInput';
 
@@ -20,8 +22,25 @@ export const ImageLoader: FC = () => {
 
   const [isPending, startTransition] = useTransition();
 
-  const addNewImage = useAddImageStore((store) => store.addNewImage);
+  const { width, height, currentSlideId, addCanvasElement } = useCanvasStore();
   const { materials, addMaterial } = useUserMaterialsStore((store) => store);
+
+  const addNewImage = (image: Material) => {
+    if (!currentSlideId) return;
+
+    image.width = image.width || 0;
+    image.height = image.height || 0;
+
+    addCanvasElement(currentSlideId, {
+      id: image.id,
+      type: CanvasElementType.IMAGE,
+      content: image.filePath,
+      x: width / 2 - image.width / 2,
+      y: height / 2 - image.height / 2,
+      width: image.width,
+      height: image.height,
+    });
+  };
 
   const sendImage = (file: File) => {
     const formData = new FormData();
@@ -36,6 +55,9 @@ export const ImageLoader: FC = () => {
       }
 
       if (result.image?.filePath) {
+        result.image.width = result.image.width || 0;
+        result.image.height = result.image.height || 0;
+
         addNewImage(result.image);
         addMaterial(result.image);
       }

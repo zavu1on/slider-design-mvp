@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 import Link from 'next/link';
 import { LogoutButton } from '@/entities/auth/ui';
 
@@ -14,7 +14,7 @@ export const ProfileHeader: FC<ProfileHeaderProps> = ({ userName }) => {
       </h1>
       <div className="flex items-center gap-4">
         <span>
-          Hello,{' '}
+          Привет,{' '}
           <Link
             href="/profile"
             className="text-blue-400 hover:text-blue-300 underline underline-offset-2 transition-colors"

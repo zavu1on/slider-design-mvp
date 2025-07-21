@@ -5,6 +5,7 @@ import Moveable from 'react-moveable';
 import Selecto from 'react-selecto';
 import type { PresentationSlide } from '../schema';
 import { useCanvasStore, useSelectedTargetsStore } from '../store';
+import { useKeepRatio } from './useKeepRatio';
 import { useMoveableHandlers } from './useMoveableHandlers';
 
 type MoveableAndSelectableProps = {
@@ -34,6 +35,7 @@ export const MoveableAndSelectable: FC<MoveableAndSelectableProps> = ({
   const { targets, setTargets } = useSelectedTargetsStore();
   const moveableRef = useRef<Moveable>(null);
   const selectoRef = useRef<Selecto>(null);
+  const keepRatio = useKeepRatio(moveableRef);
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -73,7 +75,9 @@ export const MoveableAndSelectable: FC<MoveableAndSelectableProps> = ({
             return;
           }
 
-          setTargets(event.selected.map((t) => `#${t.id}`));
+          console.log(event.selected.map((t) => `[data-id="${t.id}"]`));
+
+          setTargets(event.selected.map((t) => `[data-id="${t.id}"]`));
         }}
         onSelectEnd={(event) => {
           if (event.isDragStartEnd) {
@@ -82,13 +86,13 @@ export const MoveableAndSelectable: FC<MoveableAndSelectableProps> = ({
               moveableRef.current?.dragStart(event.inputEvent);
             });
           }
-          setTargets(event.selected.map((t) => `#${t.id}`));
+          setTargets(event.selected.map((t) => `[data-id="${t.id}"]`));
         }}
         onDragStart={(event) => {
           const target = event.inputEvent.target as HTMLElement;
           if (
             moveableRef.current?.isMoveableElement(target) ||
-            targets.some((t) => t === `#${target.id}`)
+            targets.some((t) => t === `[data-id="${target.id}"]`)
           ) {
             event.stop();
           }
@@ -106,7 +110,7 @@ export const MoveableAndSelectable: FC<MoveableAndSelectableProps> = ({
         throttleDrag={0}
         onDrag={({ target, left, top }) => dragHandler(target, left, top)}
         onDragEnd={({ target }) => dragEndHandler(target)}
-        keepRatio={false}
+        keepRatio={keepRatio}
         // resizable
         resizable={true}
         throttleResize={0}

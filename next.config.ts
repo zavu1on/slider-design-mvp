@@ -2,6 +2,22 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '3000',
+        pathname: '/upload/**',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '3000',
+        pathname: '/preview/**',
+      },
+    ],
+  },
 
   async headers() {
     return [
@@ -16,7 +32,7 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        source: '/uploads/:path*\\.(svg|jpg|png|avif|webp|ico)',
+        source: '/upload/:path*\\.(svg|jpg|png|avif|webp|ico)',
         locale: false,
         headers: [
           {

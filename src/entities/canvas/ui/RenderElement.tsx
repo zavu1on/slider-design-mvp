@@ -1,31 +1,38 @@
-import type { FC } from 'react';
-import type { CanvasElement } from '../schema';
+'use client';
 
-type CanvasElementProps = {
-  el: CanvasElement;
-};
+import { type FC, useMemo } from 'react';
+import { type CanvasElement, CanvasElementType } from '../schema';
+import { GeometricViewer } from './GeometricViewer';
+import { ImageViewer } from './ImageViewer';
 
-export const RenderElement: FC<CanvasElementProps> = ({ el }) => {
-  const background = `hsl(${Math.random() * 360}, 50%, 30%)`;
+export const RenderElement: FC<{
+  element: CanvasElement;
+}> = ({ element }) => {
+  const content = useMemo(() => {
+    switch (element.type) {
+      case CanvasElementType.IMAGE:
+        return <ImageViewer element={element} />;
+      case CanvasElementType.FIGURE:
+        return <GeometricViewer element={element} />;
+      default:
+        return <GeometricViewer element={element} />;
+    }
+  }, [element]);
 
   return (
-    <>
-      <div
-        id={el.id}
-        className="absolute selectable"
-        style={{
-          background,
-          width: el.width,
-          height: el.height,
-          left: el.x,
-          top: el.y,
-          transform: `rotate(${el.rotation ?? 0}deg)`,
-        }}
-      >
-        <div className="size-full flex items-center justify-center text-white text-3xl">
-          {el.id}
-        </div>
-      </div>
-    </>
+    <div
+      id={element.id}
+      data-id={element.id}
+      className="absolute selectable"
+      style={{
+        width: element.width,
+        height: element.height,
+        left: element.x,
+        top: element.y,
+        transform: `rotate(${element.rotation ?? 0}deg)`,
+      }}
+    >
+      {content}
+    </div>
   );
 };

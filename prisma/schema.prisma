@@ -24,12 +24,13 @@ model User {
 }
 
 model Slide {
-  id        String   @id @default(uuid())
-  name      String   @default("Untitled")
-  data      String
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  String
-  updatedAt DateTime @default(now())
+  id         String   @id @default(uuid())
+  name       String   @default("Untitled")
+  data       String
+  previewUrl String?
+  author     User     @relation(fields: [authorId], references: [id])
+  authorId   String
+  updatedAt  DateTime @default(now())
 }
 
 enum MaterialType {
@@ -39,7 +40,7 @@ enum MaterialType {
 }
 
 model Material {
-  id       Int          @id @default(autoincrement())
+  id       String       @id @default(uuid())
   filePath String       @unique
   width    Int?
   height   Int?

@@ -170,4 +170,11 @@
   .editor-sidebar div[data-state='open'] div[data-slot='sidebar-menu-button'] {
     @apply bg-slate-300 text-gray-800;
   }
+
+  .h-inherit {
+    height: inherit;
+    display: initial;
+    vertical-align: unset;
+    max-width: initial;
+  }
 }

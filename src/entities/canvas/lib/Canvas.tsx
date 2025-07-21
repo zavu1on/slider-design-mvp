@@ -35,7 +35,7 @@ export const Canvas: FC<CanvasProps> = ({ ref, className }) => {
         }}
       >
         {currentPresentationSlide?.elements.map((el) => (
-          <RenderElement key={el.id} el={el} />
+          <RenderElement key={el.id} element={el} />
         ))}
       </div>
       <MoveableAndSelectable

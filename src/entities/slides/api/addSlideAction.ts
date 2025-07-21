@@ -13,7 +13,6 @@ import { type AddSlideFormSchema, addSlideFormSchema } from '../schema';
 const createInitialSlideData = (): SlideData => [
   {
     id: uuidv4(),
-    previewUrl: '',
     elements: [],
   },
 ];

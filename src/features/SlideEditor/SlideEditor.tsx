@@ -16,14 +16,11 @@ type SlideEditorProps = {
 const SLIDE_DATA: SlideData = [
   {
     id: 'slide-1',
-    previewUrl:
-      'https://www.shutterstock.com/image-vector/preview-text-button-sign-icon-260nw-2251383869.jpg ',
     elements: [
       {
         id: 'image-1',
-        type: CanvasElementType.IMAGE,
-        content:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSabrBZxuW139T0wCclOEZlj8-uf_pZX2gjw&s',
+        type: CanvasElementType.FIGURE,
+        content: 'image-1',
         x: 20,
         y: 20,
         width: 400,
@@ -31,9 +28,8 @@ const SLIDE_DATA: SlideData = [
       },
       {
         id: 'image-2',
-        type: CanvasElementType.IMAGE,
-        content:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSabrBZxuW139T0wCclOEZlj8-uf_pZX2gjw&s',
+        type: CanvasElementType.FIGURE,
+        content: 'image-2',
         x: 450,
         y: 20,
         width: 400,
@@ -41,9 +37,8 @@ const SLIDE_DATA: SlideData = [
       },
       {
         id: 'image-3',
-        type: CanvasElementType.IMAGE,
-        content:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSabrBZxuW139T0wCclOEZlj8-uf_pZX2gjw&s',
+        type: CanvasElementType.FIGURE,
+        content: 'image-3',
         x: 20,
         y: 350,
         width: 400,
