@@ -14,6 +14,7 @@ export const useMoveableHandlers = (
     (target: TargetElement, left: number, top: number) => {
       target.style.left = `${left}px`;
       target.style.top = `${top}px`;
+      target.style.cursor = 'move';
     },
     []
   );
@@ -76,7 +77,7 @@ export const useMoveableHandlers = (
         height: getClearValue(target.style.height),
       });
     },
-    [currentPresentationSlide, currentSlideId, updateCanvasElement]
+    [currentPresentationSlide, currentSlideId]
   );
 
   const rotateHandler = useCallback(
@@ -88,16 +89,37 @@ export const useMoveableHandlers = (
 
   const rotateEndHandler = useCallback(
     (target: TargetElement) => {
-      const el = currentPresentationSlide!.elements.find(
+      const element = currentPresentationSlide!.elements.find(
         (el) => el.id === target.id
       )!;
 
       updateCanvasElement(currentSlideId!, {
-        ...el,
+        ...element,
         rotation: Number(target.style.transform.slice(7, -4)),
       });
     },
-    [currentPresentationSlide, currentSlideId, updateCanvasElement]
+    [currentPresentationSlide, currentSlideId]
+  );
+
+  const roundHandler = useCallback(
+    (target: TargetElement, borderRadius: string) => {
+      target.style.borderRadius = borderRadius;
+    },
+    []
+  );
+
+  const roundEndHandler = useCallback(
+    (target: TargetElement) => {
+      const element = currentPresentationSlide!.elements.find(
+        (el) => el.id === target.id
+      )!;
+
+      updateCanvasElement(currentSlideId!, {
+        ...element,
+        borderRadius: target.style.borderRadius,
+      });
+    },
+    [currentPresentationSlide, currentSlideId]
   );
 
   return {
@@ -107,5 +129,7 @@ export const useMoveableHandlers = (
     resizeEndHandler,
     rotateHandler,
     rotateEndHandler,
+    roundHandler,
+    roundEndHandler,
   };
 };

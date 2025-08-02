@@ -1,7 +1,8 @@
 'use client';
 
 import { type FC, useEffect, useRef } from 'react';
-import { Canvas, type CanvasProps, useInitCanvas } from './lib';
+import { Canvas, type CanvasProps } from './Canvas';
+import { useInitCanvas } from './lib';
 
 type UseCanvasArgs = {
   color?: string;

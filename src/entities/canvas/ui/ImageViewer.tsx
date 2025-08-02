@@ -13,7 +13,7 @@ export const ImageViewer: FC<{
       src={location.origin + element.content}
       width={element.width}
       height={element.height}
-      className="object-fill h-inherit"
+      className="object-fill h-inherit border-radius-inherit"
     />
   );
 };

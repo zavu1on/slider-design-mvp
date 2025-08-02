@@ -19,7 +19,7 @@ const SLIDE_DATA: SlideData = [
     elements: [
       {
         id: 'image-1',
-        type: CanvasElementType.FIGURE,
+        type: CanvasElementType.TEXT,
         content: 'image-1',
         x: 20,
         y: 20,
@@ -28,7 +28,7 @@ const SLIDE_DATA: SlideData = [
       },
       {
         id: 'image-2',
-        type: CanvasElementType.FIGURE,
+        type: CanvasElementType.TEXT,
         content: 'image-2',
         x: 450,
         y: 20,
@@ -37,7 +37,7 @@ const SLIDE_DATA: SlideData = [
       },
       {
         id: 'image-3',
-        type: CanvasElementType.FIGURE,
+        type: CanvasElementType.TEXT,
         content: 'image-3',
         x: 20,
         y: 350,

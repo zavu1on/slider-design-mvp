@@ -4,6 +4,7 @@ import { type FC, useMemo } from 'react';
 import { type CanvasElement, CanvasElementType } from '../schema';
 import { GeometricViewer } from './GeometricViewer';
 import { ImageViewer } from './ImageViewer';
+import { TextViewer } from './TextViewer';
 
 export const RenderElement: FC<{
   element: CanvasElement;
@@ -14,8 +15,10 @@ export const RenderElement: FC<{
         return <ImageViewer element={element} />;
       case CanvasElementType.FIGURE:
         return <GeometricViewer element={element} />;
+      case CanvasElementType.TEXT:
+        return <TextViewer element={element} />;
       default:
-        return <GeometricViewer element={element} />;
+        return <TextViewer element={element} />;
     }
   }, [element]);
 
@@ -30,6 +33,7 @@ export const RenderElement: FC<{
         left: element.x,
         top: element.y,
         transform: `rotate(${element.rotation ?? 0}deg)`,
+        borderRadius: element.borderRadius,
       }}
     >
       {content}

@@ -1,10 +1,10 @@
 'use client';
 
-import { type FC, type Ref, useMemo, useRef } from 'react';
+import { type FC, type Ref, useEffect, useMemo, useRef } from 'react';
 import React from 'react';
-import { useCanvasStore } from '../store';
-import { RenderElement } from '../ui';
-import { MoveableAndSelectable } from './MoveableAndSelectable';
+import { MoveableAndSelectable } from './lib';
+import { useCanvasStore, useSelectedTargetsStore } from './store';
+import { RenderElement } from './ui';
 
 export type CanvasProps = {
   ref: Ref<HTMLDivElement>;
@@ -13,12 +13,33 @@ export type CanvasProps = {
 
 export const Canvas: FC<CanvasProps> = ({ ref, className }) => {
   const { color, slideData, currentSlideId } = useCanvasStore();
+  const { setTargets } = useSelectedTargetsStore();
+
   const currentPresentationSlide = useMemo(
     () => slideData.find((slide) => slide.id === currentSlideId),
     [slideData, currentSlideId]
   );
 
   const canvasRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const onKeydown = (event: KeyboardEvent) => {
+      if (event.key.toLowerCase() === 'a' && event.ctrlKey) {
+        event.preventDefault();
+        setTargets(
+          currentPresentationSlide?.elements.map(
+            (target) => `[data-id="${target.id}"]`
+          ) ?? []
+        );
+      }
+    };
+
+    document.addEventListener('keydown', onKeydown);
+
+    return () => {
+      document.removeEventListener('keydown', onKeydown);
+    };
+  }, [currentPresentationSlide]);
 
   return (
     <>

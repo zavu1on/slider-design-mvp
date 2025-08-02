@@ -113,13 +113,11 @@ export const ImageLoader: FC = () => {
           * либо перетащите изображение
         </div>
       </form>
-
       <div className="font-bold mt-6">Мои материалы</div>
       {materials.length ? (
         <ResponsiveMasonry
           className="mt-2"
           columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}
-          // gutterBreakpoints={{ 350: '12px', 750: '16px', 900: '24px' }}
         >
           <Masonry>
             {materials.map((image) => (

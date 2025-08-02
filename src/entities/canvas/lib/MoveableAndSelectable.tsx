@@ -1,10 +1,13 @@
 'use client';
 
 import { type FC, type RefObject, useEffect, useRef, useState } from 'react';
+import { flushSync } from 'react-dom';
 import Moveable from 'react-moveable';
 import Selecto from 'react-selecto';
 import type { PresentationSlide } from '../schema';
 import { useCanvasStore, useSelectedTargetsStore } from '../store';
+import { DimensionViewableAddon } from '../ui';
+import { useDeleteItemHandler } from './useDeleteItemHandler';
 import { useKeepRatio } from './useKeepRatio';
 import { useMoveableHandlers } from './useMoveableHandlers';
 
@@ -25,6 +28,8 @@ export const MoveableAndSelectable: FC<MoveableAndSelectableProps> = ({
     resizeEndHandler,
     rotateHandler,
     rotateEndHandler,
+    roundHandler,
+    roundEndHandler,
   } = useMoveableHandlers(currentPresentationSlide);
 
   const [verticalGuidelines, setVerticalGuidelines] = useState<number[]>([]);
@@ -56,6 +61,8 @@ export const MoveableAndSelectable: FC<MoveableAndSelectableProps> = ({
     ]);
   }, [canvasRef, width, height]);
 
+  useDeleteItemHandler(currentPresentationSlide?.id);
+
   return (
     <>
       <Selecto
@@ -71,12 +78,7 @@ export const MoveableAndSelectable: FC<MoveableAndSelectableProps> = ({
         ratio={0}
         keyContainer={window}
         onSelect={(event) => {
-          if (event.isDragStartEnd) {
-            return;
-          }
-
-          console.log(event.selected.map((t) => `[data-id="${t.id}"]`));
-
+          if (event.isDragStartEnd) return;
           setTargets(event.selected.map((t) => `[data-id="${t.id}"]`));
         }}
         onSelectEnd={(event) => {
@@ -105,6 +107,11 @@ export const MoveableAndSelectable: FC<MoveableAndSelectableProps> = ({
         container={null}
         origin={false}
         edge={false}
+        flushSync={flushSync}
+        ables={[DimensionViewableAddon]}
+        props={{
+          dimensionViewable: true,
+        }}
         // draggable
         draggable={true}
         throttleDrag={0}
@@ -123,6 +130,15 @@ export const MoveableAndSelectable: FC<MoveableAndSelectableProps> = ({
         throttleRotate={1}
         onRotate={({ target, transform }) => rotateHandler(target, transform)}
         onRotateEnd={({ target }) => rotateEndHandler(target)}
+        // roundable
+        roundable={true}
+        roundClickable={true}
+        isDisplayShadowRoundControls="horizontal"
+        roundPadding={25}
+        onRound={({ target, borderRadius }) =>
+          roundHandler(target, borderRadius)
+        }
+        onRoundEnd={({ target }) => roundEndHandler(target)}
         // pinchable
         pinchable={false} // todo add pinchable
         // snappable
@@ -142,9 +158,7 @@ export const MoveableAndSelectable: FC<MoveableAndSelectableProps> = ({
           center: true,
           middle: true,
         }}
-        /*
-         * groupable
-         */
+        // groupable
         onDragGroup={({ events }) => {
           events.forEach((ev) => dragHandler(ev.target, ev.left, ev.top));
         }}
@@ -177,6 +191,12 @@ export const MoveableAndSelectable: FC<MoveableAndSelectableProps> = ({
         }}
         onClickGroup={(event) => {
           selectoRef.current?.clickTarget(event.inputEvent, event.inputTarget);
+        }}
+        onRoundGroup={({ events }) => {
+          events.forEach((ev) => roundHandler(ev.target, ev.borderRadius));
+        }}
+        onRoundGroupEnd={({ events }) => {
+          events.forEach((ev) => roundEndHandler(ev.target));
         }}
       />
     </>

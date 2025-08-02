@@ -34,7 +34,7 @@ export const uploadImageAction = async (
     const uploadDir = path.join(process.cwd(), 'public', 'upload');
     await fs.mkdir(uploadDir, { recursive: true });
     await fs.writeFile(path.join(uploadDir, filename), buffer);
-    const url = `/upload/${filename}`;
+    const url = `/upload/${filename}`; // todo save full path
 
     const image = await prisma.material.create({
       data: {

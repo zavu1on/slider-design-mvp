@@ -171,6 +171,10 @@
     @apply bg-slate-300 text-gray-800;
   }
 
+  .border-radius-inherit {
+    border-radius: inherit;
+  }
+
   .h-inherit {
     height: inherit;
     display: initial;

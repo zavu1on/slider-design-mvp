@@ -1,16 +1,18 @@
 import type { FC } from 'react';
 import type { CanvasElement } from '../schema';
 
-export const GeometricViewer: FC<{
+export const TextViewer: FC<{
   element: CanvasElement;
 }> = ({ element }) => {
   return (
     <div
-      className="size-full border-radius-inherit bg-gray-800"
+      className="size-full flex items-center justify-center text-black text-3xl border-radius-inherit"
       style={{
-        clipPath: element.content,
         backgroundColor: element.backgroundColor,
+        color: element.color,
       }}
-    ></div>
+    >
+      {element.content}
+    </div>
   );
 };

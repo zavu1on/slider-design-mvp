@@ -1,7 +1,7 @@
 'use client';
 
 import { type FC, useEffect } from 'react';
-import { Grid2X2Plus, Image, Settings, Sparkles, Type } from 'lucide-react';
+import { Grid2X2Plus, Image, Settings, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import { useUserMaterialsStore } from '@/entities/canvas';
 import type { Material } from '@/generated/prisma';
@@ -24,7 +24,12 @@ import {
   SidebarTrigger,
 } from '@/generated/shadcn/sidebar';
 import { Button } from '@/shared/ui';
-import { ImageLoader, ProjectNameInput, ProjectSettings } from './lib';
+import {
+  Elements,
+  ImageLoader,
+  ProjectNameInput,
+  ProjectSettings,
+} from './lib';
 
 const SIDEBAR_ITEMS = [
   {
@@ -35,7 +40,7 @@ const SIDEBAR_ITEMS = [
   {
     title: 'Элементы',
     icon: Grid2X2Plus,
-    body: <p>Заглушка</p>,
+    body: <Elements />,
   },
   {
     title: 'Изображения',
@@ -43,14 +48,9 @@ const SIDEBAR_ITEMS = [
     body: <ImageLoader />,
   },
   {
-    title: 'Текст',
-    icon: Type,
-    body: <p>Заглушка</p>,
-  },
-  {
     title: 'AI',
     icon: Sparkles,
-    body: <p>Заглушка</p>,
+    body: <p>Еще в разработке</p>,
   },
 ];
 

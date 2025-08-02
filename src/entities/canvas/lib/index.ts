@@ -1,2 +1,2 @@
-export { Canvas, type CanvasProps } from './Canvas';
+export { MoveableAndSelectable } from './MoveableAndSelectable';
 export { useInitCanvas } from './useInitCanvas';

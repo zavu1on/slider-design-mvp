@@ -4,5 +4,6 @@ export {
   type CanvasElement,
   type PresentationSlide,
   type SlideData,
+  type GeometricFigure,
 } from './schema';
 export { useCanvas } from './useCanvas';
