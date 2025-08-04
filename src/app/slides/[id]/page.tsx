@@ -29,5 +29,5 @@ export default async function SlideDetailPage({
 
   if (!slideName) redirect('/slides');
 
-  return <SlideDetail id={id} name={slideName} materials={materials} />;
+  return <SlideDetail projectId={id} name={slideName} materials={materials} />;
 }

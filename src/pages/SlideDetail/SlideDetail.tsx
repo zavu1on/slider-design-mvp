@@ -5,7 +5,7 @@ import { SidebarProvider } from '@/generated/shadcn/sidebar';
 import { SlideDetail as SlideDetailWidget } from '@/widgets/SlideDetail';
 
 type SlideDetailProps = {
-  id: string;
+  projectId: string;
   name: string;
   materials: Material[];
 };

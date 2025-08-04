@@ -5,12 +5,12 @@ import { toast } from 'sonner';
 import { updateSlideName } from '@/entities/slides';
 
 type ProjectNameInputProps = {
-  id: string;
+  projectId: string;
   initialName: string;
 };
 
 export const ProjectNameInput: FC<ProjectNameInputProps> = ({
-  id,
+  projectId,
   initialName,
 }) => {
   const [mode, setMode] = useState<'view' | 'edit'>('view');
@@ -25,7 +25,7 @@ export const ProjectNameInput: FC<ProjectNameInputProps> = ({
     setMode('view');
 
     startTransition(async () => {
-      const resp = await updateSlideName(id, name);
+      const resp = await updateSlideName(projectId, name);
 
       if (resp.error) toast.error(resp.error);
     });

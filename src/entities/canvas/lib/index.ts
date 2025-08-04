@@ -1,2 +1,2 @@
-export { MoveableAndSelectable } from './MoveableAndSelectable';
-export { useInitCanvas } from './useInitCanvas';
+export { Moveable } from './Moveable';
+export { Selectable } from './Selectable';

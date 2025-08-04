@@ -4,26 +4,28 @@ import { getSessionOrLogin } from '@/entities/auth';
 import { getSlideById } from '@/entities/slides';
 import { EditorSidebar } from '@/features/EditorSidebar';
 import { SlideEditor } from '@/features/SlideEditor';
+import { SliderHeader } from '@/features/SliderHeader';
 import type { Material } from '@/generated/prisma';
 
 type SlideDetailProps = {
-  id: string;
+  projectId: string;
   name: string;
   materials: Material[];
 };
 
 export const SlideDetail: FC<SlideDetailProps> = async ({
-  id,
+  projectId,
   name,
   materials,
 }) => {
   const session = await getSessionOrLogin();
-  const slide = getSlideById(session, id);
+  const slide = getSlideById(session, projectId);
 
   return (
     <>
-      <EditorSidebar id={id} name={name} materials={materials} />
-      <main className="w-screen h-screen bg-slate-200 p-8">
+      <EditorSidebar projectId={projectId} name={name} materials={materials} />
+      <main className="w-screen h-screen flex flex-col bg-slate-200">
+        <SliderHeader />
         <div className="size-full flex justify-center items-center">
           <Suspense
             fallback={

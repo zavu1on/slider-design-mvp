@@ -55,13 +55,13 @@ const SIDEBAR_ITEMS = [
 ];
 
 type EditorSidebarProps = {
-  id: string;
+  projectId: string;
   name: string;
   materials: Material[];
 };
 
 export const EditorSidebar: FC<EditorSidebarProps> = ({
-  id,
+  projectId,
   name,
   materials,
 }) => {
@@ -77,7 +77,7 @@ export const EditorSidebar: FC<EditorSidebarProps> = ({
         <SidebarContent className="bg-gray-800 text-slate-300">
           <SidebarGroup>
             <SidebarGroupLabel className="text-white font-bold w-full">
-              <ProjectNameInput id={id} initialName={name} />
+              <ProjectNameInput projectId={projectId} initialName={name} />
             </SidebarGroupLabel>
             <SidebarGroupContent className="mt-2">
               <SidebarMenu>

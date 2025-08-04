@@ -2,7 +2,7 @@
 
 import { type FC, type Ref, useEffect, useMemo, useRef } from 'react';
 import React from 'react';
-import { MoveableAndSelectable } from './lib';
+import { Moveable, Selectable } from './lib';
 import { useCanvasStore, useSelectedTargetsStore } from './store';
 import { RenderElement } from './ui';
 
@@ -59,10 +59,11 @@ export const Canvas: FC<CanvasProps> = ({ ref, className }) => {
           <RenderElement key={el.id} element={el} />
         ))}
       </div>
-      <MoveableAndSelectable
+      <Moveable
         canvasRef={canvasRef}
         currentPresentationSlide={currentPresentationSlide}
       />
+      <Selectable canvasRef={canvasRef} />
     </>
   );
 };

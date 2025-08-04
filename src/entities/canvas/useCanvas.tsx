@@ -2,7 +2,7 @@
 
 import { type FC, useEffect, useRef } from 'react';
 import { Canvas, type CanvasProps } from './Canvas';
-import { useInitCanvas } from './lib';
+import { useInitCanvas } from './hooks';
 
 type UseCanvasArgs = {
   color?: string;
