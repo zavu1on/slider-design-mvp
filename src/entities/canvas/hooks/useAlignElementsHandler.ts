@@ -5,7 +5,7 @@ import type Moveable from 'react-moveable';
 import type { DraggableRequestParam } from 'react-moveable';
 import { useAlignActionStore } from '../store';
 
-export const useAlignElements = (
+export const useAlignElementsHandler = (
   moveableRef: RefObject<Moveable<unknown> | null>
 ) => {
   const { action, clearAction } = useAlignActionStore();

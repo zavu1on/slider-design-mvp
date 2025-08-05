@@ -5,7 +5,7 @@ import { flushSync } from 'react-dom';
 import ReactMoveable from 'react-moveable';
 import type Selecto from 'react-selecto';
 import {
-  useAlignElements,
+  useAlignElementsHandler,
   useDeleteItemHandler,
   useKeepRatio,
   useMoveableHandlers,
@@ -66,7 +66,7 @@ export const Moveable: FC<MoveableProps> = ({
   }, [canvasRef, width, height]);
 
   useDeleteItemHandler(currentPresentationSlide?.id);
-  useAlignElements(moveableRef);
+  useAlignElementsHandler(moveableRef);
 
   return (
     <ReactMoveable

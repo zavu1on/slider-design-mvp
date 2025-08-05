@@ -1,4 +1,4 @@
-export { useAlignElements } from './useAlignElements';
+export { useAlignElementsHandler } from './useAlignElementsHandler';
 export { useDeleteItemHandler } from './useDeleteItemHandler';
 export { useKeepRatio } from './useKeepRatio';
 export { useMoveableHandlers } from './useMoveableHandlers';

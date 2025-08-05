@@ -1,5 +1,3 @@
-import type { JSX } from 'react';
-
 export enum CanvasElementType {
   TEXT,
   IMAGE,
@@ -19,11 +17,6 @@ export type CanvasElement = {
   backgroundColor?: string;
   rotation?: number;
   borderRadius?: string;
-};
-
-export type GeometricFigure = {
-  name: 'square' | 'triangle' | 'circle' | 'move-down-left' | 'chevron-left';
-  icon: JSX.Element;
 };
 
 export type PresentationSlide = {
