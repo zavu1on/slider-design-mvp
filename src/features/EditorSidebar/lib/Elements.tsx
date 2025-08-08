@@ -77,6 +77,8 @@ export const Elements: FC = () => {
       y: height / 2 - 100,
       width: 200,
       height: 40,
+      color: '#000000',
+      backgroundColor: 'transparent',
     });
   };
 

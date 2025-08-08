@@ -36,6 +36,7 @@
     "react-hook-form": "^7.56.4",
     "react-moveable": "^0.56.0",
     "react-responsive-masonry": "^2.7.1",
+    "react-scan": "^0.4.3",
     "react-selecto": "^1.26.3",
     "sharp": "^0.34.2",
     "sonner": "^2.0.3",

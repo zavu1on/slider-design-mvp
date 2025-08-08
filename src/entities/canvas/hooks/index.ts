@@ -4,3 +4,4 @@ export { useKeepRatio } from './useKeepRatio';
 export { useMoveableHandlers } from './useMoveableHandlers';
 export { useSelectableHandlers } from './useSelectableHandlers';
 export { useInitCanvas } from './useInitCanvas';
+export { useGetCurrentPresentationSlide } from './useGetCurrentPresentationSlide';

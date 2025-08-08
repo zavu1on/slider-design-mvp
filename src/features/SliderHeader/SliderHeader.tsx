@@ -1,21 +1,74 @@
 'use client';
 
-import type { FC } from 'react';
+import { type FC, useMemo } from 'react';
 import {
   AlignCenterHorizontal,
   AlignCenterVertical,
   AlignHorizontalSpaceBetween,
   AlignVerticalSpaceBetween,
+  Square,
+  Type,
 } from 'lucide-react';
-import { useAlignActionStore } from '@/entities/canvas';
+import {
+  type CanvasElement,
+  useAlignActionStore,
+  useCanvasStore,
+  useGetCurrentPresentationSlide,
+} from '@/entities/canvas';
+import { useSelectedTargetsStore } from '@/entities/canvas/store';
+import { SketchPicker } from '@/shared/ui';
 
 export const SliderHeader: FC = () => {
   const setAction = useAlignActionStore((store) => store.setAction);
+  const currentPresentationSlide = useGetCurrentPresentationSlide();
+  const { currentSlideId, updateCanvasElement } = useCanvasStore();
+  const { targets } = useSelectedTargetsStore();
+
+  const selectedElements = useMemo(
+    () =>
+      currentPresentationSlide?.elements.filter((slide) =>
+        targets.includes(`[data-id="${slide.id}"]`)
+      ) ?? [],
+    [currentPresentationSlide?.elements, targets]
+  );
+
+  const updateColors = (
+    color: Partial<Pick<CanvasElement, 'color' | 'backgroundColor'>>
+  ) => {
+    if (selectedElements?.length && currentSlideId) {
+      for (const element of selectedElements) {
+        updateCanvasElement(currentSlideId, { ...element, ...color });
+      }
+    }
+  };
 
   return (
     <header className="w-full pt-4 pr-4">
       <div className="flex flex-row justify-between items-center w-full py-4 px-8 bg-gray-50 shadow">
-        <div></div>
+        <div className="flex flex-row gap-4">
+          <div className="flex flex-row gap-2">
+            <Type className="color-gray-800" />
+            <SketchPicker
+              color={selectedElements[0]?.color ?? '#ffffff'}
+              onChange={(color) =>
+                updateColors({
+                  color,
+                })
+              }
+            />
+          </div>
+          <div className="flex flex-row gap-2">
+            <Square className="color-gray-800" />
+            <SketchPicker
+              color={selectedElements[0]?.backgroundColor ?? 'transparent'}
+              onChange={(color) =>
+                updateColors({
+                  backgroundColor: color,
+                })
+              }
+            />
+          </div>
+        </div>
         <div className="flex flex-row justify-between items-center gap-4">
           <AlignHorizontalSpaceBetween
             className="cursor-pointer"

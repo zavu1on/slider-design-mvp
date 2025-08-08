@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
+import { ReactScan } from '@/shared/lib';
 import { ToastProvider } from '@/shared/providers';
 import './globals.css';
 
@@ -17,6 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
+      <ReactScan />
       <body className={montserratFont.className}>
         <ToastProvider>{children}</ToastProvider>
       </body>

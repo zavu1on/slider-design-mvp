@@ -11,3 +11,4 @@ export {
   type GeometricFigure,
 } from './schema';
 export { useCanvas } from './useCanvas';
+export { useGetCurrentPresentationSlide } from './hooks';

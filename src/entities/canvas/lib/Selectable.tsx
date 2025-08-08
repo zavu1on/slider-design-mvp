@@ -1,18 +1,21 @@
 'use client';
 
-import { type FC, type RefObject, useRef } from 'react';
+import type { FC, RefObject } from 'react';
 import type Moveable from 'react-moveable';
 import Selecto from 'react-selecto';
 import { useSelectableHandlers } from '../hooks';
 
 type SelectableProps = {
   canvasRef: RefObject<HTMLDivElement | null>;
+  moveableRef: RefObject<Moveable | null>;
+  selectoRef: RefObject<Selecto | null>;
 };
 
-export const Selectable: FC<SelectableProps> = ({ canvasRef }) => {
-  const moveableRef = useRef<Moveable>(null);
-  const selectoRef = useRef<Selecto>(null);
-
+export const Selectable: FC<SelectableProps> = ({
+  canvasRef,
+  moveableRef,
+  selectoRef,
+}) => {
   const { selectHandler, selectEndHandler, dragStartHandler } =
     useSelectableHandlers(moveableRef, canvasRef);
 

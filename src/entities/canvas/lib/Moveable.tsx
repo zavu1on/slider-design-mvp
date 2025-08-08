@@ -1,6 +1,6 @@
 'use client';
 
-import { type FC, type RefObject, useEffect, useRef, useState } from 'react';
+import { type FC, type RefObject, useEffect, useState } from 'react';
 import { flushSync } from 'react-dom';
 import ReactMoveable from 'react-moveable';
 import type Selecto from 'react-selecto';
@@ -10,18 +10,23 @@ import {
   useKeepRatio,
   useMoveableHandlers,
 } from '../hooks';
-import type { PresentationSlide } from '../schema';
-import { useCanvasStore, useSelectedTargetsStore } from '../store';
+import {
+  useCanvasStore,
+  useCheckInputStore,
+  useSelectedTargetsStore,
+} from '../store';
 import { DimensionViewableAddon } from '../ui';
 
 type MoveableProps = {
   canvasRef: RefObject<HTMLDivElement | null>;
-  currentPresentationSlide?: PresentationSlide;
+  moveableRef: RefObject<ReactMoveable | null>;
+  selectoRef: RefObject<Selecto | null>;
 };
 
 export const Moveable: FC<MoveableProps> = ({
   canvasRef,
-  currentPresentationSlide,
+  moveableRef,
+  selectoRef,
 }) => {
   const [verticalGuidelines, setVerticalGuidelines] = useState<number[]>([]);
   const [horizontalGuidelines, setHorizontalGuidelines] = useState<number[]>(
@@ -29,9 +34,7 @@ export const Moveable: FC<MoveableProps> = ({
   );
 
   const { targets } = useSelectedTargetsStore();
-
-  const moveableRef = useRef<ReactMoveable>(null);
-  const selectoRef = useRef<Selecto>(null);
+  const { checkInput } = useCheckInputStore();
   const keepRatio = useKeepRatio(moveableRef);
 
   const { width, height } = useCanvasStore();
@@ -44,7 +47,8 @@ export const Moveable: FC<MoveableProps> = ({
     rotateEndHandler,
     roundHandler,
     roundEndHandler,
-  } = useMoveableHandlers(currentPresentationSlide);
+    clickHandler,
+  } = useMoveableHandlers();
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -65,7 +69,7 @@ export const Moveable: FC<MoveableProps> = ({
     ]);
   }, [canvasRef, width, height]);
 
-  useDeleteItemHandler(currentPresentationSlide?.id);
+  useDeleteItemHandler();
   useAlignElementsHandler(moveableRef);
 
   return (
@@ -80,6 +84,8 @@ export const Moveable: FC<MoveableProps> = ({
       props={{
         dimensionViewable: true,
       }}
+      checkInput={checkInput}
+      onClick={(event) => clickHandler(event.target.id)}
       // draggable
       draggable={true}
       throttleDrag={0}

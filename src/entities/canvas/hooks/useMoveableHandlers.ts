@@ -1,14 +1,16 @@
 import { useCallback } from 'react';
-import type { PresentationSlide, TargetElement } from '../schema';
-import { useCanvasStore } from '../store';
+import type { TargetElement } from '../schema';
+import { useCanvasStore, useCheckInputStore } from '../store';
+import { useGetCurrentPresentationSlide } from './useGetCurrentPresentationSlide';
 
 const getClearValue = (valueInPixels: string, padding: number = 2): number =>
   Number(valueInPixels.slice(0, -padding));
 
-export const useMoveableHandlers = (
-  currentPresentationSlide: PresentationSlide | undefined
-) => {
+export const useMoveableHandlers = () => {
   const { currentSlideId, updateCanvasElement } = useCanvasStore();
+  const currentPresentationSlide = useGetCurrentPresentationSlide();
+  const { wasDoubleClickEvent, setWasDoubleClickEvent, setCheckInput } =
+    useCheckInputStore();
 
   const dragHandler = useCallback(
     (target: TargetElement, left: number, top: number) => {
@@ -24,6 +26,7 @@ export const useMoveableHandlers = (
       const element = currentPresentationSlide!.elements.find(
         (el) => el.id === target.id
       )!;
+
       updateCanvasElement(currentSlideId!, {
         ...element,
         x: getClearValue(target.style.left),
@@ -122,6 +125,18 @@ export const useMoveableHandlers = (
     [currentPresentationSlide, currentSlideId]
   );
 
+  const clickHandler = useCallback(
+    (elementId: string) => {
+      if (!wasDoubleClickEvent) {
+        setWasDoubleClickEvent(true);
+        setTimeout(() => setWasDoubleClickEvent(false), 300);
+      } else {
+        setCheckInput(true, elementId);
+      }
+    },
+    [wasDoubleClickEvent]
+  );
+
   return {
     dragHandler,
     dragEndHandler,
@@ -131,5 +146,6 @@ export const useMoveableHandlers = (
     rotateEndHandler,
     roundHandler,
     roundEndHandler,
+    clickHandler,
   };
 };

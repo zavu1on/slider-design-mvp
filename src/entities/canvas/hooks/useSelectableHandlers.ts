@@ -1,16 +1,31 @@
 'use client';
 
-import { type RefObject, useCallback } from 'react';
+import { type RefObject, useCallback, useEffect } from 'react';
 import type Moveable from 'react-moveable';
 import type { OnDragStart, OnSelect, OnSelectEnd } from 'react-selecto';
 import type Selecto from 'react-selecto';
-import { useSelectedTargetsStore } from '../store';
+import { useCheckInputStore, useSelectedTargetsStore } from '../store';
 
 export const useSelectableHandlers = (
   moveableRef: RefObject<Moveable | null>,
   canvasRef: RefObject<HTMLDivElement | null>
 ) => {
   const { targets, setTargets } = useSelectedTargetsStore();
+  const { uncheckInput } = useCheckInputStore();
+
+  useEffect(() => {
+    const onKeydown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        uncheckInput();
+      }
+    };
+    document.addEventListener('keydown', onKeydown);
+
+    return () => {
+      document.removeEventListener('keydown', onKeydown);
+    };
+  }, []);
 
   /**
    * The onSelectEnd event is triggered after any mouse click/drag inside the canvas,
@@ -31,6 +46,7 @@ export const useSelectableHandlers = (
        */
       const target = event.inputEvent.originalTarget;
       if (targets.length && canvasRef.current?.contains(target)) {
+        uncheckInput();
         setTargets(event.selected.map((t) => `[data-id="${t.id}"]`));
         return;
       }
@@ -68,6 +84,7 @@ export const useSelectableHandlers = (
        */
       const target = event.inputEvent.originalTarget;
       if (targets.length && canvasRef.current?.contains(target)) {
+        uncheckInput();
         setTargets(event.selected.map((t) => `[data-id="${t.id}"]`));
         return;
       }

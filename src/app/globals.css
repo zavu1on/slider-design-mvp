@@ -181,4 +181,8 @@
     vertical-align: unset;
     max-width: initial;
   }
+
+  .pointer-events-all {
+    pointer-events: all;
+  }
 }

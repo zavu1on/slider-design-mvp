@@ -7,7 +7,6 @@ type CanvasBackgroundStore = {
   height: number;
   slideData: SlideData;
   currentSlideId: string | null;
-  selectedSlidesId: string[];
 
   setSizes: (width: number, height: number) => void;
   setColor: (color: string) => void;
@@ -21,8 +20,6 @@ type CanvasBackgroundStore = {
   updateCanvasElement: (slideId: string, element: CanvasElement) => void;
 
   setCurrentSlideId: (id: string) => void;
-
-  setSelectedSlidesId: (idList: string[]) => void;
 };
 
 export const useCanvasStore = create<CanvasBackgroundStore>()((set) => ({
@@ -31,7 +28,6 @@ export const useCanvasStore = create<CanvasBackgroundStore>()((set) => ({
   color: '#ffffff',
   slideData: [],
   currentSlideId: null,
-  selectedSlidesId: [],
 
   setSizes: (width, height) => set((state) => ({ ...state, width, height })),
   setColor: (color) => set((state) => ({ ...state, color })),
@@ -96,10 +92,4 @@ export const useCanvasStore = create<CanvasBackgroundStore>()((set) => ({
     })),
 
   setCurrentSlideId: (id) => set((state) => ({ ...state, currentSlideId: id })),
-
-  setSelectedSlidesId: (idList) =>
-    set((state) => ({
-      ...state,
-      selectedSlidesId: idList,
-    })),
 }));

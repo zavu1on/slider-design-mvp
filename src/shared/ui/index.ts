@@ -3,3 +3,4 @@ export { Card } from './Card';
 export { Form, FormField } from './Form';
 export { Input } from './Input';
 export { ColorPicker } from './ColorPicker';
+export { SketchPicker } from './SketchPicker';

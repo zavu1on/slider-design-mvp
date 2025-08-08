@@ -1,7 +1,10 @@
 'use client';
 
-import { type FC, type Ref, useEffect, useMemo, useRef } from 'react';
+import { type FC, type Ref, useEffect, useRef } from 'react';
 import React from 'react';
+import type ReactMoveable from 'react-moveable';
+import type Selecto from 'react-selecto';
+import { useGetCurrentPresentationSlide } from './hooks';
 import { Moveable, Selectable } from './lib';
 import { useCanvasStore, useSelectedTargetsStore } from './store';
 import { RenderElement } from './ui';
@@ -12,15 +15,13 @@ export type CanvasProps = {
 };
 
 export const Canvas: FC<CanvasProps> = ({ ref, className }) => {
-  const { color, slideData, currentSlideId } = useCanvasStore();
+  const { color } = useCanvasStore();
+  const currentPresentationSlide = useGetCurrentPresentationSlide();
   const { setTargets } = useSelectedTargetsStore();
 
-  const currentPresentationSlide = useMemo(
-    () => slideData.find((slide) => slide.id === currentSlideId),
-    [slideData, currentSlideId]
-  );
-
   const canvasRef = useRef<HTMLDivElement>(null);
+  const moveableRef = useRef<ReactMoveable>(null);
+  const selectoRef = useRef<Selecto>(null);
 
   useEffect(() => {
     const onKeydown = (event: KeyboardEvent) => {
@@ -61,9 +62,14 @@ export const Canvas: FC<CanvasProps> = ({ ref, className }) => {
       </div>
       <Moveable
         canvasRef={canvasRef}
-        currentPresentationSlide={currentPresentationSlide}
+        moveableRef={moveableRef}
+        selectoRef={selectoRef}
       />
-      <Selectable canvasRef={canvasRef} />
+      <Selectable
+        canvasRef={canvasRef}
+        moveableRef={moveableRef}
+        selectoRef={selectoRef}
+      />
     </>
   );
 };

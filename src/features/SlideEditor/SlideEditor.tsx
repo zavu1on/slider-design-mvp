@@ -1,6 +1,6 @@
 'use client';
 
-import { type FC, use, useEffect } from 'react';
+import { type FC, memo, use, useEffect } from 'react';
 import {
   CanvasElementType,
   type SlideData,
@@ -50,11 +50,18 @@ const SLIDE_DATA: SlideData = [
 
 export const SlideEditor: FC<SlideEditorProps> = ({ slide }) => {
   const slideData = use(slide);
-  const Canvas = useCanvas({});
+  const CanvasElement = useCanvas({});
   const { setSlideData, setCurrentSlideId } = useCanvasStore();
+
+  const Canvas = memo(() => {
+    return <CanvasElement />;
+  });
+  Canvas.displayName = 'Canvas';
 
   useEffect(() => {
     if (slideData) {
+      console.log('INIT STATE');
+
       setSlideData(SLIDE_DATA);
       setCurrentSlideId(SLIDE_DATA[0].id);
     }
