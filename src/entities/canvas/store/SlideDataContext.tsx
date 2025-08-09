@@ -7,20 +7,25 @@ import {
   use,
   useMemo,
   useRef,
+  useState,
 } from 'react';
+import hash from 'object-hash';
 import useUndoable from 'use-undoable';
 import type { CanvasElement, SlideData } from '../schema';
 
 type SlideDataContextValue = {
   slideData: SlideData;
   currentSlideId: string | null;
-  setSlideData: (slideData: SlideData) => void;
+  hasUnsavedChanges: boolean;
+  lastUpdatedAt: Date | null;
+  setSlideData: (slideData: SlideData, updatedDate: Date) => void;
   addPresentationSlide: (id: string) => void;
   removePresentationSlide: (id: string) => void;
   addCanvasElement: (slideId: string, element: CanvasElement) => void;
   removeCanvasElement: (slideId: string, elementId: string) => void;
   updateCanvasElement: (slideId: string, element: CanvasElement) => void;
   setCurrentSlideId: (id: string) => void;
+  markChangesAsSaved: (newHash: string, updatedAt: Date) => void;
 
   canUndo: boolean;
   canRedo: boolean;
@@ -33,6 +38,8 @@ const SlideDataContext = createContext<SlideDataContextValue | undefined>(
 );
 
 export const SlideDataProvider: FC<PropsWithChildren> = ({ children }) => {
+  const [initialDataHash, setInitialDataHash] = useState<string | null>(null);
+  const [lastUpdatedAt, setLastUpdatedAt] = useState<Date | null>(null);
   const [memoryData, setMemoryData, { undo, redo, canUndo, canRedo }] =
     useUndoable<Pick<SlideDataContextValue, 'slideData' | 'currentSlideId'>>({
       slideData: [],
@@ -40,15 +47,19 @@ export const SlideDataProvider: FC<PropsWithChildren> = ({ children }) => {
     });
 
   const actionsRef = useRef({
-    setSlideData: (slideData: SlideData) =>
-      setMemoryData((prev) => ({ ...prev, slideData })),
+    setSlideData: (slideData: SlideData, updatedDate: Date) => {
+      setMemoryData((prev) => ({ ...prev, slideData }));
+      setLastUpdatedAt(updatedDate);
+      setInitialDataHash(hash(slideData));
+    },
 
-    addPresentationSlide: (id: string) =>
+    addPresentationSlide: (id: string) => {
       setMemoryData((prev) => ({
         ...prev,
         slideData: [...prev.slideData, { id, previewUrl: '', elements: [] }],
         currentSlideId: id,
-      })),
+      }));
+    },
 
     removePresentationSlide: (id: string) =>
       setMemoryData((prev) => {
@@ -104,12 +115,24 @@ export const SlideDataProvider: FC<PropsWithChildren> = ({ children }) => {
 
     setCurrentSlideId: (id: string) =>
       setMemoryData((prev) => ({ ...prev, currentSlideId: id })),
+
+    markChangesAsSaved: (newHash: string, updatedAt: Date) => {
+      setInitialDataHash(newHash);
+      setLastUpdatedAt(updatedAt);
+    },
   });
+
+  const hasUnsavedChanges = useMemo(
+    () => hash(memoryData.slideData) !== initialDataHash,
+    [memoryData.slideData, initialDataHash]
+  );
 
   const value = useMemo<SlideDataContextValue>(
     () => ({
       slideData: memoryData.slideData,
       currentSlideId: memoryData.currentSlideId,
+      hasUnsavedChanges,
+      lastUpdatedAt,
       ...actionsRef.current,
 
       canUndo,
@@ -117,7 +140,16 @@ export const SlideDataProvider: FC<PropsWithChildren> = ({ children }) => {
       undo,
       redo,
     }),
-    [memoryData, canUndo, canRedo, undo, redo]
+    [
+      memoryData.slideData,
+      memoryData.currentSlideId,
+      hasUnsavedChanges,
+      lastUpdatedAt,
+      canUndo,
+      canRedo,
+      undo,
+      redo,
+    ]
   );
 
   return (

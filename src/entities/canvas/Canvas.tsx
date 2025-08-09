@@ -4,7 +4,11 @@ import { type FC, type Ref, useRef } from 'react';
 import React from 'react';
 import type ReactMoveable from 'react-moveable';
 import type Selecto from 'react-selecto';
-import { useGetCurrentPresentationSlide, useUndoableHandler } from './hooks';
+import {
+  useGetCurrentPresentationSlide,
+  useSaveHandler,
+  useUndoableHandler,
+} from './hooks';
 import { Moveable, Selectable } from './lib';
 import { useCanvasStore } from './store';
 import { RenderElement } from './ui';
@@ -12,9 +16,10 @@ import { RenderElement } from './ui';
 export type CanvasProps = {
   ref: Ref<HTMLDivElement>;
   className?: string;
+  projectId: string;
 };
 
-export const Canvas: FC<CanvasProps> = ({ ref, className }) => {
+export const Canvas: FC<CanvasProps> = ({ ref, className, projectId }) => {
   const { color } = useCanvasStore();
   const currentPresentationSlide = useGetCurrentPresentationSlide();
 
@@ -23,6 +28,7 @@ export const Canvas: FC<CanvasProps> = ({ ref, className }) => {
   const selectoRef = useRef<Selecto>(null);
 
   useUndoableHandler();
+  useSaveHandler(projectId);
 
   return (
     <>

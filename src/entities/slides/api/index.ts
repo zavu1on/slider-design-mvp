@@ -5,3 +5,4 @@ export { getUserMaterials } from './getUserMaterials';
 export { updateSlideName } from './updateSlideName';
 export { deleteSlideAction } from './deleteSlideAction';
 export { addSlideAction } from './addSlideAction';
+export { updateSlideData } from './updateSlideData';

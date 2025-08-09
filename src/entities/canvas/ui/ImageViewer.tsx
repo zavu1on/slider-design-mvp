@@ -11,7 +11,7 @@ export const ImageViewer: FC<{
   return (
     <Image
       alt={element.id}
-      src={location.origin + element.content} // todo delete location.origin
+      src={element.content}
       width={element.width}
       height={element.height}
       className="object-fill h-inherit border-radius-inherit"

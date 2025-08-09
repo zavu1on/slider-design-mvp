@@ -6,11 +6,15 @@ export {
   SlideDataProvider,
 } from './store';
 export {
+  canvasElementSchema,
+  presentationSlideSchema,
+  slideDataSchema,
   CanvasElementType,
   type CanvasElement,
   type PresentationSlide,
   type SlideData,
   type GeometricFigure,
 } from './schema';
-export { useCanvas } from './useCanvas';
 export { useGetCurrentPresentationSlide } from './hooks';
+export { useCanvas } from './useCanvas';
+export { PresentationSlideViewer } from './PresentationSlideViewer';

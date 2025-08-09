@@ -2,6 +2,7 @@
 
 import fs from 'fs/promises';
 import { AuthError } from 'next-auth';
+import { headers } from 'next/headers';
 import path from 'path';
 import sharp from 'sharp';
 import { getSessionOrThrowError } from '@/entities/auth';
@@ -34,7 +35,17 @@ export const uploadImageAction = async (
     const uploadDir = path.join(process.cwd(), 'public', 'upload');
     await fs.mkdir(uploadDir, { recursive: true });
     await fs.writeFile(path.join(uploadDir, filename), buffer);
-    const url = `/upload/${filename}`; // todo save full path
+
+    const headersList = await headers();
+    const host = headersList.get('host');
+    const protocol = headersList.get('x-forwarded-proto') || 'http';
+
+    if (!host) {
+      throw new Error('Unable to determine host');
+    }
+
+    const baseUrl = new URL(`${protocol}://${host}`);
+    const url = new URL(`/upload/${filename}`, baseUrl).toString();
 
     const image = await prisma.material.create({
       data: {

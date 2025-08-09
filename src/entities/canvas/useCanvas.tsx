@@ -5,6 +5,7 @@ import { Canvas, type CanvasProps } from './Canvas';
 import { useInitCanvas } from './hooks';
 
 type UseCanvasArgs = {
+  projectId: string;
   color?: string;
   width?: number;
   height?: number;
@@ -13,6 +14,7 @@ type UseCanvasArgs = {
 type UseCanvas = (props: UseCanvasArgs) => FC;
 
 export const useCanvas: UseCanvas = ({
+  projectId,
   className,
   color = '#ffffff',
   width = 1280,
@@ -47,7 +49,7 @@ export const useCanvas: UseCanvas = ({
         ref={containerRef}
         className="w-[50vw] h-[calc(50vw*0.5625)] overflow-hidden shadow"
       >
-        <Canvas ref={canvasRef} className={className} />
+        <Canvas ref={canvasRef} className={className} projectId={projectId} />
       </div>
     );
   };

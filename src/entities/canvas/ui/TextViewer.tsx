@@ -1,9 +1,31 @@
 'use client';
 
-import type { FC, FocusEvent } from 'react';
+import type { FC, FocusEvent, ReactNode } from 'react';
 import { cn, stringToStyle } from '@/shared/lib';
 import type { CanvasElement } from '../schema';
 import { useCheckInputStore, useMemorizedSlideData } from '../store';
+
+const TextViewerBasic: FC<{
+  element: CanvasElement;
+  className?: string;
+  children: ReactNode;
+  withoutId?: boolean;
+}> = ({ element, className, children, withoutId = false }) => (
+  <div
+    id={withoutId ? undefined : element.id}
+    className={cn(
+      'size-full flex items-center justify-center text-black text-3xl border-radius-inherit',
+      className
+    )}
+    style={{
+      backgroundColor: element.backgroundColor,
+      color: element.color,
+      ...stringToStyle(element.styleString),
+    }}
+  >
+    {children}
+  </div>
+);
 
 export const TextViewer: FC<{ element: CanvasElement }> = ({ element }) => {
   const { currentInputId } = useCheckInputStore();
@@ -19,19 +41,11 @@ export const TextViewer: FC<{ element: CanvasElement }> = ({ element }) => {
   };
 
   return (
-    <div
-      id={element.id}
-      className={cn(
-        {
-          'pointer-events-all': element.id === currentInputId,
-        },
-        'size-full flex items-center justify-center text-black text-3xl border-radius-inherit'
-      )}
-      style={{
-        backgroundColor: element.backgroundColor,
-        color: element.color,
-        ...stringToStyle(element.styleString),
-      }}
+    <TextViewerBasic
+      className={cn({
+        'pointer-events-all': element.id === currentInputId,
+      })}
+      element={element}
     >
       <textarea
         className={cn(
@@ -45,6 +59,16 @@ export const TextViewer: FC<{ element: CanvasElement }> = ({ element }) => {
         onBlur={handleBlur}
         disabled={element.id !== currentInputId}
       />
-    </div>
+    </TextViewerBasic>
   );
 };
+
+export const ReadonlyTextViewer: FC<{ element: CanvasElement }> = ({
+  element,
+}) => (
+  <TextViewerBasic element={element} withoutId>
+    <div className="w-full h-full p-2 overflow-hidden whitespace-nowrap text-ellipsis">
+      {element.content}
+    </div>
+  </TextViewerBasic>
+);

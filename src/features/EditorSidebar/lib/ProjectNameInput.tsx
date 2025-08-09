@@ -27,7 +27,7 @@ export const ProjectNameInput: FC<ProjectNameInputProps> = ({
     startTransition(async () => {
       const resp = await updateSlideName(projectId, name);
 
-      if (resp.error) toast.error(resp.error);
+      if (!resp.success) toast.error(resp.error);
     });
   };
 

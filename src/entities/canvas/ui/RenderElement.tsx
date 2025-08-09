@@ -5,11 +5,17 @@ import { cn } from '@/shared/lib';
 import { type CanvasElement, CanvasElementType } from '../schema';
 import { GeometricViewer } from './GeometricViewer';
 import { ImageViewer } from './ImageViewer';
-import { TextViewer } from './TextViewer';
+import { ReadonlyTextViewer, TextViewer } from './TextViewer';
 
-export const RenderElement: FC<{
+type RenderElementProps = {
   element: CanvasElement;
-}> = ({ element }) => {
+  viewMode?: boolean;
+};
+
+export const RenderElement: FC<RenderElementProps> = ({
+  element,
+  viewMode = false,
+}) => {
   const content = useMemo(() => {
     switch (element.type) {
       case CanvasElementType.IMAGE:
@@ -17,17 +23,23 @@ export const RenderElement: FC<{
       case CanvasElementType.FIGURE:
         return <GeometricViewer element={element} />;
       case CanvasElementType.TEXT:
-        return <TextViewer element={element} />;
+        return viewMode ? (
+          <ReadonlyTextViewer element={element} />
+        ) : (
+          <TextViewer element={element} />
+        );
       default:
         return <TextViewer element={element} />;
     }
-  }, [element]);
+  }, [element, viewMode]);
 
   return (
     <div
-      id={element.id}
-      data-id={element.id}
-      className={cn('absolute selectable')}
+      id={viewMode ? undefined : element.id}
+      data-id={viewMode ? undefined : element.id}
+      className={cn('absolute', {
+        selectable: !viewMode,
+      })}
       style={{
         width: element.width,
         height: element.height,

@@ -24,13 +24,12 @@ model User {
 }
 
 model Slide {
-  id         String   @id @default(uuid())
-  name       String   @default("Untitled")
-  data       String
-  previewUrl String?
-  author     User     @relation(fields: [authorId], references: [id])
-  authorId   String
-  updatedAt  DateTime @default(now())
+  id        String   @id @default(uuid())
+  name      String   @default("Untitled")
+  data      String
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
+  updatedAt DateTime @default(now())
 }
 
 enum MaterialType {

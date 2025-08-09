@@ -10,27 +10,16 @@ const nextConfig: NextConfig = {
         port: '3000',
         pathname: '/upload/**',
       },
-      {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: '3000',
-        pathname: '/preview/**',
-      },
     ],
+  },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '10mb',
+    },
   },
 
   async headers() {
     return [
-      {
-        source: '/preview/:path*\\.(svg|jpg|png|avif|webp|ico)',
-        locale: false,
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'no-store, max-age=0',
-          },
-        ],
-      },
       {
         source: '/upload/:path*\\.(svg|jpg|png|avif|webp|ico)',
         locale: false,

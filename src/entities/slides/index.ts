@@ -7,5 +7,6 @@ export {
   updateSlideName,
   deleteSlideAction,
   addSlideAction,
+  updateSlideData,
 } from './api';
 export { addSlideFormSchema, type AddSlideFormSchema } from './schema';

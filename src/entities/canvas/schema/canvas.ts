@@ -1,3 +1,5 @@
+import * as yup from 'yup';
+
 export enum CanvasElementType {
   TEXT,
   IMAGE,
@@ -22,8 +24,51 @@ export type CanvasElement = {
 
 export type PresentationSlide = {
   id: string;
-  previewUrl?: string;
   elements: CanvasElement[];
 };
 
 export type SlideData = PresentationSlide[];
+
+export const canvasElementSchema = yup
+  .object({
+    id: yup.string().required('ID обязателен'),
+    type: yup
+      .number()
+      .oneOf(
+        Object.values(CanvasElementType).filter((v) => typeof v === 'number'),
+        'Неверный тип элемента'
+      )
+      .required('Тип обязателен'),
+    content: yup.string().required('Контент обязателен'), // todo добавить типы для md разметки текста
+    x: yup.number().required('Координата X обязательна'),
+    y: yup.number().required('Координата Y обязательна'),
+    width: yup
+      .number()
+      .positive('Ширина должна быть положительной')
+      .required('Ширина обязательна'),
+    height: yup
+      .number()
+      .positive('Высота должна быть положительной')
+      .required('Высота обязательна'),
+    color: yup.string().optional(),
+    backgroundColor: yup.string().optional(),
+    rotation: yup.number().optional(),
+    borderRadius: yup.string().optional(),
+    styleString: yup.string().optional(),
+  })
+  .required();
+
+export const presentationSlideSchema = yup
+  .object({
+    id: yup.string().required('ID слайда обязателен'),
+    elements: yup
+      .array()
+      .of(canvasElementSchema)
+      .required('Элементы обязательны'),
+  })
+  .required();
+
+export const slideDataSchema = yup
+  .array()
+  .of(presentationSlideSchema)
+  .required('Слайды обязательны');
