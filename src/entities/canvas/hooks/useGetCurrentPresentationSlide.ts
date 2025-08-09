@@ -2,12 +2,12 @@
 
 import { useMemo } from 'react';
 import type { PresentationSlide } from '../schema';
-import { useSlideData } from '../store';
+import { useMemorizedSlideData } from '../store';
 
 export const useGetCurrentPresentationSlide = ():
   | PresentationSlide
   | undefined => {
-  const { slideData, currentSlideId } = useSlideData();
+  const { slideData, currentSlideId } = useMemorizedSlideData();
 
   const currentPresentationSlide = useMemo(
     () => slideData.find((slide) => slide.id === currentSlideId),

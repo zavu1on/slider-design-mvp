@@ -2,7 +2,7 @@ export {
   useCanvasStore,
   useUserMaterialsStore,
   useAlignActionStore,
-  useSlideData,
+  useMemorizedSlideData,
   SlideDataProvider,
 } from './store';
 export {

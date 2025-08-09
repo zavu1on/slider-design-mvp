@@ -7,6 +7,7 @@ import { toast } from 'sonner';
 import {
   CanvasElementType,
   useCanvasStore,
+  useMemorizedSlideData,
   useUserMaterialsStore,
 } from '@/entities/canvas';
 import { uploadImageAction } from '@/entities/slides';
@@ -22,7 +23,8 @@ export const ImageLoader: FC = () => {
 
   const [isPending, startTransition] = useTransition();
 
-  const { width, height, currentSlideId, addCanvasElement } = useCanvasStore();
+  const { width, height } = useCanvasStore();
+  const { currentSlideId, addCanvasElement } = useMemorizedSlideData();
   const { materials, addMaterial } = useUserMaterialsStore((store) => store);
 
   const addNewImage = (image: Material) => {
@@ -109,9 +111,7 @@ export const ImageLoader: FC = () => {
         >
           Загрузить
         </LoadingButton>
-        <div className="text-gray-400 text-xs">
-          * либо перетащите изображение
-        </div>
+        <div className="text-xs">* либо перетащите изображение</div>
       </form>
       <div className="font-bold mt-6">Мои материалы</div>
       {materials.length ? (

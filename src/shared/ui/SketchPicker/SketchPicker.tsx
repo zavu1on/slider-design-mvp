@@ -1,6 +1,6 @@
 'use client';
 
-import React, { type FC, useState } from 'react';
+import React, { type FC, useEffect, useState } from 'react';
 import {
   type RGBColor,
   SketchPicker as ReactColorSketchPicker,
@@ -29,10 +29,25 @@ export const SketchPicker: FC<SketchPickerProps> = ({
   const handleClick = () => {
     if (!disabled) setDisplayColorPicker(!displayColorPicker);
   };
-
   const handleClose = () => {
     setDisplayColorPicker(false);
   };
+
+  useEffect(() => {
+    const onKeydown = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement;
+      if (['INPUT', 'SELECT', 'TEXTAREA'].includes(target.tagName)) return;
+
+      if (event.key === 'Escape') {
+        setDisplayColorPicker(false);
+      }
+    };
+
+    document.addEventListener('keydown', onKeydown);
+    return () => {
+      document.removeEventListener('keydown', onKeydown);
+    };
+  }, []);
 
   return (
     <div className="relative inline-block">

@@ -1,4 +1,5 @@
 import type { FC } from 'react';
+import { stringToStyle } from '@/shared/lib';
 import type { CanvasElement } from '../schema';
 
 export const GeometricViewer: FC<{
@@ -10,6 +11,8 @@ export const GeometricViewer: FC<{
       style={{
         clipPath: element.content,
         backgroundColor: element.backgroundColor,
+        borderRadius: element.borderRadius,
+        ...stringToStyle(element.styleString),
       }}
     ></div>
   );

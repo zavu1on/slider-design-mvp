@@ -1,11 +1,11 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useSelectedTargetsStore, useSlideData } from '../store';
+import { useMemorizedSlideData, useSelectedTargetsStore } from '../store';
 
 export const useDeleteItemHandler = () => {
   const { targets } = useSelectedTargetsStore();
-  const { currentSlideId, removeCanvasElement } = useSlideData();
+  const { currentSlideId, removeCanvasElement } = useMemorizedSlideData();
 
   useEffect(() => {
     const onKeydown = (event: KeyboardEvent) => {

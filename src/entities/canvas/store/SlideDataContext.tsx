@@ -127,10 +127,12 @@ export const SlideDataProvider: FC<PropsWithChildren> = ({ children }) => {
   );
 };
 
-export const useSlideData = (): SlideDataContextValue => {
+export const useMemorizedSlideData = (): SlideDataContextValue => {
   const slideDataContext = use(SlideDataContext);
   if (!slideDataContext) {
-    throw new Error('useSlideData must be used within a SlideDataProvider');
+    throw new Error(
+      'useMemorizedSlideData must be used within a SlideDataProvider'
+    );
   }
   return slideDataContext;
 };

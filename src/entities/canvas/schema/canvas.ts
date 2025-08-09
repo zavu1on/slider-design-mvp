@@ -17,6 +17,7 @@ export type CanvasElement = {
   backgroundColor?: string;
   rotation?: number;
   borderRadius?: string;
+  styleString?: string;
 };
 
 export type PresentationSlide = {

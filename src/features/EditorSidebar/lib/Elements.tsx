@@ -12,6 +12,7 @@ import {
   CanvasElementType,
   type GeometricFigure,
   useCanvasStore,
+  useMemorizedSlideData,
 } from '@/entities/canvas';
 import { Button } from '@/shared/ui';
 
@@ -49,7 +50,8 @@ const CLIP_PATH: Record<GeometricFigure['name'], string> = {
 };
 
 export const Elements: FC = () => {
-  const { width, height, currentSlideId, addCanvasElement } = useCanvasStore();
+  const { width, height } = useCanvasStore();
+  const { currentSlideId, addCanvasElement } = useMemorizedSlideData();
 
   const addFigure = (figure: GeometricFigure) => {
     if (!currentSlideId) return;

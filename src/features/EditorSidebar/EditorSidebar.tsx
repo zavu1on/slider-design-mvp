@@ -25,6 +25,7 @@ import {
 } from '@/generated/shadcn/sidebar';
 import { Button } from '@/shared/ui';
 import {
+  ElementEditor,
   Elements,
   ImageLoader,
   ProjectNameInput,
@@ -48,9 +49,9 @@ const SIDEBAR_ITEMS = [
     body: <ImageLoader />,
   },
   {
-    title: 'AI',
+    title: 'Редактор',
     icon: Sparkles,
-    body: <p>Еще в разработке</p>,
+    body: <ElementEditor />,
   },
 ];
 
@@ -72,7 +73,7 @@ export const EditorSidebar: FC<EditorSidebarProps> = ({
   }, []);
 
   return (
-    <div className="flex flex-row bg-slate-200">
+    <div className="flex flex-row bg-slate-200 slider-container">
       <Sidebar className="editor-sidebar">
         <SidebarContent className="bg-gray-800 text-slate-300">
           <SidebarGroup>

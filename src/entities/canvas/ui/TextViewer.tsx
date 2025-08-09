@@ -1,13 +1,13 @@
 'use client';
 
 import type { FC, FocusEvent } from 'react';
-import { cn } from '@/shared/lib';
+import { cn, stringToStyle } from '@/shared/lib';
 import type { CanvasElement } from '../schema';
-import { useCanvasStore, useCheckInputStore } from '../store';
+import { useCheckInputStore, useMemorizedSlideData } from '../store';
 
 export const TextViewer: FC<{ element: CanvasElement }> = ({ element }) => {
   const { currentInputId } = useCheckInputStore();
-  const { currentSlideId, updateCanvasElement } = useCanvasStore();
+  const { currentSlideId, updateCanvasElement } = useMemorizedSlideData();
 
   const handleBlur = (e: FocusEvent<HTMLTextAreaElement>) => {
     if (e.target.value !== element.content) {
@@ -30,6 +30,7 @@ export const TextViewer: FC<{ element: CanvasElement }> = ({ element }) => {
       style={{
         backgroundColor: element.backgroundColor,
         color: element.color,
+        ...stringToStyle(element.styleString),
       }}
     >
       <textarea

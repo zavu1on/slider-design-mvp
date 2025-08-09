@@ -1,6 +1,7 @@
 'use client';
 
 import { type FC, useMemo } from 'react';
+import { cn } from '@/shared/lib';
 import { type CanvasElement, CanvasElementType } from '../schema';
 import { GeometricViewer } from './GeometricViewer';
 import { ImageViewer } from './ImageViewer';
@@ -26,7 +27,7 @@ export const RenderElement: FC<{
     <div
       id={element.id}
       data-id={element.id}
-      className="absolute selectable"
+      className={cn('absolute selectable')}
       style={{
         width: element.width,
         height: element.height,

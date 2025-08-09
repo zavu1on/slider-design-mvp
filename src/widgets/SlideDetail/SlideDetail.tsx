@@ -24,23 +24,21 @@ export const SlideDetail: FC<SlideDetailProps> = async ({
   const slide = getSlideById(session, projectId);
 
   return (
-    <>
+    <SlideDataProvider>
       <EditorSidebar projectId={projectId} name={name} materials={materials} />
       <main className="w-screen h-screen flex flex-col bg-slate-200">
-        <SlideDataProvider>
-          <SliderHeader />
-          <div className="size-full flex justify-center items-center">
-            <Suspense
-              fallback={
-                <Loader2 className="text-gray-800 size-16 animate-spin" />
-              }
-            >
-              <SlideEditor slide={slide} />
-            </Suspense>
-          </div>
-          <SliderFooter />
-        </SlideDataProvider>
+        <SliderHeader />
+        <div className="size-full flex justify-center items-center">
+          <Suspense
+            fallback={
+              <Loader2 className="text-gray-800 size-16 animate-spin" />
+            }
+          >
+            <SlideEditor slide={slide} />
+          </Suspense>
+        </div>
+        <SliderFooter />
       </main>
-    </>
+    </SlideDataProvider>
   );
 };

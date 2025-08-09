@@ -2,6 +2,7 @@
 
 import type { FC } from 'react';
 import Image from 'next/image';
+import { stringToStyle } from '@/shared/lib';
 import type { CanvasElement } from '../schema';
 
 export const ImageViewer: FC<{
@@ -14,6 +15,7 @@ export const ImageViewer: FC<{
       width={element.width}
       height={element.height}
       className="object-fill h-inherit border-radius-inherit"
+      style={stringToStyle(element.styleString)}
     />
   );
 };

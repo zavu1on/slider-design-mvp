@@ -15,8 +15,11 @@ export const useSelectableHandlers = (
   const { targets, setTargets } = useSelectedTargetsStore();
   const { uncheckInput } = useCheckInputStore();
 
-  useEffect(() => {
-    const onKeydown = (event: KeyboardEvent) => {
+  const onKeydown = useCallback(
+    (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement;
+      if (['INPUT', 'SELECT', 'TEXTAREA'].includes(target.tagName)) return;
+
       const key = event.key.toLowerCase();
 
       if (key === 'escape') {
@@ -34,13 +37,16 @@ export const useSelectableHandlers = (
           ) ?? []
         );
       }
-    };
+    },
+    [currentPresentationSlide?.elements]
+  );
 
+  useEffect(() => {
     document.addEventListener('keydown', onKeydown);
     return () => {
       document.removeEventListener('keydown', onKeydown);
     };
-  }, [currentPresentationSlide]);
+  }, [onKeydown]);
 
   /**
    * The onSelectEnd event is triggered after any mouse click/drag inside the canvas,
