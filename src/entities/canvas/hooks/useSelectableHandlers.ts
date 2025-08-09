@@ -5,27 +5,42 @@ import type Moveable from 'react-moveable';
 import type { OnDragStart, OnSelect, OnSelectEnd } from 'react-selecto';
 import type Selecto from 'react-selecto';
 import { useCheckInputStore, useSelectedTargetsStore } from '../store';
+import { useGetCurrentPresentationSlide } from './useGetCurrentPresentationSlide';
 
 export const useSelectableHandlers = (
   moveableRef: RefObject<Moveable | null>,
   canvasRef: RefObject<HTMLDivElement | null>
 ) => {
+  const currentPresentationSlide = useGetCurrentPresentationSlide();
   const { targets, setTargets } = useSelectedTargetsStore();
   const { uncheckInput } = useCheckInputStore();
 
   useEffect(() => {
     const onKeydown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
+      const key = event.key.toLowerCase();
+
+      if (key === 'escape') {
         event.preventDefault();
+        setTargets([]);
         uncheckInput();
+        return;
+      }
+
+      if (key === 'a' && event.ctrlKey) {
+        event.preventDefault();
+        setTargets(
+          currentPresentationSlide?.elements.map(
+            (target) => `[data-id="${target.id}"]`
+          ) ?? []
+        );
       }
     };
-    document.addEventListener('keydown', onKeydown);
 
+    document.addEventListener('keydown', onKeydown);
     return () => {
       document.removeEventListener('keydown', onKeydown);
     };
-  }, []);
+  }, [currentPresentationSlide]);
 
   /**
    * The onSelectEnd event is triggered after any mouse click/drag inside the canvas,

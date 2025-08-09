@@ -63,6 +63,7 @@ export const Elements: FC = () => {
       width: 200,
       height: 200,
       borderRadius: figure.name === 'circle' ? '50%' : undefined,
+      backgroundColor: '#000000',
     });
   };
 

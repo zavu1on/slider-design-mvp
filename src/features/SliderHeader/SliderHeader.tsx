@@ -12,16 +12,15 @@ import {
 import {
   type CanvasElement,
   useAlignActionStore,
-  useCanvasStore,
   useGetCurrentPresentationSlide,
 } from '@/entities/canvas';
-import { useSelectedTargetsStore } from '@/entities/canvas/store';
+import { useSelectedTargetsStore, useSlideData } from '@/entities/canvas/store';
 import { SketchPicker } from '@/shared/ui';
 
 export const SliderHeader: FC = () => {
-  const setAction = useAlignActionStore((store) => store.setAction);
+  const { setAction } = useAlignActionStore((store) => store);
   const currentPresentationSlide = useGetCurrentPresentationSlide();
-  const { currentSlideId, updateCanvasElement } = useCanvasStore();
+  const { currentSlideId, updateCanvasElement } = useSlideData();
   const { targets } = useSelectedTargetsStore();
 
   const selectedElements = useMemo(
@@ -49,6 +48,7 @@ export const SliderHeader: FC = () => {
           <div className="flex flex-row gap-2">
             <Type className="color-gray-800" />
             <SketchPicker
+              disabled={!selectedElements.length}
               color={selectedElements[0]?.color ?? '#ffffff'}
               onChange={(color) =>
                 updateColors({
@@ -60,6 +60,7 @@ export const SliderHeader: FC = () => {
           <div className="flex flex-row gap-2">
             <Square className="color-gray-800" />
             <SketchPicker
+              disabled={!selectedElements.length}
               color={selectedElements[0]?.backgroundColor ?? 'transparent'}
               onChange={(color) =>
                 updateColors({

@@ -4659,6 +4659,11 @@ use-sidecar@^1.1.3:
     detect-node-es "^1.1.0"
     tslib "^2.0.0"
 
+use-undoable@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/use-undoable/-/use-undoable-5.0.0.tgz#e8aee660e7e9830c78e93551d5df471dfaddaf56"
+  integrity sha512-CGlysuqDYqhvKdC2Y+NX1KZhxtIDRyxaaYOuEVovspbqfTdRmvDjYQh0rtNA7ibSSL31jT4dh0PSJRtR6fB+xw==
+
 uuid@^11.1.0:
   version "11.1.0"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-11.1.0.tgz#9549028be1753bb934fc96e2bca09bb4105ae912"

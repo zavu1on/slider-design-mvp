@@ -1,12 +1,12 @@
 'use client';
 
-import { type FC, type Ref, useEffect, useRef } from 'react';
+import { type FC, type Ref, useRef } from 'react';
 import React from 'react';
 import type ReactMoveable from 'react-moveable';
 import type Selecto from 'react-selecto';
-import { useGetCurrentPresentationSlide } from './hooks';
+import { useGetCurrentPresentationSlide, useUndoableHandler } from './hooks';
 import { Moveable, Selectable } from './lib';
-import { useCanvasStore, useSelectedTargetsStore } from './store';
+import { useCanvasStore } from './store';
 import { RenderElement } from './ui';
 
 export type CanvasProps = {
@@ -17,30 +17,12 @@ export type CanvasProps = {
 export const Canvas: FC<CanvasProps> = ({ ref, className }) => {
   const { color } = useCanvasStore();
   const currentPresentationSlide = useGetCurrentPresentationSlide();
-  const { setTargets } = useSelectedTargetsStore();
 
   const canvasRef = useRef<HTMLDivElement>(null);
   const moveableRef = useRef<ReactMoveable>(null);
   const selectoRef = useRef<Selecto>(null);
 
-  useEffect(() => {
-    const onKeydown = (event: KeyboardEvent) => {
-      if (event.key.toLowerCase() === 'a' && event.ctrlKey) {
-        event.preventDefault();
-        setTargets(
-          currentPresentationSlide?.elements.map(
-            (target) => `[data-id="${target.id}"]`
-          ) ?? []
-        );
-      }
-    };
-
-    document.addEventListener('keydown', onKeydown);
-
-    return () => {
-      document.removeEventListener('keydown', onKeydown);
-    };
-  }, [currentPresentationSlide]);
+  useUndoableHandler();
 
   return (
     <>

@@ -5,7 +5,7 @@ import {
   CanvasElementType,
   type SlideData,
   useCanvas,
-  useCanvasStore,
+  useSlideData,
 } from '@/entities/canvas';
 import type { Slide } from '@/generated/prisma';
 
@@ -51,7 +51,7 @@ const SLIDE_DATA: SlideData = [
 export const SlideEditor: FC<SlideEditorProps> = ({ slide }) => {
   const slideData = use(slide);
   const CanvasElement = useCanvas({});
-  const { setSlideData, setCurrentSlideId } = useCanvasStore();
+  const { setSlideData, setCurrentSlideId } = useSlideData();
 
   const Canvas = memo(() => {
     return <CanvasElement />;
@@ -60,8 +60,6 @@ export const SlideEditor: FC<SlideEditorProps> = ({ slide }) => {
 
   useEffect(() => {
     if (slideData) {
-      console.log('INIT STATE');
-
       setSlideData(SLIDE_DATA);
       setCurrentSlideId(SLIDE_DATA[0].id);
     }

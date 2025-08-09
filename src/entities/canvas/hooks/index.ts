@@ -5,3 +5,4 @@ export { useMoveableHandlers } from './useMoveableHandlers';
 export { useSelectableHandlers } from './useSelectableHandlers';
 export { useInitCanvas } from './useInitCanvas';
 export { useGetCurrentPresentationSlide } from './useGetCurrentPresentationSlide';
+export { useUndoableHandler } from './useUndoableHandler';

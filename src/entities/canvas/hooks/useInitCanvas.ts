@@ -1,3 +1,5 @@
+'use client';
+
 import { type RefObject, useEffect } from 'react';
 import { useCanvasStore } from '../store';
 

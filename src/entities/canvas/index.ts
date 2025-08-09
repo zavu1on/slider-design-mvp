@@ -2,6 +2,8 @@ export {
   useCanvasStore,
   useUserMaterialsStore,
   useAlignActionStore,
+  useSlideData,
+  SlideDataProvider,
 } from './store';
 export {
   CanvasElementType,

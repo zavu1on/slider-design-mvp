@@ -5,10 +5,12 @@ import {
   type RGBColor,
   SketchPicker as ReactColorSketchPicker,
 } from 'react-color';
+import { cn } from '@/shared/lib';
 
 type SketchPickerProps = {
   color: string;
   onChange: (color: string) => void;
+  disabled?: boolean;
 };
 
 const rgbaToHex = ({ r, g, b, a = 1 }: RGBColor): string => {
@@ -17,11 +19,15 @@ const rgbaToHex = ({ r, g, b, a = 1 }: RGBColor): string => {
   return `#${toHex(r)}${toHex(g)}${toHex(b)}${toHex(alpha)}`;
 };
 
-export const SketchPicker: FC<SketchPickerProps> = ({ color, onChange }) => {
+export const SketchPicker: FC<SketchPickerProps> = ({
+  color,
+  onChange,
+  disabled,
+}) => {
   const [displayColorPicker, setDisplayColorPicker] = useState(false);
 
   const handleClick = () => {
-    setDisplayColorPicker(!displayColorPicker);
+    if (!disabled) setDisplayColorPicker(!displayColorPicker);
   };
 
   const handleClose = () => {
@@ -31,7 +37,12 @@ export const SketchPicker: FC<SketchPickerProps> = ({ color, onChange }) => {
   return (
     <div className="relative inline-block">
       <div
-        className="p-1 bg-white rounded shadow cursor-pointer inline-block"
+        className={cn(
+          'p-1 bg-white rounded shadow cursor-pointer inline-block',
+          {
+            'cursor-not-allowed': disabled,
+          }
+        )}
         onClick={handleClick}
       >
         <div

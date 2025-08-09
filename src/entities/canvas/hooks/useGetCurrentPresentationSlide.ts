@@ -2,12 +2,12 @@
 
 import { useMemo } from 'react';
 import type { PresentationSlide } from '../schema';
-import { useCanvasStore } from '../store';
+import { useSlideData } from '../store';
 
 export const useGetCurrentPresentationSlide = ():
   | PresentationSlide
   | undefined => {
-  const { slideData, currentSlideId } = useCanvasStore();
+  const { slideData, currentSlideId } = useSlideData();
 
   const currentPresentationSlide = useMemo(
     () => slideData.find((slide) => slide.id === currentSlideId),
