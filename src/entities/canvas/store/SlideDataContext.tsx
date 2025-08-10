@@ -29,6 +29,7 @@ type SlideDataContextValue = {
 
   canUndo: boolean;
   canRedo: boolean;
+  pastLength: number;
   undo: () => void;
   redo: () => void;
 };
@@ -40,7 +41,7 @@ const SlideDataContext = createContext<SlideDataContextValue | undefined>(
 export const SlideDataProvider: FC<PropsWithChildren> = ({ children }) => {
   const [initialDataHash, setInitialDataHash] = useState<string | null>(null);
   const [lastUpdatedAt, setLastUpdatedAt] = useState<Date | null>(null);
-  const [memoryData, setMemoryData, { undo, redo, canUndo, canRedo }] =
+  const [memoryData, setMemoryData, { undo, redo, canUndo, canRedo, past }] =
     useUndoable<Pick<SlideDataContextValue, 'slideData' | 'currentSlideId'>>({
       slideData: [],
       currentSlideId: null,
@@ -122,31 +123,28 @@ export const SlideDataProvider: FC<PropsWithChildren> = ({ children }) => {
     },
   });
 
-  const hasUnsavedChanges = useMemo(
-    () => hash(memoryData.slideData) !== initialDataHash,
-    [memoryData.slideData, initialDataHash]
-  );
-
   const value = useMemo<SlideDataContextValue>(
     () => ({
       slideData: memoryData.slideData,
       currentSlideId: memoryData.currentSlideId,
-      hasUnsavedChanges,
+      hasUnsavedChanges: hash(memoryData.slideData) !== initialDataHash,
       lastUpdatedAt,
       ...actionsRef.current,
 
       canUndo,
       canRedo,
+      pastLength: past.length,
       undo,
       redo,
     }),
     [
       memoryData.slideData,
       memoryData.currentSlideId,
-      hasUnsavedChanges,
+      initialDataHash,
       lastUpdatedAt,
       canUndo,
       canRedo,
+      past.length,
       undo,
       redo,
     ]

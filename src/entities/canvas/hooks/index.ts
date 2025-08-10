@@ -3,7 +3,7 @@ export { useDeleteItemHandler } from './useDeleteItemHandler';
 export { useKeepRatio } from './useKeepRatio';
 export { useMoveableHandlers } from './useMoveableHandlers';
 export { useSelectableHandlers } from './useSelectableHandlers';
-export { useInitCanvas } from './useInitCanvas';
+export { useInitCanvas, useUpdateScale } from './useInitCanvas';
 export { useGetCurrentPresentationSlide } from './useGetCurrentPresentationSlide';
 export { useUndoableHandler } from './useUndoableHandler';
 export { useSaveHandler } from './useSaveHandler';

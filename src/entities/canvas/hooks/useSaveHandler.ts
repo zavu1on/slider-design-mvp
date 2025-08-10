@@ -6,7 +6,8 @@ import { updateSlideData } from '@/entities/slides';
 import { useMemorizedSlideData } from '../store';
 
 export const useSaveHandler = (projectId: string) => {
-  const { slideData, markChangesAsSaved } = useMemorizedSlideData();
+  const { hasUnsavedChanges, slideData, markChangesAsSaved } =
+    useMemorizedSlideData();
 
   const undoSaveHandler = useCallback(
     (event: KeyboardEvent) => {
@@ -26,12 +27,26 @@ export const useSaveHandler = (projectId: string) => {
         });
       }
     },
-    [projectId, slideData]
+    [projectId, slideData, markChangesAsSaved]
+  );
+
+  const beforeUnloadHandler = useCallback(
+    (event: BeforeUnloadEvent) => {
+      if (hasUnsavedChanges) {
+        event.preventDefault();
+        return event.returnValue;
+      }
+    },
+    [hasUnsavedChanges]
   );
 
   useEffect(() => {
     window.addEventListener('keydown', undoSaveHandler);
+    window.addEventListener('beforeunload', beforeUnloadHandler);
 
-    return () => window.removeEventListener('keydown', undoSaveHandler);
-  }, [undoSaveHandler]);
+    return () => {
+      window.removeEventListener('keydown', undoSaveHandler);
+      window.removeEventListener('beforeunload', beforeUnloadHandler);
+    };
+  }, [undoSaveHandler, beforeUnloadHandler]);
 };

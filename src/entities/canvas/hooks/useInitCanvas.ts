@@ -3,23 +3,12 @@
 import { type RefObject, useEffect } from 'react';
 import { useCanvasStore } from '../store';
 
-export const useInitCanvas = (
-  color: string,
-  width: number,
-  height: number,
+export const useUpdateScale = (
   containerRef: RefObject<HTMLDivElement | null>,
-  canvasRef: RefObject<HTMLDivElement | null>
+  canvasRef: RefObject<HTMLDivElement | null>,
+  width: number,
+  height: number
 ) => {
-  const { setSizes, setColor } = useCanvasStore((state) => state);
-
-  useEffect(() => {
-    setSizes(width, height);
-  }, [width, height]);
-
-  useEffect(() => {
-    setColor(color);
-  }, [color]);
-
   const updateScale = () => {
     if (!containerRef.current || !canvasRef.current) return;
 
@@ -53,4 +42,24 @@ export const useInitCanvas = (
     window.addEventListener('resize', updateScale);
     return () => window.removeEventListener('resize', updateScale);
   }, [canvasRef.current, containerRef.current]);
+};
+
+export const useInitCanvas = (
+  color: string,
+  width: number,
+  height: number,
+  containerRef: RefObject<HTMLDivElement | null>,
+  canvasRef: RefObject<HTMLDivElement | null>
+) => {
+  const { setSizes, setColor } = useCanvasStore((state) => state);
+
+  useEffect(() => {
+    setSizes(width, height);
+  }, [width, height]);
+
+  useEffect(() => {
+    setColor(color);
+  }, [color]);
+
+  useUpdateScale(containerRef, canvasRef, width, height);
 };

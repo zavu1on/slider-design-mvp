@@ -10,9 +10,9 @@ import { type Material, MaterialType } from '@/generated/prisma';
 import type { ActionBasicResponse } from '@/shared';
 import { prisma } from '@/shared/lib';
 
-type UploadImageActionState = ActionBasicResponse & {
-  image?: Material;
-};
+type UploadImageActionState = ActionBasicResponse<{
+  image: Material;
+}>;
 
 export const uploadImageAction = async (
   formData: FormData
@@ -59,7 +59,7 @@ export const uploadImageAction = async (
 
     return {
       success: true,
-      image,
+      data: { image },
     };
   } catch (error) {
     if (error instanceof AuthError) {

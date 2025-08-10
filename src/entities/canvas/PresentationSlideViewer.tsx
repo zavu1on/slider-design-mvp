@@ -1,7 +1,8 @@
 'use client';
 
-import { type FC, type RefObject, useEffect, useRef } from 'react';
+import { type FC, type RefObject, useRef } from 'react';
 import { cn } from '@/shared/lib';
+import { useUpdateScale } from './hooks';
 import type { PresentationSlide } from './schema';
 import { RenderElement } from './ui';
 
@@ -22,39 +23,7 @@ export const PresentationSlideViewer: FC<PresentationSlideViewerProps> = ({
 }) => {
   const canvasRef = useRef<HTMLDivElement>(null);
 
-  const updateScale = () => {
-    if (!containerRef.current || !canvasRef.current) return;
-
-    const containerWidth = containerRef.current.clientWidth;
-    const containerHeight = containerRef.current.clientHeight;
-
-    const targetRatio = width / height;
-    const containerRatio = containerWidth / containerHeight;
-
-    let scaledWidth = containerWidth;
-    let scaledHeight = containerHeight;
-
-    if (containerRatio > targetRatio) {
-      scaledHeight = containerHeight;
-      scaledWidth = scaledHeight * targetRatio;
-    } else {
-      scaledWidth = containerWidth;
-      scaledHeight = scaledWidth / targetRatio;
-    }
-
-    const newScale = scaledWidth / width;
-
-    canvasRef.current.style.transform = `scale(${newScale})`;
-    canvasRef.current.style.transformOrigin = 'top left';
-    canvasRef.current.style.width = `${width}px`;
-    canvasRef.current.style.height = `${height}px`;
-  };
-
-  useEffect(() => {
-    updateScale();
-    window.addEventListener('resize', updateScale);
-    return () => window.removeEventListener('resize', updateScale);
-  }, [canvasRef.current, containerRef.current]);
+  useUpdateScale(containerRef, canvasRef, width, height);
 
   return (
     <div ref={canvasRef} className={cn('relative overflow-hidden', className)}>

@@ -4,7 +4,7 @@ import { useCallback, useEffect } from 'react';
 import { useMemorizedSlideData } from '../store';
 
 export const useUndoableHandler = () => {
-  const { canUndo, canRedo, undo, redo } = useMemorizedSlideData();
+  const { canUndo, canRedo, pastLength, undo, redo } = useMemorizedSlideData();
 
   const undoRedoHandler = useCallback(
     (event: KeyboardEvent) => {
@@ -14,7 +14,7 @@ export const useUndoableHandler = () => {
       if (event.ctrlKey && ['z', 'я'].includes(event.key.toLowerCase())) {
         if (event.shiftKey && canRedo) {
           redo();
-        } else if (canUndo) {
+        } else if (canUndo && pastLength > 2) {
           undo();
         }
       }

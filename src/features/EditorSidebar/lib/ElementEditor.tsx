@@ -36,11 +36,21 @@ export const ElementEditor: FC = () => {
     }
   };
 
-  const updateColor = (color: string) => {
+  const updateColor = (
+    field:
+      | {
+          color: string;
+        }
+      | {
+          backgroundColor: string;
+        }
+  ) => {
+    let [fieldKey] = Object.entries(field)[0];
     let styleString = selectedElements[0]?.styleString;
 
+    if (fieldKey === 'backgroundColor') fieldKey = 'background-color';
     if (!styleString) {
-      updateElement({ color });
+      updateElement(field);
       return;
     }
 
@@ -51,12 +61,12 @@ export const ElementEditor: FC = () => {
         if (pair.length !== 2) return style;
 
         const [key] = pair;
-        if (key.trim() === 'color') return;
+        if (key.trim() === fieldKey) return;
 
         return style;
       })
       .join(';');
-    updateElement({ color, styleString });
+    updateElement({ ...field, styleString });
   };
 
   const updateStyle = (styleString: string) => {
@@ -88,7 +98,7 @@ export const ElementEditor: FC = () => {
           <SketchPicker
             disabled={!selectedElements.length}
             color={selectedElements[0]?.color ?? '#ffffff'}
-            onChange={(color) => updateColor(color)}
+            onChange={(color) => updateColor({ color })}
           />
         </div>
         <div className="flex flex-row gap-2">
@@ -97,7 +107,7 @@ export const ElementEditor: FC = () => {
             disabled={!selectedElements.length}
             color={selectedElements[0]?.backgroundColor ?? 'transparent'}
             onChange={(backgroundColor) =>
-              updateElement({
+              updateColor({
                 backgroundColor,
               })
             }

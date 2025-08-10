@@ -49,19 +49,19 @@ export const ImageLoader: FC = () => {
     formData.append('image', file);
 
     startTransition(async () => {
-      const result = await uploadImageAction(formData);
+      const resp = await uploadImageAction(formData);
 
-      if (!result.success) {
-        toast.error(result.error);
+      if (!resp.success) {
+        toast.error(resp.error);
         return;
       }
 
-      if (result.image?.filePath) {
-        result.image.width = result.image.width || 0;
-        result.image.height = result.image.height || 0;
+      if (resp.data?.image) {
+        resp.data.image.width = resp.data.image.width || 0;
+        resp.data.image.height = resp.data.image.height || 0;
 
-        addNewImage(result.image);
-        addMaterial(result.image);
+        addNewImage(resp.data.image);
+        addMaterial(resp.data.image);
       }
     });
   };
