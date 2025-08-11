@@ -6,7 +6,6 @@ import { useInitCanvas } from './hooks';
 
 type UseCanvasArgs = {
   projectId: string;
-  color?: string;
   width?: number;
   height?: number;
 } & Omit<CanvasProps, 'ref'>;
@@ -16,14 +15,13 @@ type UseCanvas = (props: UseCanvasArgs) => FC;
 export const useCanvas: UseCanvas = ({
   projectId,
   className,
-  color = '#ffffff',
   width = 1280,
   height = 720,
 }) => {
   const canvasRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useInitCanvas(color, width, height, containerRef, canvasRef);
+  useInitCanvas(width, height, containerRef, canvasRef);
 
   useEffect(() => {
     const handleWheel = (event: WheelEvent) => {

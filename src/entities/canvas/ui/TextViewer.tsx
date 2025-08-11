@@ -29,11 +29,11 @@ const TextViewerBasic: FC<{
 
 export const TextViewer: FC<{ element: CanvasElement }> = ({ element }) => {
   const { currentInputId } = useCheckInputStore();
-  const { currentSlideId, updateCanvasElement } = useMemorizedSlideData();
+  const { updateCanvasElement } = useMemorizedSlideData();
 
   const handleBlur = (e: FocusEvent<HTMLTextAreaElement>) => {
     if (e.target.value !== element.content) {
-      updateCanvasElement(currentSlideId!, {
+      updateCanvasElement({
         ...element,
         content: e.target.value,
       });

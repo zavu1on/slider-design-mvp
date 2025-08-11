@@ -13,7 +13,7 @@ import { SketchPicker } from '@/shared/ui';
 
 export const ElementEditor: FC = () => {
   const currentPresentationSlide = useGetCurrentPresentationSlide();
-  const { currentSlideId, updateCanvasElement } = useMemorizedSlideData();
+  const { updateCanvasElement } = useMemorizedSlideData();
   const { targets } = useSelectedTargetsStore();
 
   const selectedElements = useMemo(
@@ -29,9 +29,9 @@ export const ElementEditor: FC = () => {
       Pick<CanvasElement, 'color' | 'backgroundColor' | 'styleString'>
     >
   ) => {
-    if (selectedElements?.length && currentSlideId) {
+    if (selectedElements?.length) {
       for (const element of selectedElements) {
-        updateCanvasElement(currentSlideId, { ...element, ...fields });
+        updateCanvasElement({ ...element, ...fields });
       }
     }
   };

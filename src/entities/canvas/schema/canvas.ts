@@ -24,6 +24,7 @@ export type CanvasElement = {
 
 export type PresentationSlide = {
   id: string;
+  color: string;
   elements: CanvasElement[];
 };
 

@@ -18,11 +18,11 @@ export const updateSlideData = async (
   slideData: SlideData
 ): Promise<UpdateSlideDataResponse> => {
   try {
-    const slideDataForm = await slideDataSchema.validate(slideData);
+    await slideDataSchema.validate(slideData);
     const session = await getSessionOrThrowError();
 
     const updatedAt = new Date();
-    const slideDataHash = hash(slideDataForm);
+    const slideDataHash = hash(slideData);
 
     await prisma.slide.update({
       where: {
@@ -30,7 +30,7 @@ export const updateSlideData = async (
         authorId: session.user.body.id,
       },
       data: {
-        data: JSON.stringify(slideDataForm),
+        data: JSON.stringify(slideData),
         updatedAt,
       },
     });

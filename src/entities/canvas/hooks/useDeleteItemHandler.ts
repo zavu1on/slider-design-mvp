@@ -1,24 +1,23 @@
 'use client';
 
 import { useEffect } from 'react';
+import { getTargetId } from '@/shared/lib';
 import { useMemorizedSlideData, useSelectedTargetsStore } from '../store';
 
 export const useDeleteItemHandler = () => {
   const { targets } = useSelectedTargetsStore();
-  const { currentSlideId, removeCanvasElement } = useMemorizedSlideData();
+  const { removeCanvasElement } = useMemorizedSlideData();
 
   useEffect(() => {
     const onKeydown = (event: KeyboardEvent) => {
-      if (!targets.length || !currentSlideId) return;
+      if (!targets.length) return;
 
       if (event.key === 'Delete') {
         event.preventDefault();
-        for (const target of targets) {
-          const targetId = target.match(/data-id="([^"]*)"/);
 
-          if (targetId && targetId[1]) {
-            removeCanvasElement(currentSlideId, targetId[1]);
-          }
+        for (const target of targets) {
+          const targetId = getTargetId(target);
+          if (targetId) removeCanvasElement(targetId[1]);
         }
       }
     };
@@ -28,5 +27,5 @@ export const useDeleteItemHandler = () => {
     return () => {
       document.removeEventListener('keydown', onKeydown);
     };
-  }, [currentSlideId, targets]);
+  }, [targets]);
 };

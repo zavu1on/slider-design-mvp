@@ -20,10 +20,13 @@ type SlideDataContextValue = {
   lastUpdatedAt: Date | null;
   setSlideData: (slideData: SlideData, updatedDate: Date) => void;
   addPresentationSlide: (id: string) => void;
+  updateCurrentPresentationSlideColor: (color: string) => void;
   removePresentationSlide: (id: string) => void;
-  addCanvasElement: (slideId: string, element: CanvasElement) => void;
-  removeCanvasElement: (slideId: string, elementId: string) => void;
-  updateCanvasElement: (slideId: string, element: CanvasElement) => void;
+  addCanvasElement: (element: CanvasElement) => void;
+  removeCanvasElement: (elementId: string) => void;
+  updateCanvasElement: (element: CanvasElement) => void;
+  bringToFrontCanvasElement(elementId: string): void;
+  sendToBackCanvasElement(elementId: string): void;
   setCurrentSlideId: (id: string) => void;
   markChangesAsSaved: (newHash: string, updatedAt: Date) => void;
 
@@ -57,8 +60,17 @@ export const SlideDataProvider: FC<PropsWithChildren> = ({ children }) => {
     addPresentationSlide: (id: string) => {
       setMemoryData((prev) => ({
         ...prev,
-        slideData: [...prev.slideData, { id, previewUrl: '', elements: [] }],
+        slideData: [...prev.slideData, { id, color: '#ffffff', elements: [] }],
         currentSlideId: id,
+      }));
+    },
+
+    updateCurrentPresentationSlideColor: (color: string) => {
+      setMemoryData((prev) => ({
+        ...prev,
+        slideData: prev.slideData.map((slide) =>
+          slide.id === prev.currentSlideId ? { ...slide, color } : slide
+        ),
       }));
     },
 
@@ -76,21 +88,21 @@ export const SlideDataProvider: FC<PropsWithChildren> = ({ children }) => {
         return { slideData, currentSlideId };
       }),
 
-    addCanvasElement: (slideId: string, element: CanvasElement) =>
+    addCanvasElement: (element: CanvasElement) =>
       setMemoryData((prev) => ({
         ...prev,
         slideData: prev.slideData.map((slide) =>
-          slide.id === slideId
+          slide.id === prev.currentSlideId
             ? { ...slide, elements: [...slide.elements, element] }
             : slide
         ),
       })),
 
-    removeCanvasElement: (slideId: string, elementId: string) =>
+    removeCanvasElement: (elementId: string) =>
       setMemoryData((prev) => ({
         ...prev,
         slideData: prev.slideData.map((slide) =>
-          slide.id === slideId
+          slide.id === prev.currentSlideId
             ? {
                 ...slide,
                 elements: slide.elements.filter((el) => el.id !== elementId),
@@ -99,11 +111,11 @@ export const SlideDataProvider: FC<PropsWithChildren> = ({ children }) => {
         ),
       })),
 
-    updateCanvasElement: (slideId: string, element: CanvasElement) =>
+    updateCanvasElement: (element: CanvasElement) =>
       setMemoryData((prev) => ({
         ...prev,
         slideData: prev.slideData.map((slide) =>
-          slide.id === slideId
+          slide.id === prev.currentSlideId
             ? {
                 ...slide,
                 elements: slide.elements.map((el) =>
@@ -112,6 +124,50 @@ export const SlideDataProvider: FC<PropsWithChildren> = ({ children }) => {
               }
             : slide
         ),
+      })),
+
+    bringToFrontCanvasElement: (elementId: string) =>
+      setMemoryData((prev) => ({
+        ...prev,
+        slideData: prev.slideData.map((slide) => {
+          if (slide.id !== prev.currentSlideId) return slide;
+
+          const elementIndex = slide.elements.findIndex(
+            (el) => el.id === elementId
+          );
+          if (elementIndex === -1) return slide;
+
+          const newElements = [...slide.elements];
+          const [element] = newElements.splice(elementIndex, 1);
+          newElements.push(element);
+
+          return {
+            ...slide,
+            elements: newElements,
+          };
+        }),
+      })),
+
+    sendToBackCanvasElement: (elementId: string) =>
+      setMemoryData((prev) => ({
+        ...prev,
+        slideData: prev.slideData.map((slide) => {
+          if (slide.id !== prev.currentSlideId) return slide;
+
+          const elementIndex = slide.elements.findIndex(
+            (el) => el.id === elementId
+          );
+          if (elementIndex === -1) return slide;
+
+          const newElements = [...slide.elements];
+          const [element] = newElements.splice(elementIndex, 1);
+          newElements.unshift(element);
+
+          return {
+            ...slide,
+            elements: newElements,
+          };
+        }),
       })),
 
     setCurrentSlideId: (id: string) =>

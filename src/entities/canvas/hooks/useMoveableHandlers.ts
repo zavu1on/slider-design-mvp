@@ -7,7 +7,7 @@ const getClearValue = (valueInPixels: string, padding: number = 2): number =>
   Number(valueInPixels.slice(0, -padding));
 
 export const useMoveableHandlers = () => {
-  const { currentSlideId, updateCanvasElement } = useMemorizedSlideData();
+  const { updateCanvasElement } = useMemorizedSlideData();
   const currentPresentationSlide = useGetCurrentPresentationSlide();
   const { wasDoubleClickEvent, setWasDoubleClickEvent, setCheckInput } =
     useCheckInputStore();
@@ -27,13 +27,13 @@ export const useMoveableHandlers = () => {
         (el) => el.id === target.id
       )!;
 
-      updateCanvasElement(currentSlideId!, {
+      updateCanvasElement({
         ...element,
         x: getClearValue(target.style.left),
         y: getClearValue(target.style.top),
       });
     },
-    [currentPresentationSlide, currentSlideId]
+    [currentPresentationSlide]
   );
 
   const resizeHandler = useCallback(
@@ -72,7 +72,7 @@ export const useMoveableHandlers = () => {
         (el) => el.id === target.id
       )!;
 
-      updateCanvasElement(currentSlideId!, {
+      updateCanvasElement({
         ...element,
         x: getClearValue(target.style.left),
         y: getClearValue(target.style.top),
@@ -80,7 +80,7 @@ export const useMoveableHandlers = () => {
         height: getClearValue(target.style.height),
       });
     },
-    [currentPresentationSlide, currentSlideId]
+    [currentPresentationSlide]
   );
 
   const rotateHandler = useCallback(
@@ -96,12 +96,12 @@ export const useMoveableHandlers = () => {
         (el) => el.id === target.id
       )!;
 
-      updateCanvasElement(currentSlideId!, {
+      updateCanvasElement({
         ...element,
         rotation: Number(target.style.transform.slice(7, -4)),
       });
     },
-    [currentPresentationSlide, currentSlideId]
+    [currentPresentationSlide]
   );
 
   const roundHandler = useCallback(
@@ -117,12 +117,12 @@ export const useMoveableHandlers = () => {
         (el) => el.id === target.id
       )!;
 
-      updateCanvasElement(currentSlideId!, {
+      updateCanvasElement({
         ...element,
         borderRadius: target.style.borderRadius,
       });
     },
-    [currentPresentationSlide, currentSlideId]
+    [currentPresentationSlide]
   );
 
   const clickHandler = useCallback(

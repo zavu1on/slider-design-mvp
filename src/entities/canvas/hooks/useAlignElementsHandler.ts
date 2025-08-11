@@ -1,16 +1,24 @@
 'use client';
 
-import { type RefObject, useEffect } from 'react';
+import { type RefObject, useCallback, useEffect } from 'react';
 import type Moveable from 'react-moveable';
 import type { DraggableRequestParam } from 'react-moveable';
-import { useAlignActionStore } from '../store';
+import { getTargetId } from '@/shared/lib';
+import {
+  useAlignActionStore,
+  useMemorizedSlideData,
+  useSelectedTargetsStore,
+} from '../store';
 
 export const useAlignElementsHandler = (
   moveableRef: RefObject<Moveable<unknown> | null>
 ) => {
   const { action, clearAction } = useAlignActionStore();
+  const { targets } = useSelectedTargetsStore();
+  const { bringToFrontCanvasElement, sendToBackCanvasElement } =
+    useMemorizedSlideData();
 
-  const arrangeHorizontalSpacing = () => {
+  const arrangeHorizontalSpacing = useCallback(() => {
     const groupRect = moveableRef.current!.getRect();
     const moveables = moveableRef.current!.getMoveables();
     let left = groupRect.left;
@@ -20,14 +28,10 @@ export const useAlignElementsHandler = (
     }
     const gap =
       (groupRect.width -
-        groupRect.children!.reduce((prev, cur) => {
-          return prev + cur.width;
-        }, 0)) /
+        groupRect.children!.reduce((prev, cur) => prev + cur.width, 0)) /
       (moveables.length - 1);
 
-    moveables.sort((a, b) => {
-      return a.state.left - b.state.left;
-    });
+    moveables.sort((a, b) => a.state.left - b.state.left);
     moveables.forEach((child) => {
       const rect = child.getRect();
 
@@ -43,9 +47,9 @@ export const useAlignElementsHandler = (
     });
 
     moveableRef.current?.updateRect();
-  };
+  }, [moveableRef]);
 
-  const arrangeVerticalSpacing = () => {
+  const arrangeVerticalSpacing = useCallback(() => {
     const groupRect = moveableRef.current!.getRect();
     const moveables = moveableRef.current!.getMoveables();
     let top = groupRect.top;
@@ -55,14 +59,10 @@ export const useAlignElementsHandler = (
     }
     const gap =
       (groupRect.height -
-        groupRect.children!.reduce((prev, cur) => {
-          return prev + cur.height;
-        }, 0)) /
+        groupRect.children!.reduce((prev, cur) => prev + cur.height, 0)) /
       (moveables.length - 1);
 
-    moveables.sort((a, b) => {
-      return a.state.top - b.state.top;
-    });
+    moveables.sort((a, b) => a.state.top - b.state.top);
     moveables.forEach((child) => {
       const rect = child.getRect();
 
@@ -78,9 +78,9 @@ export const useAlignElementsHandler = (
     });
 
     moveableRef.current?.updateRect();
-  };
+  }, [moveableRef]);
 
-  const alignHorizontalCenter = () => {
+  const alignHorizontalCenter = useCallback(() => {
     const rect = moveableRef.current!.getRect();
     const moveables = moveableRef.current!.getMoveables();
 
@@ -98,9 +98,9 @@ export const useAlignElementsHandler = (
     });
 
     moveableRef.current?.updateRect();
-  };
+  }, [moveableRef]);
 
-  const alignVerticalCenter = () => {
+  const alignVerticalCenter = useCallback(() => {
     const rect = moveableRef.current!.getRect();
     const moveables = moveableRef.current!.getMoveables();
 
@@ -118,7 +118,21 @@ export const useAlignElementsHandler = (
     });
 
     moveableRef.current?.updateRect();
-  };
+  }, [moveableRef]);
+
+  const bringToFront = useCallback(() => {
+    for (const target of targets) {
+      const targetId = getTargetId(target);
+      if (targetId) bringToFrontCanvasElement(targetId);
+    }
+  }, [targets]);
+
+  const sendToBack = useCallback(() => {
+    for (const target of targets) {
+      const targetId = getTargetId(target);
+      if (targetId) sendToBackCanvasElement(targetId);
+    }
+  }, [targets]);
 
   useEffect(() => {
     if (action) {
@@ -135,8 +149,23 @@ export const useAlignElementsHandler = (
         case 'AlignCenterVertical':
           alignVerticalCenter();
           break;
+        case 'BringToFront':
+          bringToFront();
+          break;
+        case 'SendToBack':
+          sendToBack();
+          break;
       }
       clearAction();
     }
-  }, [action]);
+  }, [
+    action,
+    arrangeHorizontalSpacing,
+    arrangeVerticalSpacing,
+    alignHorizontalCenter,
+    alignVerticalCenter,
+    clearAction,
+    bringToFront,
+    sendToBack,
+  ]);
 };

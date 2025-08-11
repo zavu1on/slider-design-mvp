@@ -26,7 +26,13 @@ export const PresentationSlideViewer: FC<PresentationSlideViewerProps> = ({
   useUpdateScale(containerRef, canvasRef, width, height);
 
   return (
-    <div ref={canvasRef} className={cn('relative overflow-hidden', className)}>
+    <div
+      ref={canvasRef}
+      className={cn('relative overflow-hidden', className)}
+      style={{
+        background: slide.color,
+      }}
+    >
       {slide?.elements.map((el) => (
         <RenderElement key={el.id} element={el} viewMode />
       ))}

@@ -1,9 +1,10 @@
 export {
-  useCanvasStore,
+  useCanvasSizesStore,
   useUserMaterialsStore,
   useAlignActionStore,
   useMemorizedSlideData,
   SlideDataProvider,
+  type AlignAction,
 } from './store';
 export {
   canvasElementSchema,

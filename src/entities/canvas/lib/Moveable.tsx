@@ -11,7 +11,7 @@ import {
   useMoveableHandlers,
 } from '../hooks';
 import {
-  useCanvasStore,
+  useCanvasSizesStore,
   useCheckInputStore,
   useSelectedTargetsStore,
 } from '../store';
@@ -37,7 +37,7 @@ export const Moveable: FC<MoveableProps> = ({
   const { checkInput } = useCheckInputStore();
   const keepRatio = useKeepRatio(moveableRef);
 
-  const { width, height } = useCanvasStore();
+  const { width, height } = useCanvasSizesStore();
   const {
     dragHandler,
     dragEndHandler,

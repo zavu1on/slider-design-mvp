@@ -1,10 +1,12 @@
 import { create } from 'zustand';
 
-type AlignAction =
+export type AlignAction =
   | 'AlignCenterHorizontal'
   | 'AlignCenterVertical'
   | 'AlignHorizontalSpaceBetween'
-  | 'AlignVerticalSpaceBetween';
+  | 'AlignVerticalSpaceBetween'
+  | 'BringToFront'
+  | 'SendToBack';
 
 type useAlignActionStore = {
   action: AlignAction | null;

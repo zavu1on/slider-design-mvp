@@ -6,34 +6,54 @@ import {
   AlignCenterVertical,
   AlignHorizontalSpaceBetween,
   AlignVerticalSpaceBetween,
+  BringToFront,
+  SendToBack,
 } from 'lucide-react';
-import { useAlignActionStore } from '@/entities/canvas';
+import { type HeaderSection, HeaderSections } from './ui';
+
+const HEADER_LEFT: HeaderSection[] = [
+  {
+    name: 'Layers',
+    group: [
+      {
+        action: 'BringToFront',
+        icon: BringToFront,
+      },
+      {
+        action: 'SendToBack',
+        icon: SendToBack,
+      },
+    ],
+  },
+  {
+    name: 'Alignment',
+    group: [
+      {
+        action: 'AlignHorizontalSpaceBetween',
+        icon: AlignHorizontalSpaceBetween,
+      },
+      {
+        action: 'AlignVerticalSpaceBetween',
+        icon: AlignVerticalSpaceBetween,
+      },
+      {
+        action: 'AlignCenterHorizontal',
+        icon: AlignCenterVertical,
+      },
+      {
+        action: 'AlignCenterVertical',
+        icon: AlignCenterHorizontal,
+      },
+    ],
+  },
+];
 
 export const SliderHeader: FC = () => {
-  const { setAction } = useAlignActionStore((store) => store);
-
   return (
     <header className="w-full pt-4 pr-4">
       <div className="flex flex-row justify-between items-center w-full py-4 px-8 bg-gray-50 shadow">
         <div>{/* MD editor */}</div>
-        <div className="flex flex-row justify-between items-center gap-4">
-          <AlignHorizontalSpaceBetween
-            className="cursor-pointer"
-            onClick={() => setAction('AlignHorizontalSpaceBetween')}
-          />
-          <AlignVerticalSpaceBetween
-            className="cursor-pointer"
-            onClick={() => setAction('AlignVerticalSpaceBetween')}
-          />
-          <AlignCenterHorizontal
-            className="cursor-pointer"
-            onClick={() => setAction('AlignCenterVertical')}
-          />
-          <AlignCenterVertical
-            className="cursor-pointer"
-            onClick={() => setAction('AlignCenterHorizontal')}
-          />
-        </div>
+        <HeaderSections sections={HEADER_LEFT} />
       </div>
     </header>
   );

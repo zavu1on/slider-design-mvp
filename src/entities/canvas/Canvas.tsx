@@ -10,7 +10,6 @@ import {
   useUndoableHandler,
 } from './hooks';
 import { Moveable, Selectable } from './lib';
-import { useCanvasStore } from './store';
 import { RenderElement } from './ui';
 
 export type CanvasProps = {
@@ -20,7 +19,6 @@ export type CanvasProps = {
 };
 
 export const Canvas: FC<CanvasProps> = ({ ref, className, projectId }) => {
-  const { color } = useCanvasStore();
   const currentPresentationSlide = useGetCurrentPresentationSlide();
 
   const canvasRef = useRef<HTMLDivElement>(null);
@@ -34,7 +32,9 @@ export const Canvas: FC<CanvasProps> = ({ ref, className, projectId }) => {
     <>
       <div
         className={className}
-        style={{ backgroundColor: color }}
+        style={{
+          background: currentPresentationSlide?.color ?? '#ffffff',
+        }}
         ref={(node) => {
           canvasRef.current = node;
           if (typeof ref === 'function') {

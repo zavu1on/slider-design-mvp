@@ -6,7 +6,7 @@ import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import { toast } from 'sonner';
 import {
   CanvasElementType,
-  useCanvasStore,
+  useCanvasSizesStore,
   useMemorizedSlideData,
   useUserMaterialsStore,
 } from '@/entities/canvas';
@@ -23,17 +23,15 @@ export const ImageLoader: FC = () => {
 
   const [isPending, startTransition] = useTransition();
 
-  const { width, height } = useCanvasStore();
-  const { currentSlideId, addCanvasElement } = useMemorizedSlideData();
+  const { width, height } = useCanvasSizesStore();
+  const { addCanvasElement } = useMemorizedSlideData();
   const { materials, addMaterial } = useUserMaterialsStore((store) => store);
 
   const addNewImage = (image: Material) => {
-    if (!currentSlideId) return;
-
     image.width = image.width || 0;
     image.height = image.height || 0;
 
-    addCanvasElement(currentSlideId, {
+    addCanvasElement({
       id: image.id,
       type: CanvasElementType.IMAGE,
       content: image.filePath,

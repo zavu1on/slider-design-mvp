@@ -11,7 +11,7 @@ import { v4 as uuid4 } from 'uuid';
 import {
   CanvasElementType,
   type GeometricFigure,
-  useCanvasStore,
+  useCanvasSizesStore,
   useMemorizedSlideData,
 } from '@/entities/canvas';
 import { Button } from '@/shared/ui';
@@ -50,13 +50,11 @@ const CLIP_PATH: Record<GeometricFigure['name'], string> = {
 };
 
 export const Elements: FC = () => {
-  const { width, height } = useCanvasStore();
-  const { currentSlideId, addCanvasElement } = useMemorizedSlideData();
+  const { width, height } = useCanvasSizesStore();
+  const { addCanvasElement } = useMemorizedSlideData();
 
   const addFigure = (figure: GeometricFigure) => {
-    if (!currentSlideId) return;
-
-    addCanvasElement(currentSlideId, {
+    addCanvasElement({
       id: uuid4(),
       type: CanvasElementType.FIGURE,
       content: CLIP_PATH[figure.name],
@@ -70,9 +68,7 @@ export const Elements: FC = () => {
   };
 
   const addTextField = () => {
-    if (!currentSlideId) return;
-
-    addCanvasElement(currentSlideId, {
+    addCanvasElement({
       id: uuid4(),
       type: CanvasElementType.TEXT,
       content: 'Текст',
