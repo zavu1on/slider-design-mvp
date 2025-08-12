@@ -1,14 +1,14 @@
 import { useCallback } from 'react';
 import type { TargetElement } from '../schema';
 import { useCheckInputStore, useMemorizedSlideData } from '../store';
-import { useGetCurrentPresentationSlide } from './useGetCurrentPresentationSlide';
+import { useCurrentPresentationSlide } from './useCurrentPresentationSlide';
 
 const getClearValue = (valueInPixels: string, padding: number = 2): number =>
   Number(valueInPixels.slice(0, -padding));
 
 export const useMoveableHandlers = () => {
   const { updateCanvasElement } = useMemorizedSlideData();
-  const currentPresentationSlide = useGetCurrentPresentationSlide();
+  const currentPresentationSlide = useCurrentPresentationSlide();
   const { wasDoubleClickEvent, setWasDoubleClickEvent, setCheckInput } =
     useCheckInputStore();
 

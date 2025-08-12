@@ -9,6 +9,7 @@ export const useUndoableHandler = () => {
   const undoRedoHandler = useCallback(
     (event: KeyboardEvent) => {
       const target = event.target as HTMLElement;
+      if (target.contentEditable === 'true') return;
       if (['INPUT', 'SELECT', 'TEXTAREA'].includes(target.tagName)) return;
 
       if (event.ctrlKey && ['z', 'я'].includes(event.key.toLowerCase())) {

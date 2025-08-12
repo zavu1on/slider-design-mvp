@@ -2,10 +2,9 @@
 
 import type { FC } from 'react';
 import type { LucideProps } from 'lucide-react';
-import { type AlignAction, useAlignActionStore } from '@/entities/canvas';
 
 type HeaderGroup = {
-  action: AlignAction;
+  action: () => void;
   icon: FC<LucideProps>;
 }[];
 
@@ -17,8 +16,6 @@ export type HeaderSection = {
 export const HeaderSections: FC<{ sections: HeaderSection[] }> = ({
   sections,
 }) => {
-  const { setAction } = useAlignActionStore();
-
   return (
     <div className="flex flex-row justify-between items-center gap-12">
       {sections.map(({ name, group }) => (
@@ -28,9 +25,9 @@ export const HeaderSections: FC<{ sections: HeaderSection[] }> = ({
         >
           {group.map(({ action, icon: Icon }) => (
             <Icon
-              key={action}
+              key={Icon.displayName}
               className="cursor-pointer"
-              onClick={() => setAction(action)}
+              onClick={action}
             />
           ))}
         </div>

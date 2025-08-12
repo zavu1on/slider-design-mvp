@@ -185,4 +185,33 @@
   .pointer-events-all {
     pointer-events: all;
   }
+
+  .tiptap ul,
+  .tiptap ol {
+    padding-left: 2rem;
+  }
+
+  .tiptap ul {
+    list-style-type: disc;
+  }
+
+  .tiptap ol {
+    list-style-type: decimal;
+  }
+
+  .tiptap h1 {
+    @apply mb-4 text-6xl font-bold;
+  }
+
+  .tiptap h2 {
+    @apply mb-3 text-5xl font-semibold;
+  }
+
+  .tiptap h3 {
+    @apply mb-2 text-4xl font-semibold;
+  }
+
+  .tiptap h4 {
+    @apply mb-2 text-3xl font-medium;
+  }
 }

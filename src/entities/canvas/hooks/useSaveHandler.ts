@@ -12,10 +12,14 @@ export const useSaveHandler = (projectId: string) => {
   const undoSaveHandler = useCallback(
     (event: KeyboardEvent) => {
       const target = event.target as HTMLElement;
+      if (target.contentEditable === 'true') return;
       if (['INPUT', 'SELECT', 'TEXTAREA'].includes(target.tagName)) return;
 
       if (event.ctrlKey && ['s', 'ы'].includes(event.key.toLowerCase())) {
+        const activeElement = document.activeElement as HTMLElement | null;
+        activeElement?.blur();
         event.preventDefault();
+
         startTransition(async () => {
           const resp = await updateSlideData(projectId, slideData);
 

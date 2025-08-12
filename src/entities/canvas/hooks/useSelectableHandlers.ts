@@ -5,19 +5,20 @@ import type Moveable from 'react-moveable';
 import type { OnDragStart, OnSelect, OnSelectEnd } from 'react-selecto';
 import type Selecto from 'react-selecto';
 import { useCheckInputStore, useSelectedTargetsStore } from '../store';
-import { useGetCurrentPresentationSlide } from './useGetCurrentPresentationSlide';
+import { useCurrentPresentationSlide } from './useCurrentPresentationSlide';
 
 export const useSelectableHandlers = (
   moveableRef: RefObject<Moveable | null>,
   canvasRef: RefObject<HTMLDivElement | null>
 ) => {
-  const currentPresentationSlide = useGetCurrentPresentationSlide();
+  const currentPresentationSlide = useCurrentPresentationSlide();
   const { targets, setTargets } = useSelectedTargetsStore();
   const { uncheckInput } = useCheckInputStore();
 
   const onKeydown = useCallback(
     (event: KeyboardEvent) => {
       const target = event.target as HTMLElement;
+      if (target.contentEditable === 'true') return;
       if (['INPUT', 'SELECT', 'TEXTAREA'].includes(target.tagName)) return;
 
       const key = event.key.toLowerCase();

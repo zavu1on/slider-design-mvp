@@ -16,6 +16,6 @@ export {
   type SlideData,
   type GeometricFigure,
 } from './schema';
-export { useGetCurrentPresentationSlide } from './hooks';
+export { useCurrentPresentationSlide, useSelectedElements } from './hooks';
 export { useCanvas } from './useCanvas';
 export { PresentationSlideViewer } from './PresentationSlideViewer';

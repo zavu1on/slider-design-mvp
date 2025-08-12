@@ -17,7 +17,7 @@ export const useDeleteItemHandler = () => {
 
         for (const target of targets) {
           const targetId = getTargetId(target);
-          if (targetId) removeCanvasElement(targetId[1]);
+          if (targetId) removeCanvasElement(targetId);
         }
       }
     };

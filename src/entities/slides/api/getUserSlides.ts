@@ -7,5 +7,6 @@ export const getUserSlides = async (session: Session): Promise<Slide[]> => {
     where: {
       authorId: session.user.body.id,
     },
+    orderBy: [{ updatedAt: 'desc' }],
   });
 };

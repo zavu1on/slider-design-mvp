@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import type { PresentationSlide } from '../schema';
 import { useMemorizedSlideData } from '../store';
 
-export const useGetCurrentPresentationSlide = ():
+export const useCurrentPresentationSlide = ():
   | PresentationSlide
   | undefined => {
   const { slideData, currentSlideId } = useMemorizedSlideData();

@@ -2,13 +2,13 @@
 
 import type { FC } from 'react';
 import {
-  useGetCurrentPresentationSlide,
+  useCurrentPresentationSlide,
   useMemorizedSlideData,
 } from '@/entities/canvas';
 import { ColorPicker } from '@/shared/ui';
 
 export const ProjectSettings: FC = () => {
-  const currentPresentationSlide = useGetCurrentPresentationSlide();
+  const currentPresentationSlide = useCurrentPresentationSlide();
   const { updateCurrentPresentationSlideColor } = useMemorizedSlideData();
 
   return (

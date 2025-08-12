@@ -5,7 +5,7 @@ import React from 'react';
 import type ReactMoveable from 'react-moveable';
 import type Selecto from 'react-selecto';
 import {
-  useGetCurrentPresentationSlide,
+  useCurrentPresentationSlide,
   useSaveHandler,
   useUndoableHandler,
 } from './hooks';
@@ -19,7 +19,7 @@ export type CanvasProps = {
 };
 
 export const Canvas: FC<CanvasProps> = ({ ref, className, projectId }) => {
-  const currentPresentationSlide = useGetCurrentPresentationSlide();
+  const currentPresentationSlide = useCurrentPresentationSlide();
 
   const canvasRef = useRef<HTMLDivElement>(null);
   const moveableRef = useRef<ReactMoveable>(null);

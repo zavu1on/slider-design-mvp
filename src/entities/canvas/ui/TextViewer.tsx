@@ -1,7 +1,7 @@
 'use client';
 
-import type { FC, FocusEvent, ReactNode } from 'react';
-import { cn, stringToStyle } from '@/shared/lib';
+import type { FC, ReactNode } from 'react';
+import { RichTextEditor, cn, stringToStyle } from '@/shared/lib';
 import type { CanvasElement } from '../schema';
 import { useCheckInputStore, useMemorizedSlideData } from '../store';
 
@@ -31,11 +31,11 @@ export const TextViewer: FC<{ element: CanvasElement }> = ({ element }) => {
   const { currentInputId } = useCheckInputStore();
   const { updateCanvasElement } = useMemorizedSlideData();
 
-  const handleBlur = (e: FocusEvent<HTMLTextAreaElement>) => {
-    if (e.target.value !== element.content) {
+  const handleBlur = (html: string) => {
+    if (html !== element.content) {
       updateCanvasElement({
         ...element,
-        content: e.target.value,
+        content: html,
       });
     }
   };
@@ -47,17 +47,10 @@ export const TextViewer: FC<{ element: CanvasElement }> = ({ element }) => {
       })}
       element={element}
     >
-      <textarea
-        className={cn(
-          {
-            'border-1 border-blue-600': element.id === currentInputId,
-            'pointer-events-none': element.id !== currentInputId,
-          },
-          'w-full h-full p-2 resize-none overflow-hidden whitespace-nowrap text-ellipsis'
-        )}
-        defaultValue={element.content}
+      <RichTextEditor
+        initialContent={element.content}
+        className="w-full h-full bg-transparent overflow-hidden whitespace-nowrap text-ellipsis"
         onBlur={handleBlur}
-        disabled={element.id !== currentInputId}
       />
     </TextViewerBasic>
   );
@@ -67,8 +60,9 @@ export const ReadonlyTextViewer: FC<{ element: CanvasElement }> = ({
   element,
 }) => (
   <TextViewerBasic element={element} withoutId>
-    <div className="w-full h-full p-2 overflow-hidden whitespace-nowrap text-ellipsis">
-      {element.content}
-    </div>
+    <div
+      className="w-full h-full p-2 overflow-hidden whitespace-nowrap text-ellipsis tiptap"
+      dangerouslySetInnerHTML={{ __html: element.content }}
+    ></div>
   </TextViewerBasic>
 );

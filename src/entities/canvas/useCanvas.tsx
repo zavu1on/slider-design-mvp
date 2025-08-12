@@ -1,8 +1,8 @@
 'use client';
 
-import { type FC, useEffect, useRef } from 'react';
+import { type FC, useRef } from 'react';
 import { Canvas, type CanvasProps } from './Canvas';
-import { useInitCanvas } from './hooks';
+import { useInitCanvas, usePreventWheelEvent } from './hooks';
 
 type UseCanvasArgs = {
   projectId: string;
@@ -22,24 +22,7 @@ export const useCanvas: UseCanvas = ({
   const containerRef = useRef<HTMLDivElement>(null);
 
   useInitCanvas(width, height, containerRef, canvasRef);
-
-  useEffect(() => {
-    const handleWheel = (event: WheelEvent) => {
-      if (event.ctrlKey) event.preventDefault();
-    };
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.ctrlKey && (event.key === '+' || event.key === '-')) {
-        event.preventDefault();
-      }
-    };
-    document.addEventListener('wheel', handleWheel);
-    document.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      document.removeEventListener('wheel', handleWheel);
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, []);
+  usePreventWheelEvent();
 
   return function CanvasWrapper() {
     return (
