@@ -1,7 +1,7 @@
 'use client';
 
 import { type FC, useEffect } from 'react';
-import { Grid2X2Plus, Image, Settings, Sparkles } from 'lucide-react';
+import { Edit, Grid2X2Plus, Image, Settings } from 'lucide-react';
 import Link from 'next/link';
 import { useUserMaterialsStore } from '@/entities/canvas';
 import type { Material } from '@/generated/prisma';
@@ -50,7 +50,7 @@ const SIDEBAR_ITEMS = [
   },
   {
     title: 'Редактор',
-    icon: Sparkles,
+    icon: Edit,
     body: <ElementEditor />,
   },
 ];

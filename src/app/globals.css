@@ -152,12 +152,6 @@
 }
 
 @layer utilities {
-  :root {
-    --canvas-min-width: 1000px;
-    --canvas-mean-width: 50vw;
-    --canvas-max-width: 1180px;
-  }
-
   div[data-slot='sidebar-container'] {
     border-right: 0 !important;
   }
@@ -219,42 +213,5 @@
 
   .tiptap h4 {
     @apply mb-2 text-3xl font-medium;
-  }
-
-  .canvas-container {
-    width: clamp(
-      var(--canvas-min-width),
-      var(--canvas-mean-width),
-      var(--canvas-max-width)
-    );
-    height: clamp(
-      calc(var(--canvas-min-width) * 0.5625),
-      calc(var(--canvas-mean-width) * 0.5625),
-      calc(var(--canvas-max-width) * 0.5625)
-    );
-  }
-
-  @media screen and (max-width: 1360px) {
-    :root {
-      --canvas-min-width: 400px;
-      --canvas-mean-width: 70vw;
-      --canvas-max-width: 1280px;
-    }
-  }
-
-  @media screen and (max-width: 1020px) {
-    :root {
-      --canvas-min-width: 400px;
-      --canvas-mean-width: 65vw;
-      --canvas-max-width: 1280px;
-    }
-  }
-
-  @media screen and (max-width: 1020px) {
-    :root {
-      --canvas-min-width: 400px;
-      --canvas-mean-width: 90vw;
-      --canvas-max-width: 910px;
-    }
   }
 }

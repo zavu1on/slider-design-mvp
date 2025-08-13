@@ -9,3 +9,4 @@ export { useUndoableHandler } from './useUndoableHandler';
 export { useSaveHandler } from './useSaveHandler';
 export { usePreventWheelEvent } from './usePreventWheelEvent';
 export { useSelectedElements } from './useSelectedElements';
+export { useCalcContainerSize } from './useCalcContainerSize';

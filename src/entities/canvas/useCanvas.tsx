@@ -2,7 +2,11 @@
 
 import { type FC, useRef } from 'react';
 import { Canvas, type CanvasProps } from './Canvas';
-import { useInitCanvas, usePreventWheelEvent } from './hooks';
+import {
+  useCalcContainerSize,
+  useInitCanvas,
+  usePreventWheelEvent,
+} from './hooks';
 
 type UseCanvasArgs = {
   projectId: string;
@@ -21,6 +25,7 @@ export const useCanvas: UseCanvas = ({
   const canvasRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  const { containerWidth, containerHeight } = useCalcContainerSize();
   useInitCanvas(width, height, containerRef, canvasRef);
   usePreventWheelEvent();
 
@@ -28,7 +33,8 @@ export const useCanvas: UseCanvas = ({
     return (
       <div
         ref={containerRef}
-        className="canvas-container overflow-hidden shadow"
+        className="overflow-hidden shadow"
+        style={{ width: containerWidth, height: containerHeight }}
       >
         <Canvas ref={canvasRef} className={className} projectId={projectId} />
       </div>
