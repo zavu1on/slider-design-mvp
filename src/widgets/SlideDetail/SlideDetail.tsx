@@ -28,7 +28,7 @@ export const SlideDetail: FC<SlideDetailProps> = async ({
       <EditorSidebar projectId={projectId} name={name} materials={materials} />
       <main className="w-screen h-screen flex flex-col bg-slate-200">
         <SliderHeader />
-        <div className="size-full flex justify-center items-center">
+        <div className="size-full flex justify-center items-center pr-2 md:pr-4">
           <Suspense
             fallback={
               <Loader2 className="text-gray-800 size-16 animate-spin" />

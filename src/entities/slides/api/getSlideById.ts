@@ -6,8 +6,6 @@ export const getSlideById = async (
   session: Session,
   id: string
 ): Promise<Slide | null> => {
-  // await new Promise((res) => setTimeout(res, 1000));
-
   return await prisma.slide.findFirst({
     where: {
       id,

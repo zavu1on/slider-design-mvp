@@ -28,7 +28,7 @@ export const SliderFooter: FC = () => {
 
   return (
     <footer
-      className="w-full pb-4 pr-4"
+      className="w-full pb-4 pr-2 md:pr-4"
       style={{
         maxWidth,
       }}

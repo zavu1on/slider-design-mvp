@@ -1,6 +1,6 @@
 'use client';
 
-import type { FC } from 'react';
+import { type FC, useEffect, useState } from 'react';
 import {
   AlignCenterHorizontal,
   AlignCenterVertical,
@@ -18,7 +18,7 @@ import {
   Underline,
 } from 'lucide-react';
 import { useAlignActionStore } from '@/entities/canvas';
-import { useRichTextStore } from '@/shared/lib';
+import { useIsMobile, useRichTextStore } from '@/shared/lib';
 import { type HeaderSection, HeaderSections } from './ui';
 
 const HEADER_RIGHT: HeaderSection[] = [
@@ -110,12 +110,22 @@ const HEADER_LEFT: HeaderSection[] = [
 ];
 
 export const SliderHeader: FC = () => {
+  const isMobile = useIsMobile();
+  const [maxWidth, setMaxWidth] = useState('100%');
+
+  useEffect(() => {
+    if (isMobile && maxWidth === '100%') {
+      setMaxWidth('calc(100vw - 36px)');
+    }
+  }, [isMobile, maxWidth]);
+
   return (
-    <header className="w-full pt-4 pr-4">
-      <div className="flex flex-row justify-between items-center w-full py-4 px-8 bg-gray-50 shadow">
-        <div className="flex flex-row justify-between items-center gap-4">
-          <HeaderSections sections={HEADER_RIGHT} />
-        </div>
+    <header className="w-full pt-4 pr-2 md:pr-4">
+      <div
+        className="flex flex-col md:flex-row justify-between items-start md:items-center w-full py-3 md:py-4 px-4 md:px-8 bg-gray-50 shadow overflow-scroll"
+        style={{ maxWidth }}
+      >
+        <HeaderSections sections={HEADER_RIGHT} />
         <HeaderSections sections={HEADER_LEFT} />
       </div>
     </header>

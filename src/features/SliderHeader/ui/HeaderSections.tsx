@@ -17,7 +17,7 @@ export const HeaderSections: FC<{ sections: HeaderSection[] }> = ({
   sections,
 }) => {
   return (
-    <div className="flex flex-row justify-between items-center gap-12">
+    <div className="flex flex-row justify-between items-center gap-12 w-full">
       {sections.map(({ name, group }) => (
         <div
           key={name}
