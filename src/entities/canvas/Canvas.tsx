@@ -5,6 +5,7 @@ import React from 'react';
 import type ReactMoveable from 'react-moveable';
 import type Selecto from 'react-selecto';
 import {
+  useCopyPasteHandler,
   useCurrentPresentationSlide,
   useSaveHandler,
   useUndoableHandler,
@@ -27,6 +28,7 @@ export const Canvas: FC<CanvasProps> = ({ ref, className, projectId }) => {
 
   useUndoableHandler();
   useSaveHandler(projectId);
+  useCopyPasteHandler();
 
   return (
     <>

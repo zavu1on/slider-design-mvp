@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { getTargetId } from '@/shared/lib';
 import { useMemorizedSlideData, useSelectedTargetsStore } from '../store';
 
@@ -8,8 +8,8 @@ export const useDeleteItemHandler = () => {
   const { targets } = useSelectedTargetsStore();
   const { removeCanvasElement } = useMemorizedSlideData();
 
-  useEffect(() => {
-    const onKeydown = (event: KeyboardEvent) => {
+  const onKeydown = useCallback(
+    (event: KeyboardEvent) => {
       if (!targets.length) return;
 
       if (event.key === 'Delete') {
@@ -20,12 +20,15 @@ export const useDeleteItemHandler = () => {
           if (targetId) removeCanvasElement(targetId);
         }
       }
-    };
+    },
+    [targets]
+  );
 
+  useEffect(() => {
     document.addEventListener('keydown', onKeydown);
 
     return () => {
       document.removeEventListener('keydown', onKeydown);
     };
-  }, [targets]);
+  }, [onKeydown]);
 };

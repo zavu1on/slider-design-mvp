@@ -8,6 +8,7 @@ import {
   useSelectedElements,
 } from '@/entities/canvas';
 import { Input } from '@/generated/shadcn/input';
+import { cn } from '@/shared/lib';
 import { SketchPicker } from '@/shared/ui';
 
 export const ElementEditor: FC = () => {
@@ -111,6 +112,9 @@ export const ElementEditor: FC = () => {
           placeholder="color: red; font-size: 16px"
           value={selectedElements[0]?.styleString ?? ''}
           onChange={(event) => updateStyle(event.target.value)}
+          className={cn({
+            'cursor-not-allowed': !selectedElements?.length,
+          })}
         />
       </div>
     </div>

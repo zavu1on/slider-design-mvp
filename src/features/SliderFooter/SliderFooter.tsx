@@ -33,7 +33,7 @@ export const SliderFooter: FC = () => {
         maxWidth,
       }}
     >
-      <div className="flex flex-row items-center gap-2 w-full py-3 px-4 bg-gray-50 shadow overflow-x-scroll">
+      <div className="flex flex-row items-center gap-2 w-full py-3 px-4 bg-gray-50 shadow overflow-x-scroll overflow-y-hidden">
         {slideData.map((slide, index) => (
           <SlideCard
             key={slide.id}

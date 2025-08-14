@@ -25,7 +25,7 @@ export const ImageLoader: FC = () => {
 
   const { width, height } = useCanvasSizesStore();
   const { addCanvasElement } = useMemorizedSlideData();
-  const { materials, addMaterial } = useUserMaterialsStore((store) => store);
+  const { materials, addMaterial } = useUserMaterialsStore();
 
   const addNewImage = (image: Material) => {
     image.width = image.width || 0;

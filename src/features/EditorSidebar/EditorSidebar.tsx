@@ -1,9 +1,13 @@
 'use client';
 
-import { type FC, useEffect } from 'react';
+import { type FC, type MouseEvent, useEffect } from 'react';
 import { Edit, Grid2X2Plus, Image, Settings } from 'lucide-react';
 import Link from 'next/link';
-import { useUserMaterialsStore } from '@/entities/canvas';
+import { toast } from 'sonner';
+import {
+  useMemorizedSlideData,
+  useUserMaterialsStore,
+} from '@/entities/canvas';
 import type { Material } from '@/generated/prisma';
 import {
   Accordion,
@@ -66,7 +70,15 @@ export const EditorSidebar: FC<EditorSidebarProps> = ({
   name,
   materials,
 }) => {
-  const setMaterials = useUserMaterialsStore((store) => store.setMaterials);
+  const { setMaterials } = useUserMaterialsStore();
+  const { hasUnsavedChanges } = useMemorizedSlideData();
+
+  const linkClickHandler = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (hasUnsavedChanges) {
+      event.preventDefault();
+      toast.error('Сохраните данные перед выходом');
+    }
+  };
 
   useEffect(() => {
     setMaterials(materials);
@@ -109,7 +121,7 @@ export const EditorSidebar: FC<EditorSidebarProps> = ({
           </SidebarGroup>
         </SidebarContent>
         <SidebarFooter className="bg-gray-800">
-          <Link href="/slides">
+          <Link href="/slides" onClick={linkClickHandler}>
             <Button className="w-full hover:underline">
               К списку проектов
             </Button>

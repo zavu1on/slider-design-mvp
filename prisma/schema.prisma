@@ -30,6 +30,7 @@ model Slide {
   author    User     @relation(fields: [authorId], references: [id])
   authorId  String
   updatedAt DateTime @default(now())
+  slug      String   @unique @default(uuid())
 }
 
 enum MaterialType {

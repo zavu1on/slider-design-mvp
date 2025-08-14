@@ -59,13 +59,15 @@ export const canvasElementSchema = yup
   })
   .required();
 
+export const canvasElementListSchema = yup
+  .array()
+  .of(canvasElementSchema)
+  .required('Элементы обязательны');
+
 export const presentationSlideSchema = yup
   .object({
     id: yup.string().required('ID слайда обязателен'),
-    elements: yup
-      .array()
-      .of(canvasElementSchema)
-      .required('Элементы обязательны'),
+    elements: canvasElementListSchema,
   })
   .required();
 

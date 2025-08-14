@@ -6,9 +6,9 @@ import { scan } from 'react-scan';
 export const ReactScan: FC = () => {
   useEffect(() => {
     scan({
-      enabled: true,
+      enabled: process.env.NODE_ENV === 'development',
     });
   }, []);
 
-  return <></>;
+  return null;
 };

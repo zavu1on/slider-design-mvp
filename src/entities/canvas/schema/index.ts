@@ -1,5 +1,6 @@
 export {
   canvasElementSchema,
+  canvasElementListSchema,
   presentationSlideSchema,
   slideDataSchema,
   CanvasElementType,

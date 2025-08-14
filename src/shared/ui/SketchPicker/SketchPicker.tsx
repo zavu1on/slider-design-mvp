@@ -33,16 +33,16 @@ export const SketchPicker: FC<SketchPickerProps> = ({
     setDisplayColorPicker(false);
   };
 
+  const onKeydown = (event: KeyboardEvent) => {
+    const target = event.target as HTMLElement;
+    if (['INPUT', 'SELECT', 'TEXTAREA'].includes(target.tagName)) return;
+
+    if (event.key === 'Escape') {
+      setDisplayColorPicker(false);
+    }
+  };
+
   useEffect(() => {
-    const onKeydown = (event: KeyboardEvent) => {
-      const target = event.target as HTMLElement;
-      if (['INPUT', 'SELECT', 'TEXTAREA'].includes(target.tagName)) return;
-
-      if (event.key === 'Escape') {
-        setDisplayColorPicker(false);
-      }
-    };
-
     document.addEventListener('keydown', onKeydown);
     return () => {
       document.removeEventListener('keydown', onKeydown);
