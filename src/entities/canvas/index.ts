@@ -1,6 +1,11 @@
 export {
   useCanvasSizesStore,
+  selectCanvasWidth,
+  selectCanvasHeight,
   useUserMaterialsStore,
+  selectUserMaterials,
+  selectAddUserMaterial,
+  selectSetUserMaterials,
   useAlignActionStore,
   useMemorizedSlideData,
   SlideDataProvider,

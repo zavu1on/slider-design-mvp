@@ -5,6 +5,7 @@ import { Edit, Grid2X2Plus, Image, Settings } from 'lucide-react';
 import Link from 'next/link';
 import { toast } from 'sonner';
 import {
+  selectSetUserMaterials,
   useMemorizedSlideData,
   useUserMaterialsStore,
 } from '@/entities/canvas';
@@ -70,7 +71,7 @@ export const EditorSidebar: FC<EditorSidebarProps> = ({
   name,
   materials,
 }) => {
-  const { setMaterials } = useUserMaterialsStore();
+  const setMaterials = useUserMaterialsStore(selectSetUserMaterials);
   const { hasUnsavedChanges } = useMemorizedSlideData();
 
   const linkClickHandler = (event: MouseEvent<HTMLAnchorElement>) => {

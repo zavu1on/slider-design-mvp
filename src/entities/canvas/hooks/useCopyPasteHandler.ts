@@ -4,11 +4,12 @@ import { useCallback, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { getTargetId } from '@/shared/lib';
 import { type CanvasElement, canvasElementListSchema } from '../schema';
-import { useMemorizedSlideData, useSelectedTargetsStore } from '../store';
+import { useMemorizedSlideData } from '../store';
 import { useCurrentPresentationSlide } from './useCurrentPresentationSlide';
+import { useSelectedTargets } from './useSelectedTargets';
 
 export const useCopyPasteHandler = () => {
-  const { targets } = useSelectedTargetsStore();
+  const targets = useSelectedTargets();
   const currentSlide = useCurrentPresentationSlide();
   const { addCanvasElement, removeCanvasElement } = useMemorizedSlideData();
 

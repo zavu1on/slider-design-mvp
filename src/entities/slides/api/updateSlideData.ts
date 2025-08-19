@@ -24,6 +24,7 @@ export const updateSlideData = async (
     const updatedAt = new Date();
     const slideDataHash = hash(slideData);
 
+    // todo add dom purify to slideData[].elements[].content
     await prisma.slide.update({
       where: {
         id: projectId,

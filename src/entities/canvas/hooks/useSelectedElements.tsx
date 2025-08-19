@@ -2,12 +2,12 @@
 
 import { useMemo } from 'react';
 import type { CanvasElement } from '../schema';
-import { useSelectedTargetsStore } from '../store';
 import { useCurrentPresentationSlide } from './useCurrentPresentationSlide';
+import { useSelectedTargets } from './useSelectedTargets';
 
 export const useSelectedElements = (): CanvasElement[] => {
   const currentPresentationSlide = useCurrentPresentationSlide();
-  const { targets } = useSelectedTargetsStore();
+  const targets = useSelectedTargets();
 
   const selectedElements = useMemo(
     () =>

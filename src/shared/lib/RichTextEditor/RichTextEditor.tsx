@@ -16,7 +16,7 @@ export const RichTextEditor: FC<RichTextEditorProps> = ({
   className,
   onBlur,
 }) => {
-  const { setEditor } = useRichTextStore();
+  const setEditor = useRichTextStore((store) => store.setEditor);
 
   const editor = useEditor({
     extensions: [StarterKit],

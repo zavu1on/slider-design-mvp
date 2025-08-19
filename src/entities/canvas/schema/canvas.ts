@@ -40,7 +40,7 @@ export const canvasElementSchema = yup
         'Неверный тип элемента'
       )
       .required('Тип обязателен'),
-    content: yup.string().required('Контент обязателен'), // todo добавить типы для md разметки текста
+    content: yup.string().required('Контент обязателен'),
     x: yup.number().required('Координата X обязательна'),
     y: yup.number().required('Координата Y обязательна'),
     width: yup

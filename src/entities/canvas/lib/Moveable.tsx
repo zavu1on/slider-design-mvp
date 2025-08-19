@@ -9,11 +9,14 @@ import {
   useDeleteItemHandler,
   useKeepRatio,
   useMoveableHandlers,
+  useSelectedTargets,
 } from '../hooks';
 import {
+  selectCanvasHeight,
+  selectCanvasWidth,
+  selectCheckInput,
   useCanvasSizesStore,
   useCheckInputStore,
-  useSelectedTargetsStore,
 } from '../store';
 import { DimensionViewableAddon } from '../ui';
 
@@ -33,11 +36,12 @@ export const Moveable: FC<MoveableProps> = ({
     []
   );
 
-  const { targets } = useSelectedTargetsStore();
-  const { checkInput } = useCheckInputStore();
+  const targets = useSelectedTargets();
+  const checkInput = useCheckInputStore(selectCheckInput);
   const keepRatio = useKeepRatio(moveableRef);
 
-  const { width, height } = useCanvasSizesStore();
+  const width = useCanvasSizesStore(selectCanvasWidth);
+  const height = useCanvasSizesStore(selectCanvasHeight);
   const {
     dragHandler,
     dragEndHandler,

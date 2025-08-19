@@ -5,16 +5,20 @@ import type Moveable from 'react-moveable';
 import type { DraggableRequestParam } from 'react-moveable';
 import { getTargetId } from '@/shared/lib';
 import {
+  selectAlignAction,
+  selectClearAlignAction,
   useAlignActionStore,
   useMemorizedSlideData,
-  useSelectedTargetsStore,
 } from '../store';
+import { useSelectedTargets } from './useSelectedTargets';
 
 export const useAlignElementsHandler = (
   moveableRef: RefObject<Moveable<unknown> | null>
 ) => {
-  const { action, clearAction } = useAlignActionStore();
-  const { targets } = useSelectedTargetsStore();
+  const action = useAlignActionStore(selectAlignAction);
+  const clearAction = useAlignActionStore(selectClearAlignAction);
+
+  const targets = useSelectedTargets();
   const { bringToFrontCanvasElement, sendToBackCanvasElement } =
     useMemorizedSlideData();
 

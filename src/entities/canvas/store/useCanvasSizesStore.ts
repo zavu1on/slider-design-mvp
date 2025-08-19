@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { withSelectors } from '@/shared/lib';
 
 type CanvasSizesStore = {
   width: number;
@@ -7,9 +8,15 @@ type CanvasSizesStore = {
   setSizes: (width: number, height: number) => void;
 };
 
-export const useCanvasSizesStore = create<CanvasSizesStore>()((set) => ({
-  width: 0,
-  height: 0,
+export const useCanvasSizesStore = withSelectors(
+  create<CanvasSizesStore>()((set) => ({
+    width: 0,
+    height: 0,
 
-  setSizes: (width, height) => set((state) => ({ ...state, width, height })),
-}));
+    setSizes: (width, height) => set((state) => ({ ...state, width, height })),
+  }))
+);
+
+export const selectCanvasWidth = useCanvasSizesStore.selectors.width;
+export const selectCanvasHeight = useCanvasSizesStore.selectors.height;
+export const selectSetCanvasSizes = useCanvasSizesStore.selectors.setSizes;

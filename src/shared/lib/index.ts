@@ -6,4 +6,5 @@ export { stringToStyle } from './stringToStyle';
 export { getTargetId } from './getTargetId';
 export { RichTextEditor, useRichTextStore } from './RichTextEditor';
 export { useIsMobile } from './useIsMobile';
+export { withSelectors } from './withSelectors';
 export { prisma };

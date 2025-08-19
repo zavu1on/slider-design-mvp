@@ -4,8 +4,13 @@ import { type FC, useRef, useTransition } from 'react';
 import Image from 'next/image';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import { toast } from 'sonner';
+import { useShallow } from 'zustand/react/shallow';
 import {
   CanvasElementType,
+  selectAddUserMaterial,
+  selectCanvasHeight,
+  selectCanvasWidth,
+  selectUserMaterials,
   useCanvasSizesStore,
   useMemorizedSlideData,
   useUserMaterialsStore,
@@ -23,9 +28,12 @@ export const ImageLoader: FC = () => {
 
   const [isPending, startTransition] = useTransition();
 
-  const { width, height } = useCanvasSizesStore();
+  const width = useCanvasSizesStore(selectCanvasWidth);
+  const height = useCanvasSizesStore(selectCanvasHeight);
   const { addCanvasElement } = useMemorizedSlideData();
-  const { materials, addMaterial } = useUserMaterialsStore();
+
+  const materials = useUserMaterialsStore(useShallow(selectUserMaterials));
+  const addMaterial = useUserMaterialsStore(selectAddUserMaterial);
 
   const addNewImage = (image: Material) => {
     image.width = image.width || 0;

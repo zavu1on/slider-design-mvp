@@ -1,7 +1,7 @@
 'use client';
 
 import { type RefObject, useEffect } from 'react';
-import { useCanvasSizesStore } from '../store';
+import { selectSetCanvasSizes, useCanvasSizesStore } from '../store';
 
 export const useUpdateScale = (
   containerRef: RefObject<HTMLDivElement | null>,
@@ -41,7 +41,7 @@ export const useUpdateScale = (
     updateScale();
     window.addEventListener('resize', updateScale);
     return () => window.removeEventListener('resize', updateScale);
-  }, [canvasRef.current, containerRef.current]);
+  }, [canvasRef.current, containerRef.current]); // todo
 };
 
 export const useInitCanvas = (
@@ -50,7 +50,7 @@ export const useInitCanvas = (
   containerRef: RefObject<HTMLDivElement | null>,
   canvasRef: RefObject<HTMLDivElement | null>
 ) => {
-  const { setSizes } = useCanvasSizesStore((state) => state);
+  const setSizes = useCanvasSizesStore(selectSetCanvasSizes);
 
   useEffect(() => {
     setSizes(width, height);

@@ -4,16 +4,24 @@ import { type RefObject, useCallback, useEffect } from 'react';
 import type Moveable from 'react-moveable';
 import type { OnDragStart, OnSelect, OnSelectEnd } from 'react-selecto';
 import type Selecto from 'react-selecto';
-import { useCheckInputStore, useSelectedTargetsStore } from '../store';
+import {
+  selectSetSelectedTargets,
+  selectUncheckInput,
+  useCheckInputStore,
+  useSelectedTargetsStore,
+} from '../store';
 import { useCurrentPresentationSlide } from './useCurrentPresentationSlide';
+import { useSelectedTargets } from './useSelectedTargets';
 
 export const useSelectableHandlers = (
   moveableRef: RefObject<Moveable | null>,
   canvasRef: RefObject<HTMLDivElement | null>
 ) => {
   const currentPresentationSlide = useCurrentPresentationSlide();
-  const { targets, setTargets } = useSelectedTargetsStore();
-  const { uncheckInput } = useCheckInputStore();
+  const targets = useSelectedTargets();
+  const setTargets = useSelectedTargetsStore(selectSetSelectedTargets);
+
+  const uncheckInput = useCheckInputStore(selectUncheckInput);
 
   const onKeydown = useCallback(
     (event: KeyboardEvent) => {

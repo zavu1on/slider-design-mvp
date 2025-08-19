@@ -11,6 +11,8 @@ import { v4 as uuid4 } from 'uuid';
 import {
   CanvasElementType,
   type GeometricFigure,
+  selectCanvasHeight,
+  selectCanvasWidth,
   useCanvasSizesStore,
   useMemorizedSlideData,
 } from '@/entities/canvas';
@@ -50,7 +52,8 @@ const CLIP_PATH: Record<GeometricFigure['name'], string> = {
 };
 
 export const Elements: FC = () => {
-  const { width, height } = useCanvasSizesStore();
+  const width = useCanvasSizesStore(selectCanvasWidth);
+  const height = useCanvasSizesStore(selectCanvasHeight);
   const { addCanvasElement } = useMemorizedSlideData();
 
   const addFigure = (figure: GeometricFigure) => {

@@ -1,6 +1,12 @@
 import { useCallback } from 'react';
 import type { TargetElement } from '../schema';
-import { useCheckInputStore, useMemorizedSlideData } from '../store';
+import {
+  selectSetCheckInput,
+  selectSetWasDoubleClickEvent,
+  selectWasDoubleClickEvent,
+  useCheckInputStore,
+  useMemorizedSlideData,
+} from '../store';
 import { useCurrentPresentationSlide } from './useCurrentPresentationSlide';
 
 const getClearValue = (valueInPixels: string, padding: number = 2): number =>
@@ -9,8 +15,12 @@ const getClearValue = (valueInPixels: string, padding: number = 2): number =>
 export const useMoveableHandlers = () => {
   const { updateCanvasElement } = useMemorizedSlideData();
   const currentPresentationSlide = useCurrentPresentationSlide();
-  const { wasDoubleClickEvent, setWasDoubleClickEvent, setCheckInput } =
-    useCheckInputStore();
+
+  const wasDoubleClickEvent = useCheckInputStore(selectWasDoubleClickEvent);
+  const setWasDoubleClickEvent = useCheckInputStore(
+    selectSetWasDoubleClickEvent
+  );
+  const setCheckInput = useCheckInputStore(selectSetCheckInput);
 
   const dragHandler = useCallback(
     (target: TargetElement, left: number, top: number) => {

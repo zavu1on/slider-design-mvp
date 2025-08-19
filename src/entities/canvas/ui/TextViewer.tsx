@@ -3,7 +3,11 @@
 import type { FC, ReactNode } from 'react';
 import { RichTextEditor, cn, stringToStyle } from '@/shared/lib';
 import type { CanvasElement } from '../schema';
-import { useCheckInputStore, useMemorizedSlideData } from '../store';
+import {
+  selectCurrentInputId,
+  useCheckInputStore,
+  useMemorizedSlideData,
+} from '../store';
 
 const TextViewerBasic: FC<{
   element: CanvasElement;
@@ -28,7 +32,7 @@ const TextViewerBasic: FC<{
 );
 
 export const TextViewer: FC<{ element: CanvasElement }> = ({ element }) => {
-  const { currentInputId } = useCheckInputStore();
+  const currentInputId = useCheckInputStore(selectCurrentInputId);
   const { updateCanvasElement } = useMemorizedSlideData();
 
   const handleBlur = (html: string) => {
