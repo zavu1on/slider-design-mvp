@@ -14,6 +14,7 @@ const createInitialSlideData = (): SlideData => [
   {
     id: uuidv4(),
     elements: [],
+    color: '#ffffff',
   },
 ];
 

@@ -45,7 +45,7 @@ const FIGURES: GeometricFigure[] = [
 const CLIP_PATH: Record<GeometricFigure['name'], string> = {
   square: 'none',
   triangle: 'polygon(50% 0%, 100% 100%, 0% 100%)',
-  circle: 'none',
+  circle: 'circle(50% at 50% 50%)',
   'move-down-left':
     'polygon(40% 0%, 40% 20%, 100% 20%, 100% 80%, 40% 80%, 40% 100%, 0% 50%);',
   'chevron-left':
@@ -66,7 +66,6 @@ export const Elements: FC = () => {
       y: height / 2 - 100,
       width: 200,
       height: 200,
-      borderRadius: figure.name === 'circle' ? '50%' : undefined,
       backgroundColor: '#000000',
     });
   };

@@ -67,7 +67,6 @@ export const ImageLoader: FC = () => {
         resp.data.image.width = resp.data.image.width || 0;
         resp.data.image.height = resp.data.image.height || 0;
 
-        addNewImage(resp.data.image);
         addMaterial(resp.data.image);
       }
     });
