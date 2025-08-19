@@ -6,9 +6,11 @@ import type { DraggableRequestParam } from 'react-moveable';
 import { getTargetId } from '@/shared/lib';
 import {
   selectAlignAction,
+  selectBringToFrontCanvasElement,
   selectClearAlignAction,
+  selectSendToBackCanvasElement,
   useAlignActionStore,
-  useMemorizedSlideData,
+  useSlideStore,
 } from '../store';
 import { useSelectedTargets } from './useSelectedTargets';
 
@@ -19,8 +21,10 @@ export const useAlignElementsHandler = (
   const clearAction = useAlignActionStore(selectClearAlignAction);
 
   const targets = useSelectedTargets();
-  const { bringToFrontCanvasElement, sendToBackCanvasElement } =
-    useMemorizedSlideData();
+  const bringToFrontCanvasElement = useSlideStore(
+    selectBringToFrontCanvasElement
+  );
+  const sendToBackCanvasElement = useSlideStore(selectSendToBackCanvasElement);
 
   const arrangeHorizontalSpacing = useCallback(() => {
     const groupRect = moveableRef.current!.getRect();

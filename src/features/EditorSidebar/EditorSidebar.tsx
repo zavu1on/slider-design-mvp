@@ -1,12 +1,9 @@
 'use client';
 
-import { type FC, type MouseEvent, useEffect } from 'react';
+import { type FC, useEffect } from 'react';
 import { Edit, Grid2X2Plus, Image, Settings } from 'lucide-react';
-import Link from 'next/link';
-import { toast } from 'sonner';
 import {
   selectSetUserMaterials,
-  useMemorizedSlideData,
   useUserMaterialsStore,
 } from '@/entities/canvas';
 import type { Material } from '@/generated/prisma';
@@ -28,7 +25,6 @@ import {
   SidebarMenuItem,
   SidebarTrigger,
 } from '@/generated/shadcn/sidebar';
-import { Button } from '@/shared/ui';
 import {
   ElementEditor,
   Elements,
@@ -36,6 +32,7 @@ import {
   ProjectNameInput,
   ProjectSettings,
 } from './lib';
+import { LobbyLink } from './ui';
 
 const SIDEBAR_ITEMS = [
   {
@@ -72,14 +69,6 @@ export const EditorSidebar: FC<EditorSidebarProps> = ({
   materials,
 }) => {
   const setMaterials = useUserMaterialsStore(selectSetUserMaterials);
-  const { hasUnsavedChanges } = useMemorizedSlideData();
-
-  const linkClickHandler = (event: MouseEvent<HTMLAnchorElement>) => {
-    if (hasUnsavedChanges) {
-      event.preventDefault();
-      toast.error('Сохраните данные перед выходом');
-    }
-  };
 
   useEffect(() => {
     setMaterials(materials);
@@ -122,11 +111,7 @@ export const EditorSidebar: FC<EditorSidebarProps> = ({
           </SidebarGroup>
         </SidebarContent>
         <SidebarFooter className="bg-gray-800">
-          <Link href="/slides" onClick={linkClickHandler}>
-            <Button className="w-full hover:underline">
-              К списку проектов
-            </Button>
-          </Link>
+          <LobbyLink />
         </SidebarFooter>
       </Sidebar>
       <SidebarTrigger className="hover:bg-gray-800 hover:text-slate-300 rounded-l-none transition-all" />

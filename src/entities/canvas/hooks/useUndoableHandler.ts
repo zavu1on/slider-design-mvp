@@ -1,10 +1,22 @@
 'use client';
 
 import { useCallback, useEffect } from 'react';
-import { useMemorizedSlideData } from '../store';
+import {
+  selectCanRedo,
+  selectCanUndo,
+  selectPastLength,
+  selectRedo,
+  selectUndo,
+  useSlideStore,
+} from '../store';
 
 export const useUndoableHandler = () => {
-  const { canUndo, canRedo, pastLength, undo, redo } = useMemorizedSlideData();
+  const canUndo = useSlideStore(selectCanUndo);
+  const canRedo = useSlideStore(selectCanRedo);
+  const pastLength = useSlideStore(selectPastLength);
+
+  const undo = useSlideStore(selectUndo);
+  const redo = useSlideStore(selectRedo);
 
   const undoRedoHandler = useCallback(
     (event: KeyboardEvent) => {
@@ -20,7 +32,7 @@ export const useUndoableHandler = () => {
         }
       }
     },
-    [canRedo, canUndo, redo, undo]
+    [canRedo, canUndo, pastLength, redo, undo]
   );
 
   useEffect(() => {

@@ -2,12 +2,25 @@
 
 import { startTransition, useCallback, useEffect } from 'react';
 import { toast } from 'sonner';
+import { useShallow } from 'zustand/react/shallow';
 import { updateSlideData } from '@/entities/slides';
-import { useMemorizedSlideData } from '../store';
+import { reconstructSlideData } from '../schema';
+import {
+  selectCurrentSlideId,
+  selectHasUnsavedChanges,
+  selectMarkChangesAsSaved,
+  selectSlideIds,
+  selectSlides,
+  useSlideStore,
+} from '../store';
 
 export const useSaveHandler = (projectId: string) => {
-  const { hasUnsavedChanges, slideData, markChangesAsSaved } =
-    useMemorizedSlideData();
+  const slideIds = useSlideStore(selectSlideIds);
+  const slides = useSlideStore(useShallow(selectSlides));
+  const currentSlideId = useSlideStore(selectCurrentSlideId);
+
+  const hasUnsavedChanges = useSlideStore(selectHasUnsavedChanges);
+  const markChangesAsSaved = useSlideStore(selectMarkChangesAsSaved);
 
   const undoSaveHandler = useCallback(
     (event: KeyboardEvent) => {
@@ -21,7 +34,14 @@ export const useSaveHandler = (projectId: string) => {
         event.preventDefault();
 
         startTransition(async () => {
-          const resp = await updateSlideData(projectId, slideData);
+          const resp = await updateSlideData(
+            projectId,
+            reconstructSlideData({
+              slideIds,
+              slides,
+              currentSlideId,
+            })
+          );
 
           if (!resp.success) toast.error(resp.error);
           else if (resp.data) {
@@ -31,7 +51,7 @@ export const useSaveHandler = (projectId: string) => {
         });
       }
     },
-    [projectId, slideData, markChangesAsSaved]
+    [projectId, slideIds, slides, currentSlideId]
   );
 
   const beforeUnloadHandler = useCallback(

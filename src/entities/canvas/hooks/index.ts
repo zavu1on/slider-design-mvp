@@ -8,7 +8,6 @@ export { useCurrentPresentationSlide } from './useCurrentPresentationSlide';
 export { useUndoableHandler } from './useUndoableHandler';
 export { useSaveHandler } from './useSaveHandler';
 export { usePreventWheelEvent } from './usePreventWheelEvent';
-export { useSelectedElements } from './useSelectedElements';
 export { useCalcContainerSize } from './useCalcContainerSize';
 export { useCopyPasteHandler } from './useCopyPasteHandler';
 export { useSelectedTargets } from './useSelectedTargets';

@@ -1,18 +1,17 @@
 'use client';
 
-import { useMemo } from 'react';
-import type { PresentationSlide } from '../schema';
-import { useMemorizedSlideData } from '../store';
+import { useShallow } from 'zustand/react/shallow';
+import {
+  type SlideInner,
+  selectCurrentSlideId,
+  selectSlides,
+  useSlideStore,
+} from '../store';
 
-export const useCurrentPresentationSlide = ():
-  | PresentationSlide
-  | undefined => {
-  const { slideData, currentSlideId } = useMemorizedSlideData();
+export const useCurrentPresentationSlide = (): SlideInner | undefined => {
+  const slides = useSlideStore(useShallow(selectSlides));
+  const currentSlideId = useSlideStore(selectCurrentSlideId);
 
-  const currentPresentationSlide = useMemo(
-    () => slideData.find((slide) => slide.id === currentSlideId),
-    [slideData, currentSlideId]
-  );
-
-  return currentPresentationSlide;
+  if (!currentSlideId) return;
+  return slides[currentSlideId];
 };

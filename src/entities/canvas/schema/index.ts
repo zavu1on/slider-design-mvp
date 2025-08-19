@@ -3,6 +3,7 @@ export {
   canvasElementListSchema,
   presentationSlideSchema,
   slideDataSchema,
+  reconstructSlideData,
   CanvasElementType,
   type CanvasElement,
   type PresentationSlide,

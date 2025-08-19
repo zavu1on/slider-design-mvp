@@ -3,12 +3,18 @@
 import { type FC, useEffect, useState } from 'react';
 import { CirclePlus } from 'lucide-react';
 import { v4 as uuidv4 } from 'uuid';
-import { useMemorizedSlideData } from '@/entities/canvas';
+import {
+  selectAddPresentationSlide,
+  selectSlideIds,
+  useSlideStore,
+} from '@/entities/canvas';
 import { SlideCard } from './ui';
 
 export const SliderFooter: FC = () => {
   const [maxWidth, setMaxWidth] = useState<string>('100%');
-  const { slideData, addPresentationSlide } = useMemorizedSlideData();
+
+  const slideIds = useSlideStore(selectSlideIds);
+  const addPresentationSlide = useSlideStore(selectAddPresentationSlide);
 
   useEffect(() => {
     const updateMaxWidth = () => {
@@ -34,12 +40,12 @@ export const SliderFooter: FC = () => {
       }}
     >
       <div className="flex flex-row items-center gap-2 w-full py-3 px-4 bg-gray-50 shadow overflow-x-scroll overflow-y-hidden">
-        {slideData.map((slide, index) => (
+        {slideIds.map((id, index) => (
           <SlideCard
-            key={slide.id}
-            slide={slide}
+            key={id}
+            slideId={id}
             index={index}
-            slideDataLength={slideData.length}
+            slideDataLength={slideIds.length}
           />
         ))}
         <div

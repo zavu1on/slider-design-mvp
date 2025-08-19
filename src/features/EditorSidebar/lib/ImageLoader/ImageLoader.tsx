@@ -7,12 +7,13 @@ import { toast } from 'sonner';
 import { useShallow } from 'zustand/react/shallow';
 import {
   CanvasElementType,
+  selectAddCanvasElement,
   selectAddUserMaterial,
   selectCanvasHeight,
   selectCanvasWidth,
   selectUserMaterials,
   useCanvasSizesStore,
-  useMemorizedSlideData,
+  useSlideStore,
   useUserMaterialsStore,
 } from '@/entities/canvas';
 import { uploadImageAction } from '@/entities/slides';
@@ -30,7 +31,7 @@ export const ImageLoader: FC = () => {
 
   const width = useCanvasSizesStore(selectCanvasWidth);
   const height = useCanvasSizesStore(selectCanvasHeight);
-  const { addCanvasElement } = useMemorizedSlideData();
+  const addCanvasElement = useSlideStore(selectAddCanvasElement);
 
   const materials = useUserMaterialsStore(useShallow(selectUserMaterials));
   const addMaterial = useUserMaterialsStore(selectAddUserMaterial);

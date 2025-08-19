@@ -1,4 +1,5 @@
 import * as yup from 'yup';
+import type { MemoryData } from '../store';
 
 export enum CanvasElementType {
   TEXT,
@@ -10,7 +11,7 @@ export enum CanvasElementType {
 export type CanvasElement = {
   id: string;
   type: CanvasElementType;
-  content: string; // url, text or clip-path
+  content: string; // url, html or clip-path
   x: number;
   y: number;
   width: number;
@@ -75,3 +76,14 @@ export const slideDataSchema = yup
   .array()
   .of(presentationSlideSchema)
   .required('Слайды обязательны');
+
+export const reconstructSlideData = (memoryData: MemoryData): SlideData => {
+  return memoryData.slideIds.map((id) => {
+    const slide = memoryData.slides[id];
+    return {
+      id,
+      color: slide.color,
+      elements: slide.elementIds.map((eid) => slide.elements[eid]),
+    };
+  });
+};

@@ -2,20 +2,25 @@
 
 import type { FC } from 'react';
 import {
-  useCurrentPresentationSlide,
-  useMemorizedSlideData,
+  selectCurrentPresentationSlideColor,
+  selectUpdateCurrentPresentationSlideColor,
+  useSlideStore,
 } from '@/entities/canvas';
 import { ColorPicker } from '@/shared/ui';
 
 export const ProjectSettings: FC = () => {
-  const currentPresentationSlide = useCurrentPresentationSlide();
-  const { updateCurrentPresentationSlideColor } = useMemorizedSlideData();
+  const currentPresentationSlideColor = useSlideStore(
+    selectCurrentPresentationSlideColor
+  );
+  const updateCurrentPresentationSlideColor = useSlideStore(
+    selectUpdateCurrentPresentationSlideColor
+  );
 
   return (
     <div className="text-gray-400">
       <div className="font-bold mb-2">Изменить цвет фона</div>
       <ColorPicker
-        color={currentPresentationSlide?.color ?? '#ffffff'}
+        color={currentPresentationSlideColor}
         onChange={(color) => updateCurrentPresentationSlideColor(color.hex)}
         disableAlpha={true}
       />

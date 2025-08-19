@@ -4,14 +4,20 @@ import { useCallback, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { getTargetId } from '@/shared/lib';
 import { type CanvasElement, canvasElementListSchema } from '../schema';
-import { useMemorizedSlideData } from '../store';
+import {
+  selectAddCanvasElement,
+  selectRemoveCanvasElement,
+  useSlideStore,
+} from '../store';
 import { useCurrentPresentationSlide } from './useCurrentPresentationSlide';
 import { useSelectedTargets } from './useSelectedTargets';
 
 export const useCopyPasteHandler = () => {
   const targets = useSelectedTargets();
   const currentSlide = useCurrentPresentationSlide();
-  const { addCanvasElement, removeCanvasElement } = useMemorizedSlideData();
+
+  const addCanvasElement = useSlideStore(selectAddCanvasElement);
+  const removeCanvasElement = useSlideStore(selectRemoveCanvasElement);
 
   const copyPasteHandler = useCallback(
     (event: KeyboardEvent) => {
@@ -26,8 +32,12 @@ export const useCopyPasteHandler = () => {
         ['с', 'c', 'x', 'ч'].includes(event.key.toLowerCase())
       ) {
         const idList = targets.map((target) => getTargetId(target)!);
-        const elements =
-          currentSlide?.elements.filter((el) => idList.includes(el.id)) ?? [];
+        const elements: CanvasElement[] = [];
+
+        idList.forEach((id) => {
+          const el = currentSlide?.elements[id];
+          if (el) elements.push(el);
+        });
         localStorage.setItem('clipboard', JSON.stringify(elements));
 
         if (['x', 'ч'].includes(event.key.toLowerCase())) {

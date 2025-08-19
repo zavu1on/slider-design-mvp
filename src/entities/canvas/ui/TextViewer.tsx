@@ -5,8 +5,9 @@ import { RichTextEditor, cn, stringToStyle } from '@/shared/lib';
 import type { CanvasElement } from '../schema';
 import {
   selectCurrentInputId,
+  selectUpdateCanvasElement,
   useCheckInputStore,
-  useMemorizedSlideData,
+  useSlideStore,
 } from '../store';
 
 const TextViewerBasic: FC<{
@@ -33,7 +34,7 @@ const TextViewerBasic: FC<{
 
 export const TextViewer: FC<{ element: CanvasElement }> = ({ element }) => {
   const currentInputId = useCheckInputStore(selectCurrentInputId);
-  const { updateCanvasElement } = useMemorizedSlideData();
+  const updateCanvasElement = useSlideStore(selectUpdateCanvasElement);
 
   const handleBlur = (html: string) => {
     if (html !== element.content) {

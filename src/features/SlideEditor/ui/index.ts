@@ -1,0 +1,1 @@
+export { LastUpdateLabel } from './LastUpdateLabel';

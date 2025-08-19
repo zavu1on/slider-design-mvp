@@ -3,10 +3,13 @@
 import { type FC, memo, use, useEffect } from 'react';
 import {
   type SlideData,
+  selectSetCurrentSlideId,
+  selectSetSlideData,
   useCanvas,
-  useMemorizedSlideData,
+  useSlideStore,
 } from '@/entities/canvas';
 import type { Slide } from '@/generated/prisma';
+import { LastUpdateLabel } from './ui';
 
 type SlideEditorProps = {
   slide: Promise<Slide | null>;
@@ -17,8 +20,9 @@ export const SlideEditor: FC<SlideEditorProps> = ({ slide }) => {
   const CanvasElement = useCanvas({
     projectId: slideData!.id,
   });
-  const { hasUnsavedChanges, lastUpdatedAt, setSlideData, setCurrentSlideId } =
-    useMemorizedSlideData();
+
+  const setSlideData = useSlideStore(selectSetSlideData);
+  const setCurrentSlideId = useSlideStore(selectSetCurrentSlideId);
 
   const Canvas = memo(() => {
     return <CanvasElement />;
@@ -36,14 +40,7 @@ export const SlideEditor: FC<SlideEditorProps> = ({ slide }) => {
   return (
     <div>
       <Canvas />
-      <div className="flex flex-row justify-between text-sm mt-2">
-        <div className="text-gray-500">
-          Последнее обновление: {lastUpdatedAt?.toLocaleString()}
-        </div>
-        {hasUnsavedChanges && (
-          <div className="text-red-500">Есть несохраненные изменения</div>
-        )}
-      </div>
+      <LastUpdateLabel />
     </div>
   );
 };

@@ -2,12 +2,12 @@
 
 import { useCallback, useEffect } from 'react';
 import { getTargetId } from '@/shared/lib';
-import { useMemorizedSlideData } from '../store';
+import { selectRemoveCanvasElement, useSlideStore } from '../store';
 import { useSelectedTargets } from './useSelectedTargets';
 
 export const useDeleteItemHandler = () => {
   const targets = useSelectedTargets();
-  const { removeCanvasElement } = useMemorizedSlideData();
+  const removeCanvasElement = useSlideStore(selectRemoveCanvasElement);
 
   const onKeydown = useCallback(
     (event: KeyboardEvent) => {

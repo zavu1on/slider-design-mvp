@@ -1,6 +1,6 @@
 'use client';
 
-import { type RefObject, useEffect } from 'react';
+import { type RefObject, useCallback, useEffect } from 'react';
 import { selectSetCanvasSizes, useCanvasSizesStore } from '../store';
 
 export const useUpdateScale = (
@@ -9,7 +9,7 @@ export const useUpdateScale = (
   width: number,
   height: number
 ) => {
-  const updateScale = () => {
+  const updateScale = useCallback(() => {
     if (!containerRef.current || !canvasRef.current) return;
 
     const containerWidth = containerRef.current.clientWidth;
@@ -35,13 +35,13 @@ export const useUpdateScale = (
     canvasRef.current.style.transformOrigin = 'top left';
     canvasRef.current.style.width = `${width}px`;
     canvasRef.current.style.height = `${height}px`;
-  };
+  }, [canvasRef.current, containerRef.current, height, width]);
 
   useEffect(() => {
     updateScale();
     window.addEventListener('resize', updateScale);
     return () => window.removeEventListener('resize', updateScale);
-  }, [canvasRef.current, containerRef.current]); // todo
+  }, [updateScale]);
 };
 
 export const useInitCanvas = (

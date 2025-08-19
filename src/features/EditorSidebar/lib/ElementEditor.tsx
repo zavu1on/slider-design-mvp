@@ -1,19 +1,32 @@
 'use client';
 
-import type { FC } from 'react';
+import { type FC, useMemo } from 'react';
 import { Square, Type } from 'lucide-react';
 import {
   type CanvasElement,
-  useMemorizedSlideData,
-  useSelectedElements,
+  selectUpdateCanvasElement,
+  useCurrentPresentationSlide,
+  useSelectedTargets,
+  useSlideStore,
 } from '@/entities/canvas';
 import { Input } from '@/generated/shadcn/input';
 import { cn } from '@/shared/lib';
 import { SketchPicker } from '@/shared/ui';
 
 export const ElementEditor: FC = () => {
-  const { updateCanvasElement } = useMemorizedSlideData();
-  const selectedElements = useSelectedElements();
+  const currentPresentationSlide = useCurrentPresentationSlide();
+  const targets = useSelectedTargets();
+  const updateCanvasElement = useSlideStore(selectUpdateCanvasElement);
+
+  const selectedElements: CanvasElement[] = useMemo(() => {
+    const elements: CanvasElement[] = [];
+    Object.keys(currentPresentationSlide?.elements ?? []).forEach((id) => {
+      if (currentPresentationSlide && targets.includes(`[data-id="${id}"]`)) {
+        elements.push(currentPresentationSlide.elements[id]);
+      }
+    });
+    return elements;
+  }, [currentPresentationSlide, targets]);
 
   const updateElement = (
     fields: Partial<

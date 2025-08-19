@@ -7,9 +7,31 @@ export {
   selectAddUserMaterial,
   selectSetUserMaterials,
   useAlignActionStore,
-  useMemorizedSlideData,
-  SlideDataProvider,
+  useSlideStore,
+  selectSlideIds,
+  selectSlides,
+  selectCurrentSlideId,
+  selectLastUpdatedAt,
+  selectHasUnsavedChanges,
+  selectCanUndo,
+  selectCanRedo,
+  selectPastLength,
+  selectCurrentPresentationSlideColor,
+  selectSetSlideData,
+  selectAddPresentationSlide,
+  selectRemovePresentationSlide,
+  selectAddCanvasElement,
+  selectRemoveCanvasElement,
+  selectUpdateCanvasElement,
+  selectUpdateCurrentPresentationSlideColor,
+  selectBringToFrontCanvasElement,
+  selectSendToBackCanvasElement,
+  selectSetCurrentSlideId,
+  selectMarkChangesAsSaved,
+  selectRedo,
+  selectUndo,
   type AlignAction,
+  type SlideInner,
 } from './store';
 export {
   canvasElementSchema,
@@ -21,6 +43,6 @@ export {
   type SlideData,
   type GeometricFigure,
 } from './schema';
-export { useCurrentPresentationSlide, useSelectedElements } from './hooks';
+export { useCurrentPresentationSlide, useSelectedTargets } from './hooks';
 export { useCanvas } from './useCanvas';
 export { PresentationSlideViewer } from './PresentationSlideViewer';

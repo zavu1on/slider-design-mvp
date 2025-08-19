@@ -3,9 +3,10 @@ import type { TargetElement } from '../schema';
 import {
   selectSetCheckInput,
   selectSetWasDoubleClickEvent,
+  selectUpdateCanvasElement,
   selectWasDoubleClickEvent,
   useCheckInputStore,
-  useMemorizedSlideData,
+  useSlideStore,
 } from '../store';
 import { useCurrentPresentationSlide } from './useCurrentPresentationSlide';
 
@@ -13,7 +14,7 @@ const getClearValue = (valueInPixels: string, padding: number = 2): number =>
   Number(valueInPixels.slice(0, -padding));
 
 export const useMoveableHandlers = () => {
-  const { updateCanvasElement } = useMemorizedSlideData();
+  const updateCanvasElement = useSlideStore(selectUpdateCanvasElement);
   const currentPresentationSlide = useCurrentPresentationSlide();
 
   const wasDoubleClickEvent = useCheckInputStore(selectWasDoubleClickEvent);
@@ -33,9 +34,7 @@ export const useMoveableHandlers = () => {
 
   const dragEndHandler = useCallback(
     (target: TargetElement) => {
-      const element = currentPresentationSlide!.elements.find(
-        (el) => el.id === target.id
-      )!;
+      const element = currentPresentationSlide!.elements[target.id];
 
       updateCanvasElement({
         ...element,
@@ -78,9 +77,7 @@ export const useMoveableHandlers = () => {
 
   const resizeEndHandler = useCallback(
     (target: TargetElement) => {
-      const element = currentPresentationSlide!.elements.find(
-        (el) => el.id === target.id
-      )!;
+      const element = currentPresentationSlide!.elements[target.id];
 
       updateCanvasElement({
         ...element,
@@ -102,9 +99,7 @@ export const useMoveableHandlers = () => {
 
   const rotateEndHandler = useCallback(
     (target: TargetElement) => {
-      const element = currentPresentationSlide!.elements.find(
-        (el) => el.id === target.id
-      )!;
+      const element = currentPresentationSlide!.elements[target.id];
 
       updateCanvasElement({
         ...element,
@@ -123,9 +118,7 @@ export const useMoveableHandlers = () => {
 
   const roundEndHandler = useCallback(
     (target: TargetElement) => {
-      const element = currentPresentationSlide!.elements.find(
-        (el) => el.id === target.id
-      )!;
+      const element = currentPresentationSlide!.elements[target.id];
 
       updateCanvasElement({
         ...element,

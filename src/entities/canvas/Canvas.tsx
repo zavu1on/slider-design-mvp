@@ -4,14 +4,14 @@ import { type FC, type Ref, useRef } from 'react';
 import React from 'react';
 import type ReactMoveable from 'react-moveable';
 import type Selecto from 'react-selecto';
+import { useShallow } from 'zustand/react/shallow';
+import { Hookable, Moveable, Selectable } from './lib';
 import {
-  useCopyPasteHandler,
-  useCurrentPresentationSlide,
-  useSaveHandler,
-  useUndoableHandler,
-} from './hooks';
-import { Moveable, Selectable } from './lib';
-import { RenderElement } from './ui';
+  selectCurrentPresentationSlideColor,
+  selectCurrentSlideId,
+  useSlideStore,
+} from './store';
+import { CanvasElement } from './ui';
 
 export type CanvasProps = {
   ref: Ref<HTMLDivElement>;
@@ -20,22 +20,26 @@ export type CanvasProps = {
 };
 
 export const Canvas: FC<CanvasProps> = ({ ref, className, projectId }) => {
-  const currentPresentationSlide = useCurrentPresentationSlide();
+  const currentSlideId = useSlideStore(selectCurrentSlideId);
+  const currentPresentationSlideColor = useSlideStore(
+    selectCurrentPresentationSlideColor
+  );
+  const elementIds = useSlideStore(
+    useShallow((state) =>
+      state.currentSlideId ? state.slides[state.currentSlideId].elementIds : []
+    )
+  );
 
   const canvasRef = useRef<HTMLDivElement>(null);
   const moveableRef = useRef<ReactMoveable>(null);
   const selectoRef = useRef<Selecto>(null);
-
-  useUndoableHandler();
-  useSaveHandler(projectId);
-  useCopyPasteHandler();
 
   return (
     <>
       <div
         className={className}
         style={{
-          background: currentPresentationSlide?.color ?? '#ffffff',
+          background: currentPresentationSlideColor,
         }}
         ref={(node) => {
           canvasRef.current = node;
@@ -46,8 +50,8 @@ export const Canvas: FC<CanvasProps> = ({ ref, className, projectId }) => {
           }
         }}
       >
-        {currentPresentationSlide?.elements.map((el) => (
-          <RenderElement key={el.id} element={el} />
+        {elementIds.map((id) => (
+          <CanvasElement key={id} slideId={currentSlideId} elementId={id} />
         ))}
       </div>
       <Moveable
@@ -60,6 +64,7 @@ export const Canvas: FC<CanvasProps> = ({ ref, className, projectId }) => {
         moveableRef={moveableRef}
         selectoRef={selectoRef}
       />
+      <Hookable projectId={projectId} />
     </>
   );
 };

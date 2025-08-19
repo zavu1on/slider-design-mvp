@@ -1,7 +1,6 @@
 import { type FC, Suspense } from 'react';
 import { Loader2 } from 'lucide-react';
 import { getSessionOrLogin } from '@/entities/auth';
-import { SlideDataProvider } from '@/entities/canvas';
 import { getSlideById } from '@/entities/slides';
 import { EditorSidebar } from '@/features/EditorSidebar';
 import { SlideEditor } from '@/features/SlideEditor';
@@ -24,7 +23,7 @@ export const SlideDetail: FC<SlideDetailProps> = async ({
   const slide = getSlideById(session, projectId);
 
   return (
-    <SlideDataProvider>
+    <>
       <EditorSidebar projectId={projectId} name={name} materials={materials} />
       <main className="w-screen h-screen flex flex-col bg-slate-200">
         <SliderHeader />
@@ -39,6 +38,6 @@ export const SlideDetail: FC<SlideDetailProps> = async ({
         </div>
         <SliderFooter />
       </main>
-    </SlideDataProvider>
+    </>
   );
 };

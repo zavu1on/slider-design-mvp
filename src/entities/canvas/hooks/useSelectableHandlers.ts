@@ -40,10 +40,11 @@ export const useSelectableHandlers = (
 
       if (key === 'a' && event.ctrlKey) {
         event.preventDefault();
+
         setTargets(
-          currentPresentationSlide?.elements.map(
-            (target) => `[data-id="${target.id}"]`
-          ) ?? []
+          Object.keys(currentPresentationSlide?.elements ?? []).map(
+            (id) => `[data-id="${id}"]`
+          )
         );
       }
     },

@@ -27,8 +27,6 @@ export const SlidePresenter: FC<SlidePresenterProps> = ({ slide }) => {
       } else if (event.key === 'ArrowLeft' && currentSlideIndex > 0) {
         setCurrentSlideIndex((prev) => prev - 1);
       }
-
-      console.log(event.key);
     },
     [currentSlideIndex, slideData.length]
   );
@@ -62,7 +60,7 @@ export const SlidePresenter: FC<SlidePresenterProps> = ({ slide }) => {
       style={{ height: containerHeight, width: containerWidth }}
     >
       <PresentationSlideViewer
-        slide={slideData[currentSlideIndex]}
+        presentationSlide={slideData[currentSlideIndex]}
         containerRef={containerRef}
       />
     </div>
