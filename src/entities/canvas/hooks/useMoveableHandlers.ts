@@ -42,7 +42,7 @@ export const useMoveableHandlers = () => {
         y: getClearValue(target.style.top),
       });
     },
-    [currentPresentationSlide]
+    [currentPresentationSlide, updateCanvasElement]
   );
 
   const resizeHandler = useCallback(
@@ -87,7 +87,7 @@ export const useMoveableHandlers = () => {
         height: getClearValue(target.style.height),
       });
     },
-    [currentPresentationSlide]
+    [currentPresentationSlide, updateCanvasElement]
   );
 
   const rotateHandler = useCallback(
@@ -106,7 +106,7 @@ export const useMoveableHandlers = () => {
         rotation: Number(target.style.transform.slice(7, -4)),
       });
     },
-    [currentPresentationSlide]
+    [currentPresentationSlide, updateCanvasElement]
   );
 
   const roundHandler = useCallback(
@@ -125,7 +125,7 @@ export const useMoveableHandlers = () => {
         borderRadius: target.style.borderRadius,
       });
     },
-    [currentPresentationSlide]
+    [currentPresentationSlide, updateCanvasElement]
   );
 
   const clickHandler = useCallback(
@@ -137,7 +137,7 @@ export const useMoveableHandlers = () => {
         setCheckInput(true, elementId);
       }
     },
-    [wasDoubleClickEvent]
+    [setCheckInput, setWasDoubleClickEvent, wasDoubleClickEvent]
   );
 
   return {

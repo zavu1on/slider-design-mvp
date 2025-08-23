@@ -72,6 +72,7 @@ export const EditorSidebar: FC<EditorSidebarProps> = ({
 
   useEffect(() => {
     setMaterials(materials);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

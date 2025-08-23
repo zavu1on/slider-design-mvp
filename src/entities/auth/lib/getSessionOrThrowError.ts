@@ -1,4 +1,4 @@
-import { type Session } from 'next-auth';
+import type { Session } from 'next-auth';
 import { auth } from './auth';
 
 export class SessionIsNullError extends Error {

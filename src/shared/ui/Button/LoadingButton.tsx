@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, type FC, type Ref } from 'react';
+import type { ButtonHTMLAttributes, FC, Ref } from 'react';
 import { Loader2 } from 'lucide-react';
 import { Button } from './Button';
 

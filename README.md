@@ -1,4 +1,4 @@
-![Demo](2025-08-19_14-44-46.gif)
+![Demo](demo.gif)
 
 # 🎨 Slider Design MVP
 

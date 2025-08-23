@@ -1,5 +1,5 @@
-import { type Session } from 'next-auth';
-import { type NextRequest } from 'next/server';
+import type { Session } from 'next-auth';
+import type { NextRequest } from 'next/server';
 
 export type NextRequestWithAuth = NextRequest & { auth: Session };
 

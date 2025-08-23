@@ -51,7 +51,7 @@ export const useSaveHandler = (projectId: string) => {
         });
       }
     },
-    [projectId, slideIds, slides, currentSlideId]
+    [projectId, slideIds, slides, currentSlideId, markChangesAsSaved]
   );
 
   const beforeUnloadHandler = useCallback(

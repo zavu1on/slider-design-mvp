@@ -1,5 +1,5 @@
-import { type FormHTMLAttributes, type ReactNode, type Ref } from 'react';
-import { type FieldValues, type UseFormReturn } from 'react-hook-form';
+import type { FormHTMLAttributes, ReactNode, Ref } from 'react';
+import type { FieldValues, UseFormReturn } from 'react-hook-form';
 import { Form as UIForm } from '@/generated/shadcn/form';
 
 type FormProps<Values extends FieldValues> =

@@ -133,14 +133,14 @@ export const useAlignElementsHandler = (
       const targetId = getTargetId(target);
       if (targetId) bringToFrontCanvasElement(targetId);
     }
-  }, [targets]);
+  }, [bringToFrontCanvasElement, targets]);
 
   const sendToBack = useCallback(() => {
     for (const target of targets) {
       const targetId = getTargetId(target);
       if (targetId) sendToBackCanvasElement(targetId);
     }
-  }, [targets]);
+  }, [sendToBackCanvasElement, targets]);
 
   useEffect(() => {
     if (action) {

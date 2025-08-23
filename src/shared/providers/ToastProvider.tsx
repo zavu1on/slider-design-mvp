@@ -1,6 +1,6 @@
 'use client';
 
-import { type FC, type ReactNode } from 'react';
+import type { FC, ReactNode } from 'react';
 import { Toaster } from '@/generated/shadcn/sonner';
 
 export const ToastProvider: FC<{

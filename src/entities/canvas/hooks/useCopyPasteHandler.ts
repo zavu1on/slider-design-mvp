@@ -61,7 +61,7 @@ export const useCopyPasteHandler = () => {
         });
       }
     },
-    [currentSlide, targets]
+    [addCanvasElement, currentSlide?.elements, removeCanvasElement, targets]
   );
 
   useEffect(() => {

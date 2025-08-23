@@ -1,5 +1,5 @@
 import { type InferType, object, ref, string } from 'yup';
-import { User } from '@/generated/prisma';
+import type { User } from '@/generated/prisma';
 
 export type PublicUser = Omit<User, 'password'>;
 

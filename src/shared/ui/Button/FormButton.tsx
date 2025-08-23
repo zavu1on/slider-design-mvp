@@ -1,6 +1,6 @@
 'use client';
 
-import { ButtonHTMLAttributes, type FC, type Ref } from 'react';
+import type { ButtonHTMLAttributes, FC, Ref } from 'react';
 import { useFormStatus } from 'react-dom';
 import { LoadingButton } from './LoadingButton';
 

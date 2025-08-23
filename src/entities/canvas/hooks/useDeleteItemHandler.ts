@@ -22,7 +22,7 @@ export const useDeleteItemHandler = () => {
         }
       }
     },
-    [targets]
+    [removeCanvasElement, targets]
   );
 
   useEffect(() => {

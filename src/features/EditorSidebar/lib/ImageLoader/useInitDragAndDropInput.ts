@@ -46,11 +46,13 @@ export const useInitDragAndDropInput = (
     return () => {
       formGroupRef.current?.removeEventListener('dragover', onLabelDragover);
       formGroupRef.current?.removeEventListener('dragleave', onLabelDragleave);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       formGroupRef.current?.removeEventListener('drop', onLabelDrop);
 
       document.removeEventListener('dragover', onDragStart);
       document.removeEventListener('dragleave', onDragEnd);
       document.removeEventListener('drop', onDragEnd);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputRef, formGroupRef]);
 };

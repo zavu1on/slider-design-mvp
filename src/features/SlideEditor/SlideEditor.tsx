@@ -35,7 +35,7 @@ export const SlideEditor: FC<SlideEditorProps> = ({ slide }) => {
       setSlideData(slideDataObj, slideData.updatedAt);
       setCurrentSlideId(slideDataObj[0].id);
     }
-  }, [slideData]);
+  }, [setCurrentSlideId, setSlideData, slideData]);
 
   return (
     <div>

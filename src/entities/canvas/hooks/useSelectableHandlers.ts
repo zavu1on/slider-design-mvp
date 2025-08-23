@@ -48,7 +48,7 @@ export const useSelectableHandlers = (
         );
       }
     },
-    [currentPresentationSlide?.elements]
+    [currentPresentationSlide?.elements, setTargets, uncheckInput]
   );
 
   useEffect(() => {
@@ -93,7 +93,7 @@ export const useSelectableHandlers = (
        */
       setTargets(event.selected.map((t) => `[data-id="${t.id}"]`));
     },
-    [moveableRef, canvasRef, targets]
+    [targets.length, canvasRef, setTargets, moveableRef, uncheckInput]
   );
 
   /**
@@ -132,7 +132,7 @@ export const useSelectableHandlers = (
        */
       setTargets(event.selected.map((t) => `[data-id="${t.id}"]`));
     },
-    [canvasRef, moveableRef, targets]
+    [canvasRef, moveableRef, setTargets, targets.length, uncheckInput]
   );
 
   const dragStartHandler = useCallback(

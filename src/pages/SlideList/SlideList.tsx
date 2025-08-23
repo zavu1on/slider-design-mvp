@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 import { getSessionOrLogin } from '@/entities/auth';
 import { getUserProfileOrLogin } from '@/entities/profile';
 import { getUserSlides } from '@/entities/slides';

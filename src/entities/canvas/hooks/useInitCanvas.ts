@@ -35,6 +35,7 @@ export const useUpdateScale = (
     canvasRef.current.style.transformOrigin = 'top left';
     canvasRef.current.style.width = `${width}px`;
     canvasRef.current.style.height = `${height}px`;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [canvasRef.current, containerRef.current, height, width]);
 
   useEffect(() => {
@@ -54,7 +55,7 @@ export const useInitCanvas = (
 
   useEffect(() => {
     setSizes(width, height);
-  }, [width, height]);
+  }, [width, height, setSizes]);
 
   useUpdateScale(containerRef, canvasRef, width, height);
 };
