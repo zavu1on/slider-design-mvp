@@ -1,0 +1,1 @@
+export { stringToStyle } from './stringToStyle';

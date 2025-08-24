@@ -1,0 +1,1 @@
+export { getTargetId } from './getTargetId';

@@ -36,6 +36,7 @@ export const RichTextEditor: FC<RichTextEditorProps> = ({
       onBlur={() => {
         if (editor && onBlur) onBlur(editor.getHTML());
       }}
+      data-testid="editor-content"
     />
   );
 };

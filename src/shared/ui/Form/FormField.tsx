@@ -38,7 +38,7 @@ export const FormField = <Values extends FieldValues = FieldValues>({
   children,
   className,
 }: FormFieldProps<Values>): ReactNode => {
-  if (!children.props?.name) throw Error('No "name" param!');
+  if (!children.props?.name) throw Error('No "name" parameter');
 
   return (
     <UIFormField

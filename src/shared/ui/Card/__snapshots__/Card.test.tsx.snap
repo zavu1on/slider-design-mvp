@@ -1,0 +1,126 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Card component > matches snapshot with all props provided 1`] = `
+<div>
+  <div
+    class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm outer-class"
+    data-slot="card"
+    data-testid="card-container"
+  >
+    <div
+      class="@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6 header-x"
+      data-slot="card-header"
+    >
+      <div
+        class="leading-none font-semibold title-x"
+        data-slot="card-title"
+      >
+        Full card
+      </div>
+      <div
+        class="text-muted-foreground text-sm desc-x"
+        data-slot="card-description"
+      >
+        Detailed description
+      </div>
+    </div>
+    <div
+      class="px-6 content-x"
+      data-slot="card-content"
+    >
+      <div>
+        Full body
+      </div>
+    </div>
+    <div
+      class="flex items-center px-6 [.border-t]:pt-6 footer-x"
+      data-slot="card-footer"
+      data-testid="card-footer"
+    >
+      <button>
+        Footer btn
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Card component > renders correctly with title and description (snapshot) 1`] = `
+<div>
+  <div
+    class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm"
+    data-slot="card"
+    data-testid="card-container"
+  >
+    <div
+      class="@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6"
+      data-slot="card-header"
+    >
+      <div
+        class="leading-none font-semibold"
+        data-slot="card-title"
+      >
+        Test title
+      </div>
+      <div
+        class="text-muted-foreground text-sm"
+        data-slot="card-description"
+      >
+        Test description
+      </div>
+    </div>
+    <div
+      class="px-6"
+      data-slot="card-content"
+    >
+      <p>
+        Card content
+      </p>
+    </div>
+    <div
+      class="flex items-center px-6 [.border-t]:pt-6"
+      data-slot="card-footer"
+      data-testid="card-footer"
+    />
+  </div>
+</div>
+`;
+
+exports[`Card component > renders with title and description (snapshot) 1`] = `
+<div>
+  <div
+    class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm"
+    data-slot="card"
+  >
+    <div
+      class="@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6"
+      data-slot="card-header"
+    >
+      <div
+        class="leading-none font-semibold"
+        data-slot="card-title"
+      >
+        Test title
+      </div>
+      <div
+        class="text-muted-foreground text-sm"
+        data-slot="card-description"
+      >
+        Test description
+      </div>
+    </div>
+    <div
+      class="px-6"
+      data-slot="card-content"
+    >
+      <p>
+        Card content
+      </p>
+    </div>
+    <div
+      class="flex items-center px-6 [.border-t]:pt-6"
+      data-slot="card-footer"
+    />
+  </div>
+</div>
+`;
